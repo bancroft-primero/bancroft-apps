@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Gracias, Omu! — Actividades Interactivas</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --stew-red: #C0392B;
+  --stew-red-light: #FDEDEC;
+  --warm-orange: #E67E22;
+  --warm-orange-light: #FDF2E9;
+  --golden: #F1C40F;
+  --golden-light: #FEF9E7;
+  --teal: #1ABC9C;
+  --teal-light: #E8F8F5;
+  --deep-blue: #2C3E50;
+  --purple: #8E44AD;
+  --purple-light: #F4ECF7;
+  --green: #27AE60;
+  --green-light: #EAFAF1;
+  --sky: #3498DB;
+  --sky-light: #EBF5FB;
+  --cream: #FFF8F0;
+  --warm-white: #FFFDF9;
+  --gray-100: #F8F9FA;
+  --gray-200: #ECF0F1;
+  --gray-300: #BDC3C7;
+  --gray-500: #7F8C8D;
+  --gray-700: #4A4A4A;
+  --shadow-sm: 0 2px 8px rgba(44,62,80,0.08);
+  --shadow-md: 0 4px 20px rgba(44,62,80,0.12);
+  --shadow-lg: 0 8px 40px rgba(44,62,80,0.15);
+  --shadow-glow: 0 0 30px rgba(241,196,15,0.2);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--cream);
+  color: var(--deep-blue);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ============ TEXTURE BACKGROUND ============ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(192,57,43,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(26,188,156,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(241,196,15,0.03) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============ HEADER ============ */
+.app-header {
+  background: linear-gradient(135deg, var(--stew-red) 0%, #A93226 50%, var(--deep-blue) 100%);
+  padding: 28px 24px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 30px rgba(192,57,43,0.3);
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.02) 20px, rgba(255,255,255,0.02) 40px);
+  pointer-events: none;
+}
+
+.app-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(90deg,
+    var(--stew-red) 0px, var(--stew-red) 30px,
+    var(--warm-orange) 30px, var(--warm-orange) 60px,
+    var(--golden) 60px, var(--golden) 90px,
+    var(--teal) 90px, var(--teal) 120px);
+}
+
+.header-steam {
+  position: absolute;
+  top: 8px;
+  font-size: 28px;
+  opacity: 0.3;
+  animation: steamFloat 4s ease-in-out infinite;
+}
+.header-steam:nth-child(1) { left: 8%; animation-delay: 0s; }
+.header-steam:nth-child(2) { left: 25%; animation-delay: 1.2s; font-size: 22px; }
+.header-steam:nth-child(3) { right: 25%; animation-delay: 0.6s; }
+.header-steam:nth-child(4) { right: 8%; animation-delay: 1.8s; font-size: 22px; }
+
+@keyframes steamFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.25; }
+  50% { transform: translateY(-8px) scale(1.1); opacity: 0.45; }
+}
+
+.app-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  position: relative;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  letter-spacing: -0.01em;
+}
+
+.app-subtitle {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  margin-top: 4px;
+  font-weight: 600;
+  position: relative;
+}
+
+.unit-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 3px 14px;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.9);
+  margin-top: 8px;
+  position: relative;
+  backdrop-filter: blur(4px);
+}
+
+/* ============ TAB NAVIGATION ============ */
+.tab-nav {
+  display: flex;
+  gap: 0;
+  background: white;
+  border-bottom: 3px solid var(--gray-200);
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex: 1;
+  min-width: 110px;
+  padding: 14px 10px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--gray-500);
+  transition: all 0.25s ease;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+}
+
+.tab-btn .tab-icon {
+  display: block;
+  font-size: 1.3rem;
+  margin-bottom: 3px;
+}
+
+.tab-btn:hover {
+  color: var(--deep-blue);
+  background: var(--gray-100);
+}
+
+.tab-btn.active {
+  color: var(--stew-red);
+  border-bottom-color: var(--stew-red);
+  background: var(--stew-red-light);
+}
+
+.tab-btn[data-tab="visitors"].active { color: var(--warm-orange); border-bottom-color: var(--warm-orange); background: var(--warm-orange-light); }
+.tab-btn[data-tab="tier1"].active { color: var(--stew-red); border-bottom-color: var(--stew-red); background: var(--stew-red-light); }
+.tab-btn[data-tab="tier2"].active { color: var(--teal); border-bottom-color: var(--teal); background: var(--teal-light); }
+.tab-btn[data-tab="tier3"].active { color: var(--purple); border-bottom-color: var(--purple); background: var(--purple-light); }
+.tab-btn[data-tab="vocab"].active { color: var(--green); border-bottom-color: var(--green); background: var(--green-light); }
+.tab-btn[data-tab="frames"].active { color: var(--sky); border-bottom-color: var(--sky); background: var(--sky-light); }
+.tab-btn[data-tab="escritura"].active { color: var(--warm-orange); border-bottom-color: var(--warm-orange); background: var(--warm-orange-light); }
+
+/* ============ TAB CONTENT ============ */
+.tab-content {
+  display: none;
+  padding: 24px 16px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: tabFadeIn 0.35s ease;
+  position: relative;
+  z-index: 1;
+}
+.tab-content.active { display: block; }
+
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ SECTION HEADERS ============ */
+.section-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.section-header h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.section-header p {
+  font-size: 0.95rem;
+  color: var(--gray-500);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.tier-badge {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+}
+.tier-badge.t1 { background: var(--stew-red); }
+.tier-badge.t2 { background: var(--teal); }
+.tier-badge.t3 { background: var(--purple); }
+
+/* ============ VISITOR CARDS ============ */
+.visitor-timeline {
+  position: relative;
+  padding-left: 40px;
+}
+
+.visitor-timeline::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 20px;
+  bottom: 20px;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--stew-red), var(--warm-orange), var(--golden), var(--teal), var(--green), var(--sky), var(--golden));
+  border-radius: 4px;
+}
+
+.visitor-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  border-left: 4px solid var(--gray-300);
+  transition: all 0.3s ease;
+}
+
+.visitor-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+.visitor-card .visitor-num {
+  position: absolute;
+  left: -42px;
+  top: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.visitor-card h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.visitor-card .desc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--gray-700);
+  margin-bottom: 8px;
+}
+
+.visitor-card .desc-en {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  font-style: italic;
+}
+
+.visitor-card .visitor-img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  margin-top: 10px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.visitor-card:hover .visitor-img {
+  box-shadow: var(--shadow-md);
+}
+
+/* Visitor colors */
+.vc-1 { border-left-color: var(--stew-red); }
+.vc-1 .visitor-num { background: var(--stew-red); }
+.vc-1 h3 { color: var(--stew-red); }
+.vc-2 { border-left-color: var(--warm-orange); }
+.vc-2 .visitor-num { background: var(--warm-orange); }
+.vc-2 h3 { color: var(--warm-orange); }
+.vc-3 { border-left-color: var(--teal); }
+.vc-3 .visitor-num { background: var(--teal); }
+.vc-3 h3 { color: var(--teal); }
+.vc-4 { border-left-color: var(--purple); }
+.vc-4 .visitor-num { background: var(--purple); }
+.vc-4 h3 { color: var(--purple); }
+.vc-5 { border-left-color: var(--green); }
+.vc-5 .visitor-num { background: var(--green); }
+.vc-5 h3 { color: var(--green); }
+.vc-6 { border-left-color: var(--sky); }
+.vc-6 .visitor-num { background: var(--sky); }
+.vc-6 h3 { color: var(--sky); }
+.vc-star { border-left-color: var(--golden); border-left-width: 5px; background: var(--golden-light); }
+.vc-star .visitor-num { background: linear-gradient(135deg, var(--golden), var(--warm-orange)); font-size: 1.2rem; }
+.vc-star h3 { color: var(--warm-orange); }
+
+/* ============ COMIC STRIP (shared) ============ */
+.comic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .comic-grid { grid-template-columns: 1fr; }
+}
+
+.comic-box {
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+.comic-box:hover { box-shadow: var(--shadow-md); }
+
+.comic-box .comic-label {
+  padding: 10px 16px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comic-box .comic-label .num-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.comic-box .comic-body {
+  padding: 14px 16px 16px;
+}
+
+.comic-box .draw-area {
+  width: 100%;
+  height: 160px;
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gray-100);
+  margin-bottom: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+  overflow: hidden;
+}
+
+.comic-box .draw-area:hover {
+  border-color: var(--gray-500);
+  background: white;
+}
+
+.comic-box .draw-area canvas {
+  position: absolute;
+  inset: 0;
+  cursor: crosshair;
+}
+
+.draw-area .placeholder-text {
+  color: var(--gray-300);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.draw-area.has-drawing .placeholder-text { display: none; }
+
+.comic-box .prompt-hint {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.comic-box .write-area {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--gray-200);
+  padding: 8px 4px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  color: var(--deep-blue);
+  resize: none;
+  transition: border-color 0.2s;
+  background: transparent;
+}
+.comic-box .write-area:focus {
+  outline: none;
+  border-bottom-color: var(--teal);
+}
+.comic-box .write-area::placeholder { color: var(--gray-300); }
+
+/* Tier 1 specifics */
+.tier1-paste-area {
+  height: 140px;
+  border: 2px dashed var(--stew-red);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--stew-red-light);
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  overflow: hidden;
+  position: relative;
+}
+.tier1-paste-area:hover { background: white; border-style: solid; }
+.tier1-paste-area img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.tier1-paste-area .paste-label {
+  color: var(--stew-red);
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.6;
+}
+.tier1-paste-area .paste-icon {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+  opacity: 0.4;
+}
+.tier1-paste-area.has-image .paste-label,
+.tier1-paste-area.has-image .paste-icon { display: none; }
+
+.tier1-desc {
+  background: var(--warm-orange-light);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: var(--warm-orange);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Tier 3 specifics */
+.tier3-box {
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+}
+.tier3-box:hover { box-shadow: var(--shadow-md); }
+
+@media (max-width: 600px) {
+  .tier3-box { grid-template-columns: 1fr; }
+}
+
+.tier3-box .tier3-draw {
+  background: var(--gray-100);
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: crosshair;
+  overflow: hidden;
+}
+
+.tier3-box .tier3-draw canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.tier3-box .tier3-draw .placeholder-text {
+  color: var(--gray-300);
+  font-size: 0.8rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tier3-box.has-drawing .tier3-draw .placeholder-text { display: none; }
+
+.tier3-box .tier3-write {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tier3-box .transition-starter {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.tier3-box textarea {
+  flex: 1;
+  min-height: 80px;
+  border: none;
+  border-bottom: 2px solid var(--gray-200);
+  padding: 8px 0;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  color: var(--deep-blue);
+  resize: none;
+  background: transparent;
+}
+.tier3-box textarea:focus {
+  outline: none;
+  border-bottom-color: var(--purple);
+}
+.tier3-box textarea::placeholder { color: var(--gray-300); }
+
+/* Tier 3 colors */
+.t3c-1 { border-color: var(--stew-red); }
+.t3c-1 .transition-starter { color: var(--stew-red); }
+.t3c-1 .tier3-draw { background: var(--stew-red-light); }
+.t3c-2 { border-color: var(--warm-orange); }
+.t3c-2 .transition-starter { color: var(--warm-orange); }
+.t3c-2 .tier3-draw { background: var(--warm-orange-light); }
+.t3c-3 { border-color: var(--teal); }
+.t3c-3 .transition-starter { color: var(--teal); }
+.t3c-3 .tier3-draw { background: var(--teal-light); }
+.t3c-4 { border-color: var(--golden); }
+.t3c-4 .transition-starter { color: #D4AC0D; }
+.t3c-4 .tier3-draw { background: var(--golden-light); }
+
+/* ============ VOCAB CARDS ============ */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.vocab-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 0;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  perspective: 600px;
+}
+
+.vocab-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.vocab-card-inner {
+  position: relative;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+.vocab-card.flipped .vocab-card-inner {
+  transform: rotateY(180deg);
+}
+
+.vocab-front, .vocab-back {
+  backface-visibility: hidden;
+  padding: 20px 14px;
+  text-align: center;
+}
+
+.vocab-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.vocab-card .color-bar {
+  height: 5px;
+  width: 100%;
+}
+
+.vocab-card .word-es {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 12px 0 6px;
+}
+
+.vocab-card .word-en {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  font-style: italic;
+}
+
+.vocab-card .tap-hint {
+  font-size: 0.7rem;
+  color: var(--gray-300);
+  margin-top: 8px;
+}
+
+.vocab-card .gesture {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.vocab-card .gesture-desc {
+  font-size: 0.82rem;
+  color: var(--gray-700);
+  line-height: 1.4;
+}
+
+/* ============ SENTENCE FRAMES ============ */
+.frame-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 22px 24px 20px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+  border-left: 5px solid var(--gray-300);
+  transition: all 0.3s;
+}
+.frame-card:hover { box-shadow: var(--shadow-md); }
+
+.frame-card .frame-word {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.frame-card .frame-sentence {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--deep-blue);
+  margin-bottom: 6px;
+}
+
+.frame-card .frame-hint {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.frame-card .frame-input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px dashed var(--gray-200);
+  padding: 10px 4px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  color: var(--deep-blue);
+  background: transparent;
+  transition: border-color 0.2s;
+}
+.frame-card .frame-input:focus {
+  outline: none;
+  border-bottom-style: solid;
+}
+
+.fc-1 { border-left-color: var(--stew-red); }
+.fc-1 .frame-word { background: var(--stew-red); }
+.fc-1 .frame-input:focus { border-bottom-color: var(--stew-red); }
+.fc-2 { border-left-color: var(--warm-orange); }
+.fc-2 .frame-word { background: var(--warm-orange); }
+.fc-2 .frame-input:focus { border-bottom-color: var(--warm-orange); }
+.fc-3 { border-left-color: var(--teal); }
+.fc-3 .frame-word { background: var(--teal); }
+.fc-3 .frame-input:focus { border-bottom-color: var(--teal); }
+.fc-4 { border-left-color: var(--golden); }
+.fc-4 .frame-word { background: #D4AC0D; }
+.fc-4 .frame-input:focus { border-bottom-color: var(--golden); }
+
+.moraleja-card {
+  background: linear-gradient(135deg, var(--teal-light), var(--golden-light));
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-top: 24px;
+  border: 2px solid var(--teal);
+  box-shadow: var(--shadow-glow);
+}
+
+.moraleja-card h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.2rem;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+
+/* ============ TOOLBAR (drawing) ============ */
+.draw-toolbar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.draw-toolbar .color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.draw-toolbar .color-swatch:hover { transform: scale(1.15); }
+.draw-toolbar .color-swatch.active { border-color: var(--deep-blue); box-shadow: 0 0 0 2px white, 0 0 0 4px var(--deep-blue); }
+
+.draw-toolbar .size-btn {
+  background: var(--gray-200);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  color: var(--gray-700);
+  transition: all 0.2s;
+}
+.draw-toolbar .size-btn.active { background: var(--deep-blue); color: white; }
+
+.draw-toolbar .clear-btn {
+  background: var(--stew-red-light);
+  color: var(--stew-red);
+  border: 1px solid rgba(192,57,43,0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  margin-left: auto;
+  transition: all 0.2s;
+}
+.draw-toolbar .clear-btn:hover { background: var(--stew-red); color: white; }
+
+/* ============ PRINT / RESET BUTTONS ============ */
+.action-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 10px 24px;
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--deep-blue);
+  background: white;
+  color: var(--deep-blue);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.action-btn:hover { background: var(--deep-blue); color: white; }
+.action-btn.primary {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: white;
+}
+.action-btn.primary:hover { background: #17A589; }
+
+/* ============ WORD BANK (shared) ============ */
+.word-bank {
+  background: var(--golden-light);
+  border: 2px solid var(--golden);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-top: 20px;
+}
+
+.word-bank h4 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.95rem;
+  color: #D4AC0D;
+  margin-bottom: 8px;
+}
+
+.word-bank .words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.word-bank .word-chip {
+  background: white;
+  border: 1px solid var(--golden);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--deep-blue);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.word-chip:hover { background: var(--golden); color: white; }
+.word-chip.used { opacity: 0.4; text-decoration: line-through; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 500px) {
+  .app-title { font-size: 1.5rem; }
+  .tab-btn { min-width: 80px; font-size: 0.7rem; padding: 10px 6px 8px; }
+  .tab-btn .tab-icon { font-size: 1.1rem; }
+  .comic-grid { grid-template-columns: 1fr; }
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+  .tier3-box { grid-template-columns: 1fr; }
+}
+
+/* ============ ESCRITURA TAB ============ */
+.escritura-prompt-card {
+  background: linear-gradient(135deg, var(--warm-orange-light), var(--golden-light));
+  border: 2px solid var(--warm-orange);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.escritura-prompt-card .prompt-q {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin-bottom: 6px;
+}
+
+.escritura-prompt-card .prompt-frame {
+  font-size: 1.1rem;
+  color: var(--warm-orange);
+  font-weight: 700;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.escritura-step {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  border-left: 5px solid var(--gray-300);
+  transition: all 0.3s;
+}
+.escritura-step:hover { box-shadow: var(--shadow-md); }
+
+.escritura-step .step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: white;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.escritura-step .step-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.escritura-step .step-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.escritura-step .step-desc {
+  font-size: 0.9rem;
+  color: var(--gray-500);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.es-1 { border-left-color: var(--stew-red); }
+.es-1 .step-num { background: var(--stew-red); }
+.es-1 .step-title { color: var(--stew-red); }
+.es-2 { border-left-color: var(--warm-orange); }
+.es-2 .step-num { background: var(--warm-orange); }
+.es-2 .step-title { color: var(--warm-orange); }
+.es-3 { border-left-color: var(--teal); }
+.es-3 .step-num { background: var(--teal); }
+.es-3 .step-title { color: var(--teal); }
+.es-4 { border-left-color: var(--purple); }
+.es-4 .step-num { background: var(--purple); }
+.es-4 .step-title { color: var(--purple); }
+
+.trait-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.trait-chip {
+  padding: 10px 22px;
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--warm-orange);
+  background: white;
+  color: var(--deep-blue);
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+.trait-chip:hover { background: var(--warm-orange-light); transform: scale(1.04); }
+.trait-chip.selected {
+  background: var(--warm-orange);
+  color: white;
+  border-color: var(--warm-orange);
+  box-shadow: 0 2px 10px rgba(230,126,34,0.3);
+  transform: scale(1.06);
+}
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 500px) {
+  .evidence-grid { grid-template-columns: 1fr; }
+}
+
+.evidence-option {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--gray-200);
+  background: white;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.evidence-option:hover { border-color: var(--teal); background: var(--teal-light); }
+.evidence-option.selected {
+  border-color: var(--teal);
+  background: var(--teal-light);
+  box-shadow: 0 2px 10px rgba(26,188,156,0.2);
+}
+
+.evidence-option .ev-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--gray-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+  margin-top: 1px;
+}
+.evidence-option.selected .ev-check {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: white;
+}
+
+.evidence-option .ev-text {
+  font-size: 0.9rem;
+  color: var(--deep-blue);
+  line-height: 1.4;
+}
+
+.evidence-custom {
+  width: 100%;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  color: var(--deep-blue);
+  resize: none;
+  transition: border-color 0.2s;
+  background: white;
+  margin-top: 6px;
+}
+.evidence-custom:focus { outline: none; border-color: var(--teal); }
+
+.sentence-builder {
+  background: var(--golden-light);
+  border: 2px solid var(--golden);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  margin-top: 8px;
+}
+
+.sentence-builder .builder-label {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #D4AC0D;
+  margin-bottom: 10px;
+}
+
+.sentence-preview {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--deep-blue);
+  min-height: 50px;
+  padding: 12px 16px;
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--golden);
+}
+
+.sentence-preview .blank {
+  display: inline-block;
+  min-width: 80px;
+  border-bottom: 2px dashed var(--gray-300);
+  color: var(--gray-300);
+  font-style: italic;
+  padding: 0 4px;
+}
+
+.sentence-preview .filled-trait {
+  color: var(--warm-orange);
+  font-weight: 700;
+  border-bottom: 2px solid var(--warm-orange);
+  padding: 0 2px;
+}
+
+.sentence-preview .filled-evidence {
+  color: var(--teal);
+  font-weight: 700;
+  border-bottom: 2px solid var(--teal);
+  padding: 0 2px;
+}
+
+.escritura-final {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  margin-top: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--purple);
+}
+
+.escritura-final h3 {
+  font-family: 'Fredoka', sans-serif;
+  color: var(--purple);
+  margin-bottom: 12px;
+}
+
+.final-writing-area {
+  width: 100%;
+  min-height: 150px;
+  border: none;
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  line-height: 2.2;
+  color: var(--deep-blue);
+  resize: none;
+  background-image: repeating-linear-gradient(
+    transparent, transparent 2.15rem, var(--gray-200) 2.15rem, var(--gray-200) 2.2rem
+  );
+  background-attachment: local;
+  padding-top: 4px;
+}
+.final-writing-area:focus { outline: none; }
+.final-writing-area::placeholder { color: var(--gray-300); }
+
+.copy-sentence-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 8px 18px;
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--purple);
+  background: white;
+  color: var(--purple);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-sentence-btn:hover { background: var(--purple); color: white; }
+
+/* ============ PRINT ============ */
+@media print {
+  .tab-nav, .action-bar, .draw-toolbar, .expand-hint, .copy-btn, .tap-hint { display: none !important; }
+  .tab-content { display: block !important; page-break-after: always; }
+  .app-header { background: var(--deep-blue) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: white; }
+  body::before { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="app-header">
+  <span class="header-steam">🍲</span>
+  <span class="header-steam">♨️</span>
+  <span class="header-steam">🍲</span>
+  <span class="header-steam">♨️</span>
+  <div class="app-title">¡Gracias, Omu!</div>
+  <div class="app-subtitle">Actividades Interactivas — Palabras de Transición</div>
+  <div class="unit-badge">Unidad 3: Cuentos de las Familias · Semana 5, Día 3</div>
+</header>
+
+<!-- ============ TAB NAV ============ -->
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn active" data-tab="visitors"><span class="tab-icon">📖</span>Visitantes</button>
+  <button class="tab-btn" data-tab="tier1"><span class="tab-icon">🖼️</span>Nivel 1</button>
+  <button class="tab-btn" data-tab="tier2"><span class="tab-icon">✏️</span>Nivel 2</button>
+  <button class="tab-btn" data-tab="tier3"><span class="tab-icon">📝</span>Nivel 3</button>
+  <button class="tab-btn" data-tab="vocab"><span class="tab-icon">🔤</span>Vocabulario</button>
+  <button class="tab-btn" data-tab="frames"><span class="tab-icon">💬</span>Marcos</button>
+  <button class="tab-btn" data-tab="escritura"><span class="tab-icon">✍️</span>Escritura</button>
+</nav>
+
+<!-- ============ TAB: VISITORS ============ -->
+<div class="tab-content active" id="tab-visitors">
+  <div class="section-header">
+    <h2>📖 Orden de los Visitantes</h2>
+    <p>¿Quién viene a la puerta de Omu? ¡Mira el orden de los visitantes!</p>
+  </div>
+
+  <div class="visitor-timeline" id="visitorTimeline">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ============ TAB: TIER 1 ============ -->
+<div class="tab-content" id="tab-tier1">
+  <div class="section-header">
+    <span class="tier-badge t1">Nivel 1 — Apoyo Intensivo</span>
+    <h2>🖼️ Pegar Imágenes y Recontar</h2>
+    <p>Pega la imagen correcta en cada caja. Luego, recuenta el cuento a tu compañero/a.</p>
+  </div>
+
+  <div class="comic-grid" id="tier1Grid">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ============ TAB: TIER 2 ============ -->
+<div class="tab-content" id="tab-tier2">
+  <div class="section-header">
+    <span class="tier-badge t2">Nivel 2 — Apoyo Moderado</span>
+    <h2>✏️ Dibujar y Etiquetar</h2>
+    <p>Dibuja lo que pasa en cada parte. Usa el banco de palabras para escribir.</p>
+  </div>
+
+  <div id="tier2Toolbar" class="draw-toolbar"></div>
+
+  <div class="comic-grid" id="tier2Grid">
+    <!-- Populated by JS -->
+  </div>
+
+  <div class="word-bank">
+    <h4>📦 Banco de Palabras</h4>
+    <div class="words" id="wordBank2">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ============ TAB: TIER 3 ============ -->
+<div class="tab-content" id="tab-tier3">
+  <div class="section-header">
+    <span class="tier-badge t3">Nivel 3 — Algo de Apoyo</span>
+    <h2>📝 Dibujar y Escribir Oraciones</h2>
+    <p>Dibuja y escribe una oración completa usando la palabra de transición.</p>
+  </div>
+
+  <div id="tier3Toolbar" class="draw-toolbar"></div>
+
+  <div id="tier3Container">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ============ TAB: VOCABULARY ============ -->
+<div class="tab-content" id="tab-vocab">
+  <div class="section-header">
+    <h2>🔤 Tarjetas de Vocabulario</h2>
+    <p>Toca una tarjeta para voltearla y ver el gesto TPR</p>
+  </div>
+
+  <div class="vocab-grid" id="vocabGrid">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ============ TAB: SENTENCE FRAMES ============ -->
+<div class="tab-content" id="tab-frames">
+
+<!-- ============ TAB: ESCRITURA ============ -->
+<div class="tab-content" id="tab-escritura">
+  <div class="section-header">
+    <span class="tier-badge" style="background:var(--warm-orange)">Día 4 — Respuesta Escrita</span>
+    <h2>✍️ ¿Qué tipo de persona es Omu?</h2>
+    <p>Piensa en el cuento. Usa las palabras y la evidencia para escribir tu respuesta.</p>
+  </div>
+
+  <div id="escrituraApp"></div>
+</div>
+  <div class="section-header">
+    <h2>💬 Marcos de Oraciones</h2>
+    <p>Usa estos marcos para recontar el cuento en orden</p>
+  </div>
+
+  <div id="framesContainer">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const VISITORS = [
+  {
+    num: "1", name: "El niño / The Little Boy",
+    colorClass: "vc-1",
+    descEs: "Un niño pequeño del pasillo huele el guiso y toca la puerta de Omu.",
+    descEn: "A little boy from down the hall smells the stew and knocks on Omu's door.",
+    image: "the-little-boy.png"
+  },
+  {
+    num: "2", name: "La oficial de policía / The Police Officer",
+    colorClass: "vc-2",
+    descEs: "Una oficial de policía sigue el olor delicioso hasta la puerta de Omu.",
+    descEn: "A police officer follows the delicious smell to Omu's door.",
+    image: "the-police-officer.png"
+  },
+  {
+    num: "3", name: "El vendedor de hot dogs / The Hot Dog Vendor",
+    colorClass: "vc-3",
+    descEs: "El vendedor de hot dogs deja su carrito para probar el guiso de Omu.",
+    descEn: "The hot dog vendor leaves his cart to taste Omu's stew.",
+    image: "the-hot-dog-vender.png"
+  },
+  {
+    num: "4", name: "El taxista / The Cab Driver",
+    colorClass: "vc-4",
+    descEs: "Un taxista para su taxi porque huele algo increíble.",
+    descEn: "A cab driver stops his taxi because he smells something incredible.",
+    image: "the-cab-driver.png"
+  },
+  {
+    num: "5", name: "Más vecinos / More Neighbors",
+    colorClass: "vc-5",
+    descEs: "Más y más personas del vecindario vienen a la puerta de Omu.",
+    descEn: "More and more people from the neighborhood come to Omu's door.",
+    image: "more-neighbors.png"
+  },
+  {
+    num: "6", name: "¡Hasta el alcalde! / Even the Mayor!",
+    colorClass: "vc-6",
+    descEs: "¡Hasta el alcalde viene a probar el guiso famoso de Omu!",
+    descEn: "Even the mayor stops by to taste Omu's famous stew!",
+    image: "the-mayor.png"
+  },
+  {
+    num: "★", name: "¡Los vecinos regresan! / The Neighbors Return!",
+    colorClass: "vc-star",
+    descEs: "Omu no tiene más guiso. Pero todos los vecinos regresan con comida para compartir con ella. ¡La mejor cena!",
+    descEn: "Omu has no stew left. But all the neighbors return with food to share with her. The best dinner ever!",
+    image: "the-neighbors-return.png"
+  }
+];
+
+const TRANSITION_WORDS = [
+  { word: "PRIMERO", color: "#C0392B", bgLight: "#FDEDEC" },
+  { word: "DESPUÉS", color: "#E67E22", bgLight: "#FDF2E9" },
+  { word: "ENTONCES", color: "#1ABC9C", bgLight: "#E8F8F5" },
+  { word: "AL FINAL", color: "#F1C40F", bgLight: "#FEF9E7" }
+];
+
+const TIER1_DESCS = [
+  "Un niño huele el guiso.\nOmu le da un poco.",
+  "Una oficial de policía\nviene a la puerta.",
+  "Más y más vecinos\nvienen a probar el guiso.",
+  "¡No queda guiso!\nLos vecinos traen comida."
+];
+
+const TIER2_PROMPTS = [
+  "¿Quién viene primero?",
+  "¿Quién viene después?",
+  "¿Qué pasa entonces?",
+  "¿Qué pasa al final?"
+];
+
+const WORD_BANK = [
+  "niño", "oficial", "vendedor", "taxista", "vecinos", "guiso",
+  "Omu", "comida", "compartir", "olla", "delicioso", "oler",
+  "cocinar", "tocar la puerta", "dar", "agradecer", "comunidad", "juntos"
+];
+
+const VOCAB = [
+  { es: "primero", en: "first", color: "#C0392B", gesture: "☝️", gestureDesc: "Levanta 1 dedo" },
+  { es: "después", en: "next / after", color: "#E67E22", gesture: "✌️", gestureDesc: "Levanta 2 dedos" },
+  { es: "entonces", en: "then", color: "#1ABC9C", gesture: "🤟", gestureDesc: "Levanta 3 dedos" },
+  { es: "al final", en: "at the end", color: "#F1C40F", gesture: "🖐️", gestureDesc: "Levanta 4 dedos (mano abierta)" },
+  { es: "el guiso", en: "the stew", color: "#C0392B", gesture: "🍲", gestureDesc: "Pretende revolver una olla grande" },
+  { es: "delicioso", en: "delicious", color: "#E67E22", gesture: "😋", gestureDesc: "Frota la barriga y sonríe" },
+  { es: "compartir", en: "to share", color: "#27AE60", gesture: "🤲", gestureDesc: "Extiende las dos manos hacia adelante" },
+  { es: "los vecinos", en: "the neighbors", color: "#2980B9", gesture: "🏘️", gestureDesc: "Señala a tu alrededor a las personas" },
+  { es: "tocar la puerta", en: "to knock", color: "#8E44AD", gesture: "🚪", gestureDesc: "Pretende tocar la puerta: ¡TOC, TOC!" },
+  { es: "oler", en: "to smell", color: "#D35400", gesture: "👃", gestureDesc: "Toca tu nariz y aspira profundamente" },
+  { es: "agradecer", en: "to thank", color: "#16A085", gesture: "🙏", gestureDesc: "Junta las manos y di '¡Gracias!'" },
+  { es: "la comunidad", en: "the community", color: "#2C3E50", gesture: "🤗", gestureDesc: "Abraza el aire — todos juntos" }
+];
+
+const FRAMES = [
+  { word: "Primero,", color: "#C0392B", cls: "fc-1",
+    sentence: "Primero, ________ huele el guiso de Omu y toca la puerta.",
+    hint: "(¿Quién viene primero?)" },
+  { word: "Después,", color: "#E67E22", cls: "fc-2",
+    sentence: "Después, ________ también viene a probar el guiso.",
+    hint: "(¿Quién viene después?)" },
+  { word: "Entonces,", color: "#1ABC9C", cls: "fc-3",
+    sentence: "Entonces, ________ personas del vecindario vienen a la puerta de Omu.",
+    hint: "(¿Cuántas? ¿Quiénes?)" },
+  { word: "Al final,", color: "#F1C40F", cls: "fc-4",
+    sentence: "Al final, Omu no tiene más guiso. Los vecinos ________ .",
+    hint: "(¿Qué hacen los vecinos?)" }
+];
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ============================================================
+// VISITORS TAB
+// ============================================================
+function buildVisitors() {
+  const container = document.getElementById('visitorTimeline');
+  VISITORS.forEach(v => {
+    const card = document.createElement('div');
+    card.className = `visitor-card ${v.colorClass}`;
+    card.innerHTML = `
+      <div class="visitor-num">${v.num}</div>
+      <h3>${v.name}</h3>
+      <div class="desc">${v.descEs}</div>
+      <div class="desc-en">${v.descEn}</div>
+      <img class="visitor-img" src="${v.image}" alt="${v.name}" loading="lazy">
+    `;
+    container.appendChild(card);
+  });
+}
+
+// (images are now embedded directly)
+
+// ============================================================
+// TIER 1 TAB
+// ============================================================
+function buildTier1() {
+  const grid = document.getElementById('tier1Grid');
+  TRANSITION_WORDS.forEach((tw, i) => {
+    const box = document.createElement('div');
+    box.className = 'comic-box';
+    box.innerHTML = `
+      <div class="comic-label" style="background:${tw.color}">
+        <span class="num-circle">${i+1}</span>
+        ${tw.word}
+      </div>
+      <div class="comic-body">
+        <div class="tier1-paste-area" id="paste-${i}" onclick="document.getElementById('file-${i}').click()">
+          <span class="paste-icon">📷</span>
+          <span class="paste-label">Pega o sube imagen aquí</span>
+          <input type="file" id="file-${i}" accept="image/*" style="display:none"
+            onchange="handleImage(this, 'paste-${i}')">
+        </div>
+        <div class="tier1-desc">${TIER1_DESCS[i].replace('\n', '<br>')}</div>
+      </div>
+    `;
+    grid.appendChild(box);
+  });
+}
+
+function handleImage(input, targetId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const target = document.getElementById(targetId);
+    const img = document.createElement('img');
+    img.src = e.target.result;
+    target.innerHTML = '';
+    target.appendChild(img);
+    target.classList.add('has-image');
+  };
+  reader.readAsDataURL(file);
+}
+
+// ============================================================
+// DRAWING SYSTEM
+// ============================================================
+let currentColor = '#2C3E50';
+let currentSize = 3;
+let activeCanvas = null;
+const canvasStates = {};
+
+function createToolbar(containerId) {
+  const container = document.getElementById(containerId);
+  const colors = ['#2C3E50', '#C0392B', '#E67E22', '#1ABC9C', '#8E44AD', '#27AE60', '#3498DB', '#F1C40F'];
+  const sizes = [{label: 'S', val: 2}, {label: 'M', val: 4}, {label: 'L', val: 7}];
+
+  colors.forEach(c => {
+    const swatch = document.createElement('div');
+    swatch.className = 'color-swatch' + (c === currentColor ? ' active' : '');
+    swatch.style.background = c;
+    swatch.onclick = () => {
+      container.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      swatch.classList.add('active');
+      currentColor = c;
+    };
+    container.appendChild(swatch);
+  });
+
+  const spacer = document.createElement('span');
+  spacer.style.width = '8px';
+  container.appendChild(spacer);
+
+  sizes.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'size-btn' + (s.val === currentSize+1 ? ' active' : '');
+    btn.textContent = s.label;
+    btn.onclick = () => {
+      container.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSize = s.val;
+    };
+    container.appendChild(btn);
+  });
+
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'clear-btn';
+  clearBtn.textContent = '🗑 Borrar todo';
+  clearBtn.onclick = () => {
+    if (activeCanvas) {
+      const ctx = activeCanvas.getContext('2d');
+      ctx.clearRect(0, 0, activeCanvas.width, activeCanvas.height);
+      activeCanvas.parentElement.classList.remove('has-drawing');
+    }
+  };
+  container.appendChild(clearBtn);
+}
+
+function initCanvas(canvasEl) {
+  const parent = canvasEl.parentElement;
+  canvasEl.width = parent.offsetWidth;
+  canvasEl.height = parent.offsetHeight;
+
+  const ctx = canvasEl.getContext('2d');
+  let drawing = false;
+  let lastX, lastY;
+
+  function getPos(e) {
+    const rect = canvasEl.getBoundingClientRect();
+    const touch = e.touches ? e.touches[0] : e;
+    return {
+      x: (touch.clientX - rect.left) * (canvasEl.width / rect.width),
+      y: (touch.clientY - rect.top) * (canvasEl.height / rect.height)
+    };
+  }
+
+  function startDraw(e) {
+    e.preventDefault();
+    drawing = true;
+    activeCanvas = canvasEl;
+    const pos = getPos(e);
+    lastX = pos.x;
+    lastY = pos.y;
+    parent.classList.add('has-drawing');
+  }
+
+  function draw(e) {
+    if (!drawing) return;
+    e.preventDefault();
+    const pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth = currentSize;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    lastX = pos.x;
+    lastY = pos.y;
+  }
+
+  function stopDraw() { drawing = false; }
+
+  canvasEl.addEventListener('mousedown', startDraw);
+  canvasEl.addEventListener('mousemove', draw);
+  canvasEl.addEventListener('mouseup', stopDraw);
+  canvasEl.addEventListener('mouseleave', stopDraw);
+  canvasEl.addEventListener('touchstart', startDraw, { passive: false });
+  canvasEl.addEventListener('touchmove', draw, { passive: false });
+  canvasEl.addEventListener('touchend', stopDraw);
+}
+
+// ============================================================
+// TIER 2 TAB
+// ============================================================
+function buildTier2() {
+  createToolbar('tier2Toolbar');
+  const grid = document.getElementById('tier2Grid');
+
+  TRANSITION_WORDS.forEach((tw, i) => {
+    const box = document.createElement('div');
+    box.className = 'comic-box';
+    box.innerHTML = `
+      <div class="comic-label" style="background:${tw.color}">
+        <span class="num-circle">${i+1}</span>
+        ${tw.word}
+      </div>
+      <div class="comic-body">
+        <div class="prompt-hint">${TIER2_PROMPTS[i]}</div>
+        <div class="draw-area" id="draw2-${i}">
+          <canvas></canvas>
+          <span class="placeholder-text">Dibuja aquí ✏️</span>
+        </div>
+        <textarea class="write-area" rows="2" placeholder="Escribe aquí usando el banco de palabras..."></textarea>
+      </div>
+    `;
+    grid.appendChild(box);
+  });
+
+  // Word bank
+  const wb = document.getElementById('wordBank2');
+  WORD_BANK.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.textContent = w;
+    chip.onclick = () => chip.classList.toggle('used');
+    wb.appendChild(chip);
+  });
+
+  // Init canvases after DOM update
+  requestAnimationFrame(() => {
+    grid.querySelectorAll('canvas').forEach(initCanvas);
+  });
+}
+
+// ============================================================
+// TIER 3 TAB
+// ============================================================
+function buildTier3() {
+  createToolbar('tier3Toolbar');
+  const container = document.getElementById('tier3Container');
+  const starters = ["Primero,", "Después,", "Entonces,", "Al final,"];
+
+  TRANSITION_WORDS.forEach((tw, i) => {
+    const box = document.createElement('div');
+    box.className = `tier3-box t3c-${i+1}`;
+    box.innerHTML = `
+      <div class="tier3-draw" id="draw3-${i}">
+        <canvas></canvas>
+        <span class="placeholder-text">Dibuja aquí</span>
+      </div>
+      <div class="tier3-write">
+        <span class="transition-starter">${starters[i]}</span>
+        <textarea placeholder="Escribe tu oración completa aquí..."></textarea>
+      </div>
+    `;
+    container.appendChild(box);
+  });
+
+  requestAnimationFrame(() => {
+    container.querySelectorAll('canvas').forEach(initCanvas);
+  });
+}
+
+// ============================================================
+// VOCAB TAB
+// ============================================================
+function buildVocab() {
+  const grid = document.getElementById('vocabGrid');
+  VOCAB.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'vocab-card';
+    card.innerHTML = `
+      <div class="color-bar" style="background:${v.color}"></div>
+      <div class="vocab-card-inner">
+        <div class="vocab-front">
+          <div class="word-es" style="color:${v.color}">${v.es}</div>
+          <div class="word-en">${v.en}</div>
+          <div class="tap-hint">Toca para ver gesto →</div>
+        </div>
+        <div class="vocab-back">
+          <div class="gesture">${v.gesture}</div>
+          <div class="word-es" style="color:${v.color}">${v.es}</div>
+          <div class="gesture-desc">${v.gestureDesc}</div>
+        </div>
+      </div>
+    `;
+    card.onclick = () => card.classList.toggle('flipped');
+    grid.appendChild(card);
+  });
+}
+
+// ============================================================
+// FRAMES TAB
+// ============================================================
+function buildFrames() {
+  const container = document.getElementById('framesContainer');
+  FRAMES.forEach(f => {
+    const card = document.createElement('div');
+    card.className = `frame-card ${f.cls}`;
+    card.innerHTML = `
+      <span class="frame-word">${f.word}</span>
+      <div class="frame-sentence">${f.sentence}</div>
+      <div class="frame-hint">${f.hint}</div>
+      <input type="text" class="frame-input" placeholder="Escribe tu respuesta aquí...">
+    `;
+    container.appendChild(card);
+  });
+
+  // Moraleja
+  const moraleja = document.createElement('div');
+  moraleja.className = 'moraleja-card';
+  moraleja.innerHTML = `
+    <h3>✨ La Moraleja / The Lesson</h3>
+    <div class="frame-sentence" style="margin-bottom:12px">
+      Este cuento nos enseña que cuando compartimos, ___________________
+    </div>
+    <input type="text" class="frame-input" placeholder="¿Qué pasa cuando compartimos?"
+      style="border-bottom-color: #1ABC9C;">
+  `;
+  container.appendChild(moraleja);
+
+  // Action bar
+  const actionBar = document.createElement('div');
+  actionBar.className = 'action-bar';
+  actionBar.innerHTML = `
+    <button class="action-btn" onclick="window.print()">🖨️ Imprimir</button>
+    <button class="action-btn primary" onclick="resetAll()">🔄 Empezar de Nuevo</button>
+  `;
+  container.appendChild(actionBar);
+}
+
+function resetAll() {
+  if (!confirm('¿Borrar todo el trabajo? / Clear all work?')) return;
+  document.querySelectorAll('textarea, input[type=text]').forEach(el => el.value = '');
+  document.querySelectorAll('canvas').forEach(cv => {
+    const ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    cv.parentElement.classList.remove('has-drawing');
+  });
+  document.querySelectorAll('.tier1-paste-area').forEach(el => {
+    el.classList.remove('has-image');
+    el.innerHTML = `<span class="paste-icon">📷</span><span class="paste-label">Pega o sube imagen aquí</span>`;
+  });
+  document.querySelectorAll('.word-chip').forEach(c => c.classList.remove('used'));
+}
+
+// ============================================================
+// RESIZE HANDLER for canvases
+// ============================================================
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    document.querySelectorAll('.draw-area canvas, .tier3-draw canvas').forEach(cv => {
+      const parent = cv.parentElement;
+      // Save current drawing
+      const imageData = cv.toDataURL();
+      cv.width = parent.offsetWidth;
+      cv.height = parent.offsetHeight;
+      // Restore drawing
+      if (parent.classList.contains('has-drawing')) {
+        const img = new Image();
+        img.onload = () => {
+          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+        };
+        img.src = imageData;
+      }
+    });
+  }, 250);
+});
+
+// ============================================================
+// ESCRITURA TAB
+// ============================================================
+function buildEscritura() {
+  const container = document.getElementById('escrituraApp');
+
+  const traits = ["amable", "generosa", "buena", "cariñosa"];
+  const evidenceOptions = [
+    { text: "Omu comparte su guiso con el niño.", emoji: "🍲" },
+    { text: "Omu comparte su guiso con la oficial de policía.", emoji: "👮" },
+    { text: "Omu comparte con todos los vecinos.", emoji: "🏘️" },
+    { text: "Omu da su comida aunque se queda sin nada.", emoji: "💛" },
+    { text: "Omu abre la puerta a todos con una sonrisa.", emoji: "😊" },
+    { text: "Omu cocina para su comunidad.", emoji: "🤗" },
+  ];
+
+  let selectedTrait = '';
+  let selectedEvidence = '';
+  let customEvidence = '';
+
+  function updatePreview() {
+    const traitSpan = document.getElementById('preview-trait');
+    const evidenceSpan = document.getElementById('preview-evidence');
+    const finalArea = document.getElementById('final-writing');
+
+    if (selectedTrait) {
+      traitSpan.className = 'filled-trait';
+      traitSpan.textContent = selectedTrait;
+    } else {
+      traitSpan.className = 'blank';
+      traitSpan.textContent = '___________';
+    }
+
+    const evText = customEvidence || selectedEvidence;
+    if (evText) {
+      evidenceSpan.className = 'filled-evidence';
+      evidenceSpan.textContent = evText.toLowerCase().replace(/\.$/, '');
+    } else {
+      evidenceSpan.className = 'blank';
+      evidenceSpan.textContent = '________________________________';
+    }
+
+    // Auto-populate the writing area if both parts selected
+    if (selectedTrait && evText && !finalArea.dataset.userEdited) {
+      finalArea.value = `Omu es ${selectedTrait} porque ${evText.toLowerCase().replace(/\.$/, '')}.`;
+    }
+  }
+
+  container.innerHTML = `
+    <!-- Prompt Card -->
+    <div class="escritura-prompt-card">
+      <div class="prompt-q">¿Qué tipo de persona es Omu y por qué lo crees?</div>
+      <div class="prompt-frame">Omu es __________ porque __________.</div>
+    </div>
+
+    <!-- Step 1: Choose trait -->
+    <div class="escritura-step es-1">
+      <div class="step-header">
+        <span class="step-num">1</span>
+        <span class="step-title">Escoge una palabra para describir a Omu</span>
+      </div>
+      <div class="step-desc">¿Qué tipo de persona es Omu? Toca la palabra que mejor la describe.</div>
+      <div class="trait-picker" id="traitPicker"></div>
+    </div>
+
+    <!-- Step 2: Choose evidence -->
+    <div class="escritura-step es-2">
+      <div class="step-header">
+        <span class="step-num">2</span>
+        <span class="step-title">¿Por qué lo crees? Busca la evidencia</span>
+      </div>
+      <div class="step-desc">¿Qué hace Omu en el cuento que muestra eso? Escoge una razón o escribe la tuya.</div>
+      <div class="evidence-grid" id="evidenceGrid"></div>
+      <textarea class="evidence-custom" id="customEvidence" rows="2"
+        placeholder="O escribe tu propia razón aquí..."></textarea>
+    </div>
+
+    <!-- Step 3: Preview -->
+    <div class="escritura-step es-3">
+      <div class="step-header">
+        <span class="step-num">3</span>
+        <span class="step-title">Mira tu oración</span>
+      </div>
+      <div class="sentence-builder">
+        <div class="builder-label">📝 Tu oración:</div>
+        <div class="sentence-preview">
+          Omu es <span id="preview-trait" class="blank">___________</span> porque <span id="preview-evidence" class="blank">________________________________</span>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Write final -->
+    <div class="escritura-final">
+      <h3>✏️ Paso 4: Escribe tu respuesta completa</h3>
+      <p style="font-size:0.9rem;color:var(--gray-500);margin-bottom:12px;">
+        Copia tu oración aquí o escribe tu propia versión. ¡Puedes agregar más detalles!
+      </p>
+      <textarea class="final-writing-area" id="final-writing"
+        placeholder="Omu es __________ porque __________."></textarea>
+      <button class="copy-sentence-btn" id="copySentenceBtn">📋 Copiar oración del Paso 3</button>
+    </div>
+  `;
+
+  // Build trait chips
+  const traitPicker = document.getElementById('traitPicker');
+  traits.forEach(t => {
+    const chip = document.createElement('button');
+    chip.className = 'trait-chip';
+    chip.textContent = t;
+    chip.onclick = () => {
+      traitPicker.querySelectorAll('.trait-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedTrait = t;
+      updatePreview();
+    };
+    traitPicker.appendChild(chip);
+  });
+
+  // Build evidence options
+  const evidenceGrid = document.getElementById('evidenceGrid');
+  evidenceOptions.forEach(ev => {
+    const opt = document.createElement('div');
+    opt.className = 'evidence-option';
+    opt.innerHTML = `
+      <span class="ev-check">✓</span>
+      <span class="ev-text">${ev.emoji} ${ev.text}</span>
+    `;
+    opt.onclick = () => {
+      evidenceGrid.querySelectorAll('.evidence-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      selectedEvidence = ev.text;
+      document.getElementById('customEvidence').value = '';
+      customEvidence = '';
+      updatePreview();
+    };
+    evidenceGrid.appendChild(opt);
+  });
+
+  // Custom evidence
+  document.getElementById('customEvidence').addEventListener('input', (e) => {
+    customEvidence = e.target.value;
+    if (customEvidence) {
+      evidenceGrid.querySelectorAll('.evidence-option').forEach(o => o.classList.remove('selected'));
+      selectedEvidence = '';
+    }
+    updatePreview();
+  });
+
+  // Final writing area — track if user has manually edited
+  document.getElementById('final-writing').addEventListener('input', (e) => {
+    e.target.dataset.userEdited = 'true';
+  });
+
+  // Copy sentence button
+  document.getElementById('copySentenceBtn').addEventListener('click', () => {
+    const preview = document.querySelector('.sentence-preview').textContent.trim();
+    const finalArea = document.getElementById('final-writing');
+    finalArea.value = preview;
+    finalArea.dataset.userEdited = '';
+    const btn = document.getElementById('copySentenceBtn');
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => { btn.innerHTML = '📋 Copiar oración del Paso 3'; }, 1500);
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+buildVisitors();
+buildTier1();
+buildTier2();
+buildTier3();
+buildVocab();
+buildFrames();
+buildEscritura();
+</script>
+</body>
+</html>
