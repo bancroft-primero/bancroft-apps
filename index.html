@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bancroft Apps</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue:    #1A5FA8;
+      --gold:    #D4920A;
+      --green:   #2B6E2E;
+      --red:     #C0392B;
+      --cream:   #FDF8F0;
+      --dark:    #1C1C2E;
+      --shadow:  rgba(28,28,46,0.13);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #0D3B6E, #1A5FA8);
+      color: white;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      border-bottom: 5px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 50%, rgba(212,146,10,0.15), transparent 60%);
+      pointer-events: none;
+    }
+    .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+    .logo-icon {
+      font-size: 2.5rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+      position: relative;
+    }
+    header h1 span { color: #FFD166; }
+    header p {
+      font-size: 1rem;
+      opacity: 0.82;
+      margin-top: 0.35rem;
+      position: relative;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #999;
+      margin-bottom: 1.25rem;
+    }
+
+    /* APP GRID */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .app-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px var(--shadow);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 2px solid transparent;
+    }
+    .app-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px var(--shadow);
+    }
+
+    .card-thumb {
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.92;
+    }
+    .card-thumb .thumb-emoji {
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+    }
+
+    .card-body { padding: 1.1rem 1.2rem 1.3rem; flex: 1; display: flex; flex-direction: column; }
+    .card-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 0.18rem 0.6rem;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 0.6rem;
+      width: fit-content;
+    }
+    .tag-literacy  { background: #FFEDE6; color: #9E2E0E; }
+    .tag-math      { background: #E8F5E8; color: #1E5E21; }
+    .tag-science   { background: #E8F0FF; color: #1A3A8A; }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 0.4rem;
+    }
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: #777;
+      font-style: italic;
+      margin-bottom: 0.55rem;
+    }
+    .card-desc {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #555;
+      flex: 1;
+    }
+    .card-footer {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-levels {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #AAA;
+    }
+    .card-cta {
+      font-size: 0.83rem;
+      font-weight: 800;
+      padding: 0.35rem 0.9rem;
+      border-radius: 20px;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .cta-red    { background: #C0392B; }
+    .cta-green  { background: #2B6E2E; }
+
+    /* COMING SOON */
+    .app-card.soon {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .card-thumb.soon-thumb { background: #F0F0F0; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: #BBB;
+      border-top: 1px solid #EEE;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 500px) {
+      header h1 { font-size: 1.7rem; }
+      main { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-row">
+    <span class="logo-icon">🏫</span>
+    <h1>Bancroft <span>Apps</span></h1>
+  </div>
+  <p>Aplicaciones de práctica · Practice Apps · Bancroft ES</p>
+</header>
+
+<main>
+  <div class="section-label">Aplicaciones disponibles · Available apps</div>
+  <div class="app-grid">
+
+    <!-- RECONTAR -->
+    <a class="app-card" href="./recontar/">
+      <div class="card-thumb" style="background: linear-gradient(135deg, #7A1E00, #C04A2A);">
+        <img src="./recontar/chocolate-abuela-p6-making-hot-chocolate.png" alt="">
+        <span class="thumb-emoji">🍫</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag tag-literacy">Lectura · Literacy</span>
+        <div class="card-title">Recontar: El chocolate de abuela</div>
+        <div class="card-subtitle">Retell: Grandma's Chocolate</div>
+        <div class="card-desc">Practica recontar el cuento en orden. Secuencia eventos, completa oraciones, y escribe un recuento completo con ayuda de imágenes.</div>
+        <div class="card-footer">
+          <span class="card-levels">3 niveles</span>
+          <span class="card-cta cta-red">Abrir →</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- COMPAREMOS -->
+    <a class="app-card" href="./comparemos/">
+      <div class="card-thumb" style="background: linear-gradient(135deg, #1E5E21, #3A9B3E);">
+        <span class="thumb-emoji">📏</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag tag-math">Matemáticas · Math</span>
+        <div class="card-title">¡Comparemos!</div>
+        <div class="card-subtitle">Let's Compare!</div>
+        <div class="card-desc">Practica comparar cantidades y longitudes usando la resta. Longitudes, animales, comida, juguetes, deportes y un nivel desafío.</div>
+        <div class="card-footer">
+          <span class="card-levels">6 niveles</span>
+          <span class="card-cta cta-green">Abrir →</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>Bancroft ES · Para uso educativo · For educational use</footer>
+
+</body>
+</html>
