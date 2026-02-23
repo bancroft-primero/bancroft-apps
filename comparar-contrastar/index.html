@@ -1,478 +1,1039 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparar y Contrastar - Diagrama de Venn</title>
-    <style>
-        :root {
-            --circle-size: 320px;
-            --overlap: 120px;
-            --container-width: calc((var(--circle-size) * 2) - var(--overlap));
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comparar y Contrastar</title>
+  <style>
+    :root {
+      --ink: #111;
+      --paper: #fbfbf6;
+      --paper-deep: #f3f3ea;
+      --left-fill: rgba(95, 168, 255, 0.14);
+      --right-fill: rgba(255, 173, 95, 0.14);
+      --overlap-fill: rgba(160, 120, 255, 0.16);
+      --zone-highlight: rgba(36, 168, 84, 0.22);
+      --ok: #1c8f48;
+      --ok-bg: #edfff2;
+      --bad: #c23232;
+      --bad-bg: #fff1f1;
+    }
 
-        body {
-            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
-            background-color: #f8f9fa;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-            color: #333;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        h1 {
-            margin-bottom: 10px;
-        }
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Trebuchet MS", "Comic Sans MS", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 20%, #ffffff 0%, transparent 42%),
+        radial-gradient(circle at 85% 5%, #ffffff 0%, transparent 35%),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0 31px,
+          rgba(0, 0, 0, 0.035) 31px 32px
+        ),
+        linear-gradient(160deg, var(--paper) 0%, var(--paper-deep) 100%);
+      min-height: 100vh;
+      padding: 16px;
+    }
 
-        .inputs {
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-        }
+    .worksheet {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 20px 24px;
+      border: 3px solid var(--ink);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
 
-        input[type="text"] {
-            font-size: 1.2rem;
-            padding: 8px 15px;
-            border: 2px dashed #888;
-            border-radius: 10px;
-            font-family: inherit;
-            text-align: center;
-            width: 250px;
-            background: white;
-        }
+    .top-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 8px;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
 
-        /* --- VENN DIAGRAM CONTAINER --- */
-        .venn-container {
-            position: relative;
-            width: var(--container-width);
-            height: var(--circle-size);
-            margin: 0 auto 40px auto;
-        }
+    .line-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        /* The visual circles */
-        .circle {
-            position: absolute;
-            top: 0;
-            width: var(--circle-size);
-            height: var(--circle-size);
-            border-radius: 50%;
-            border: 4px solid #333;
-            pointer-events: none; /* Let clicks pass through to dropzones */
-            background-color: transparent;
-        }
-        .circle-left {
-            left: 0;
-        }
-        .circle-right {
-            right: 0;
-        }
+    .line-field input {
+      flex: 1;
+      border: 0;
+      border-bottom: 3px solid var(--ink);
+      background: transparent;
+      font-size: 1.2rem;
+      font-family: inherit;
+      padding: 4px 2px;
+      min-width: 0;
+    }
 
-        /* Labels positioned on the circles */
-        .venn-label {
-            position: absolute;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #555;
-            pointer-events: none;
-        }
-        .label-similar {
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #f8f9fa;
-            padding: 0 10px;
-        }
-        .label-diff-left {
-            bottom: 40px;
-            left: 80px;
-            transform: rotate(35deg);
-        }
-        .label-diff-right {
-            bottom: 40px;
-            right: 80px;
-            transform: rotate(-35deg);
-        }
+    .title {
+      margin: 10px 0 8px;
+      text-align: center;
+      font-size: clamp(2rem, 6vw, 4rem);
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
 
-        /* --- DROP ZONES --- */
-        .dropzone {
-            position: absolute;
-            top: 45px; /* Space for top curve */
-            bottom: 45px; /* Space for bottom curve */
-            display: flex;
-            flex-wrap: wrap;
-            align-content: flex-start;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px;
-            transition: background-color 0.2s, box-shadow 0.2s;
-            z-index: 10;
-        }
+    .diagram-shell {
+      position: relative;
+      margin-top: 8px;
+      border-bottom: 3px dashed var(--ink);
+      padding-bottom: 16px;
+    }
 
-        .dropzone.dragover {
-            background-color: rgba(0, 188, 212, 0.15);
-            box-shadow: inset 0 0 15px rgba(0, 188, 212, 0.3);
-        }
+    .venn {
+      position: relative;
+      width: min(980px, 100%);
+      margin: 0 auto;
+      aspect-ratio: 16 / 10;
+      min-height: 420px;
+      touch-action: none;
+    }
 
-        .zone-left {
-            left: 20px;
-            width: calc(var(--circle-size) - var(--overlap) - 40px);
-            border-radius: 200px 0 0 200px;
-        }
+    .circle {
+      position: absolute;
+      top: 12%;
+      width: 50%;
+      height: 76%;
+      border: 4px solid var(--ink);
+      border-radius: 50%;
+      pointer-events: none;
+    }
 
-        .zone-center {
-            left: calc(var(--circle-size) - var(--overlap) + 5px);
-            width: calc(var(--overlap) - 10px);
-            border-radius: 50%; /* Approximates the intersection lens */
-        }
+    .circle.left {
+      left: 4%;
+      background: var(--left-fill);
+    }
 
-        .zone-right {
-            right: 20px;
-            width: calc(var(--circle-size) - var(--overlap) - 40px);
-            border-radius: 0 200px 200px 0;
-        }
+    .circle.right {
+      right: 4%;
+      background: var(--right-fill);
+    }
 
-        /* --- TILE BANK --- */
-        .bank-container {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: left;
-        }
-        
-        .bank-instructions {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: center;
-        }
+    .center-lens {
+      position: absolute;
+      top: 12%;
+      left: 38%;
+      width: 24%;
+      height: 76%;
+      background: var(--overlap-fill);
+      border-radius: 49% / 52%;
+      pointer-events: none;
+    }
 
-        .tile-bank {
-            min-height: 120px;
-            border: 3px dashed #aaa;
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            align-items: center;
-            position: relative; /* Not absolute like the Venn zones */
-        }
+    .object-name {
+      position: absolute;
+      top: 16%;
+      width: 20%;
+      border: 0;
+      border-bottom: 3px solid var(--ink);
+      text-align: center;
+      background: transparent;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-family: inherit;
+      font-weight: 600;
+      padding-bottom: 2px;
+      z-index: 7;
+    }
 
-        /* --- DRAGGABLE TILES --- */
-        .tile {
-            background-color: #fff;
-            border: 2px dashed #444;
-            border-radius: 8px;
-            padding: 5px;
-            cursor: grab;
-            width: 75px;
-            text-align: center;
-            box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            user-select: none;
-            font-size: 0.75rem;
-            font-weight: bold;
-            line-height: 1.1;
-            transition: transform 0.1s;
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px);
-        }
-        
-        .tile:hover {
-            transform: scale(1.05);
-            border-color: #000;
-        }
-        
-        .tile:active {
-            cursor: grabbing;
-            transform: scale(0.95);
-        }
-        
-        .emoji {
-            font-size: 1.6rem;
-            display: block;
-            margin-bottom: 3px;
-        }
+    .object-name.left {
+      left: 20%;
+    }
 
-        /* --- SENTENCE GENERATOR --- */
-        .sentence-section {
-            margin: 15px auto 25px auto;
-            max-width: 800px;
-        }
-        
-        .btn {
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: bold;
-            padding: 10px 15px;
-            margin: 5px;
-            border: 2px solid #333;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .btn-compare {
-            background-color: #b5ead7;
-        }
-        
-        .btn-contrast {
-            background-color: #ffb7b2;
-        }
-        
-        .sentence-output {
-            margin-top: 15px;
-            min-height: 30px;
-            padding: 12px;
-            background-color: #fff;
-            border: 2px dashed #00bcd4;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            color: #333;
-        }
+    .object-name.right {
+      right: 20%;
+    }
 
-    </style>
+    .diagram-label {
+      position: absolute;
+      font-size: clamp(1rem, 2.5vw, 1.9rem);
+      font-weight: 700;
+      z-index: 8;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    .diagram-label.similar {
+      top: 19%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .diagram-label.left-different {
+      left: 13%;
+      bottom: 15%;
+      transform: rotate(-36deg);
+    }
+
+    .diagram-label.right-different {
+      right: 13%;
+      bottom: 15%;
+      transform: rotate(36deg);
+    }
+
+    .dropzone {
+      position: absolute;
+      z-index: 6;
+      border-radius: 14px;
+      padding: 8px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+      gap: 6px;
+      align-content: start;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      background: rgba(255, 255, 255, 0.16);
+      transition: background-color 140ms ease, box-shadow 140ms ease;
+    }
+
+    .dropzone.targeted {
+      background: var(--zone-highlight);
+      box-shadow: inset 0 0 0 2px rgba(36, 168, 84, 0.75);
+    }
+
+    .dropzone.left {
+      left: 8%;
+      top: 24%;
+      width: 29%;
+      height: 56%;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dropzone.center {
+      left: 38%;
+      top: 24%;
+      width: 24%;
+      height: 56%;
+      grid-template-columns: 1fr;
+    }
+
+    .dropzone.right {
+      right: 8%;
+      top: 24%;
+      width: 29%;
+      height: 56%;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tiles-panel {
+      margin-top: 12px;
+    }
+
+    .tiles-panel h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.5rem, 3vw, 2.3rem);
+      line-height: 1.1;
+    }
+
+    .bank {
+      position: static;
+      min-height: 142px;
+      border: 3px dashed var(--ink);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.66);
+      grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    }
+
+    .tile {
+      border: 2px dashed #222;
+      background: #fff;
+      min-height: 148px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: clamp(0.86rem, 1.3vw, 1rem);
+      font-weight: 700;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .venn .dropzone .tile {
+      min-height: 66px;
+      padding: 4px 6px;
+      gap: 3px;
+      font-size: 0.75rem;
+    }
+
+    .venn .dropzone .tile-icon {
+      width: 56px;
+      height: 34px;
+    }
+
+    .venn .dropzone.center .tile {
+      min-height: 60px;
+      font-size: 0.72rem;
+    }
+
+    .venn .dropzone.center .tile-icon {
+      width: 52px;
+      height: 30px;
+    }
+
+    .tile.dragging {
+      cursor: grabbing;
+      opacity: 0.96;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+      transform: rotate(-1.5deg);
+      z-index: 9999;
+    }
+
+    .tile.correct {
+      border-style: solid;
+      border-color: var(--ok);
+      background: var(--ok-bg);
+    }
+
+    .tile.incorrect {
+      border-style: solid;
+      border-color: var(--bad);
+      background: var(--bad-bg);
+    }
+
+    .tile.incorrect::after {
+      content: "Clave: " attr(data-expected-label);
+      margin-top: auto;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--bad);
+      letter-spacing: 0.01em;
+    }
+
+    .tile-icon {
+      width: 96px;
+      height: 78px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .tile-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .tile-text {
+      line-height: 1.1;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .action-btn {
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 8px 16px;
+      background: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      background: #f2f2f2;
+    }
+
+    .action-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #f3f3f3;
+    }
+
+    .feedback {
+      min-height: 1.4em;
+      margin: 10px 0 0;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .feedback.ok {
+      color: var(--ok);
+    }
+
+    .feedback.warn {
+      color: var(--bad);
+    }
+
+    .sentence-tools {
+      margin-top: 10px;
+      padding: 10px;
+      border: 2px dashed var(--ink);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .sentence-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sentence-heading {
+      margin: 10px 0 4px;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .sentence-list {
+      margin: 0;
+      padding-left: 24px;
+      line-height: 1.35;
+      font-size: 1rem;
+    }
+
+    .sentence-empty {
+      color: #333;
+      font-size: 0.95rem;
+      font-style: italic;
+      margin: 8px 0 0;
+    }
+
+    .tile:focus-visible,
+    .line-field input:focus-visible,
+    .object-name:focus-visible,
+    .action-btn:focus-visible {
+      outline: 3px solid #2d7bff;
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .worksheet {
+        padding: 14px 12px 18px;
+      }
+
+      .top-fields {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .venn {
+        min-height: 360px;
+      }
+
+      .dropzone.left,
+      .dropzone.right {
+        width: 31%;
+      }
+
+      .tile {
+        min-height: 136px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .venn {
+        min-height: 330px;
+      }
+
+      .circle {
+        top: 16%;
+        height: 70%;
+      }
+
+      .center-lens {
+        top: 16%;
+        height: 70%;
+      }
+
+      .object-name {
+        top: 17%;
+        width: 22%;
+      }
+
+      .dropzone.left,
+      .dropzone.center,
+      .dropzone.right {
+        top: 30%;
+        height: 47%;
+      }
+
+      .tile {
+        min-height: 128px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
 <body>
+  <main class="worksheet">
+    <section class="top-fields">
+      <label class="line-field">
+        <span>Nombre:</span>
+        <input type="text" aria-label="Nombre del estudiante">
+      </label>
+      <label class="line-field">
+        <span>Fecha:</span>
+        <input type="text" aria-label="Fecha">
+      </label>
+    </section>
 
-    <h1>✏️ Comparar y Contrastar</h1>
-    
-    <div class="inputs">
-        <div>
-            <label style="display:block; font-size:0.9rem; margin-bottom:5px;">Libro 1:</label>
-            <input type="text" id="title1" placeholder="Libro 1..." value="Amor de pelo">
+    <h1 class="title">Comparar y Contrastar</h1>
+
+    <section class="diagram-shell">
+      <div class="venn" aria-label="Diagrama de Venn para comparar y contrastar">
+        <div class="circle left" aria-hidden="true"></div>
+        <div class="circle right" aria-hidden="true"></div>
+        <div class="center-lens" aria-hidden="true"></div>
+
+        <input class="object-name left" type="text" aria-label="Primer tema">
+        <input class="object-name right" type="text" aria-label="Segundo tema">
+
+        <span class="diagram-label similar">Similar</span>
+        <span class="diagram-label left-different">Diferente</span>
+        <span class="diagram-label right-different">Diferente</span>
+
+        <div class="dropzone left" data-zone="left" aria-label="Zona izquierda: diferente"></div>
+        <div class="dropzone center" data-zone="center" aria-label="Zona del medio: similar"></div>
+        <div class="dropzone right" data-zone="right" aria-label="Zona derecha: diferente"></div>
+      </div>
+    </section>
+
+    <section class="tiles-panel">
+      <h2>Recorta y pega las imagenes en el lugar correcto.</h2>
+      <div id="bank" class="dropzone bank" data-zone="bank" aria-label="Banco de tarjetas"></div>
+      <div class="actions">
+        <button id="check-board" class="action-btn" type="button">Comprobar respuestas</button>
+        <button id="toggle-key" class="action-btn" type="button">Mostrar modo clave</button>
+        <button id="reset-board" class="action-btn" type="button">Reiniciar tarjetas</button>
+      </div>
+      <p id="feedback" class="feedback" aria-live="polite"></p>
+      <section class="sentence-tools">
+        <div class="sentence-actions">
+          <button id="generate-compare" class="action-btn" type="button">Generar oraciones de comparar</button>
+          <button id="generate-contrast" class="action-btn" type="button">Generar oraciones de contrastar</button>
         </div>
-        <div style="font-size: 2rem; margin-top: 20px;">y</div>
-        <div>
-            <label style="display:block; font-size:0.9rem; margin-bottom:5px;">Libro 2:</label>
-            <input type="text" id="title2" placeholder="Libro 2..." value="Jabari salta">
-        </div>
-    </div>
+        <p id="sentence-heading" class="sentence-heading"></p>
+        <ol id="sentence-output" class="sentence-list"></ol>
+        <p id="sentence-empty" class="sentence-empty">Coloca tarjetas y luego genera oraciones.</p>
+      </section>
+    </section>
+  </main>
 
-    <!-- VENN DIAGRAM -->
-    <div class="venn-container">
-        <!-- Visual borders -->
-        <div class="circle circle-left"></div>
-        <div class="circle circle-right"></div>
-        
-        <!-- Text Labels -->
-        <div class="venn-label label-similar">Similar</div>
-        <div class="venn-label label-diff-left">Diferente</div>
-        <div class="venn-label label-diff-right">Diferente</div>
+  <script>
+    // "answer" marks the expected drop zone for check mode: left, center, or right.
+    const tileData = [
+      { id: "una_nina", text: "Una nina", image: "assets/tiles/icon_1.png", answer: "left" },
+      { id: "arreglar_pelo", text: "Arreglar el pelo", image: "assets/tiles/icon_2.png", answer: "left" },
+      { id: "adentro", text: "Adentro", image: "assets/tiles/icon_3.png", answer: "left" },
+      { id: "el_papa_ayuda", text: "El papa ayuda", image: "assets/tiles/icon_4.png", answer: "center" },
+      { id: "sentir_miedo", text: "Sentir miedo", image: "assets/tiles/icon_5.png", answer: "right" },
+      { id: "saltar_piscina", text: "Saltar en la piscina", image: "assets/tiles/icon_6.png", answer: "right" },
+      { id: "afuera", text: "Afuera", image: "assets/tiles/icon_7.png", answer: "right" },
+      { id: "final_feliz", text: "Un final feliz", image: "assets/tiles/icon_8.png", answer: "center" },
+      { id: "ser_valiente", text: "Ser valiente", image: "assets/tiles/icon_9.png", answer: "center" }
+    ];
 
-        <!-- Functional Drop Zones -->
-        <div class="dropzone zone-left" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
-        <div class="dropzone zone-center" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
-        <div class="dropzone zone-right" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
-    </div>
+    const zoneNames = {
+      left: "izquierda",
+      center: "similar",
+      right: "derecha",
+      bank: "banco"
+    };
 
-    <!-- SENTENCE GENERATOR -->
-    <div class="sentence-section">
-        <button class="btn btn-compare" onclick="generateCompare()">¡Oración de Comparación!</button>
-        <button class="btn btn-contrast" onclick="generateContrast()">¡Oración de Contraste!</button>
-        <div id="sentence-output" class="sentence-output">Haz clic en un botón para generar una oración...</div>
-    </div>
+    const bank = document.querySelector("#bank");
+    const dropzones = Array.from(document.querySelectorAll(".dropzone"));
+    const resetBtn = document.querySelector("#reset-board");
+    const checkBtn = document.querySelector("#check-board");
+    const toggleKeyBtn = document.querySelector("#toggle-key");
+    const feedbackNode = document.querySelector("#feedback");
+    const compareBtn = document.querySelector("#generate-compare");
+    const contrastBtn = document.querySelector("#generate-contrast");
+    const sentenceHeading = document.querySelector("#sentence-heading");
+    const sentenceOutput = document.querySelector("#sentence-output");
+    const sentenceEmpty = document.querySelector("#sentence-empty");
+    const leftTopicInput = document.querySelector(".object-name.left");
+    const rightTopicInput = document.querySelector(".object-name.right");
+    const zones = {
+      bank,
+      left: document.querySelector(".dropzone[data-zone='left']"),
+      center: document.querySelector(".dropzone[data-zone='center']"),
+      right: document.querySelector(".dropzone[data-zone='right']")
+    };
 
-    <!-- TILE BANK -->
-    <div class="bank-container">
-        <div class="bank-instructions">✂️ Recorta y pega las imágenes en el lugar correcto. (¡Arrastra y suelta!)</div>
-        
-        <div class="tile-bank dropzone" id="bank" ondragover="allowDrop(event)" ondrop="drop(event)">
-            
-            <div class="tile" draggable="true" ondragstart="drag(event)" id="t1">
-                <span class="emoji">👧🏽</span>Una niña
-            </div>
-            <div class="tile" draggable="true" ondragstart="drag(event)" id="t2">
-                <span class="emoji">🪮</span>Arreglar el pelo
-            </div>
-            <div class="tile" draggable="true" ondragstart="drag(event)" id="t3">
-                <span class="emoji">🏠</span>Adentro
-            </div>
-            <div class="tile" draggable="true" ondragstart="drag(event)" id="t4">
-                <span class="emoji">👨‍👧</span>El papá ayuda
-            </div>
-            <div class="tile" draggable="true" ondragstart="drag(event)" id="t5">
-                <span class="emoji">😨</span>Sentir miedo
-            </div>
-            <div class="tile" draggable="true" ondragstart="drag(event)" id="t6">
-                <span class="emoji">🏊🏽‍♂️</span>Saltar en la piscina
-            </div>
-            <div class="tile" draggable="true" ondragstart="drag(event)" id="t7">
-                <span class="emoji">⛅</span>Afuera
-            </div>
-            <div class="tile" draggable="true" ondragstart="drag(event)" id="t8">
-                <span class="emoji">😁</span>Un final feliz
-            </div>
-            <div class="tile" draggable="true" ondragstart="drag(event)" id="t9">
-                <span class="emoji">💪</span>Ser valiente
-            </div>
+    const dragState = {
+      tile: null,
+      pointerId: null,
+      offsetX: 0,
+      offsetY: 0,
+      startX: 0,
+      startY: 0,
+      moved: false,
+      hoverZone: null,
+      originZone: null
+    };
 
-        </div>
-    </div>
+    let keyModeActive = false;
+    let savedArrangement = null;
 
-    <script>
-        // --- DRAG AND DROP LOGIC ---
+    function setFeedback(message, tone = "") {
+      feedbackNode.textContent = message;
+      feedbackNode.classList.remove("ok", "warn");
+      if (tone) {
+        feedbackNode.classList.add(tone);
+      }
+    }
 
-        function allowDrop(ev) {
-            ev.preventDefault(); // Necessary to allow dropping
-            
-            // Find the closest dropzone (in case we drag over a tile inside the zone)
-            const dropzone = ev.target.closest('.dropzone');
-            if(dropzone) {
-                dropzone.classList.add('dragover');
-            }
-        }
+    function clearEvaluation() {
+      document.querySelectorAll(".tile").forEach((tile) => {
+        tile.classList.remove("correct", "incorrect");
+        tile.removeAttribute("data-expected-label");
+      });
+    }
 
-        function drag(ev) {
-            // Store the ID of the dragged element
-            ev.dataTransfer.setData("text", ev.target.id);
-        }
+    function clearEvaluationIfNeeded() {
+      if (document.querySelector(".tile.correct, .tile.incorrect")) {
+        clearEvaluation();
+        setFeedback("");
+      }
+    }
 
-        function drop(ev) {
-            ev.preventDefault();
-            
-            // Remove dragover styling from all zones
-            document.querySelectorAll('.dropzone').forEach(zone => {
-                zone.classList.remove('dragover');
-            });
-            
-            // Get the ID of the dragged element
-            const data = ev.dataTransfer.getData("text");
-            const draggedElement = document.getElementById(data);
-            
-            // Ensure we drop it into the container itself, not inside another tile
-            const dropzone = ev.target.closest('.dropzone');
-            
-            if (dropzone && draggedElement) {
-                dropzone.appendChild(draggedElement);
-            }
-        }
+    function getTopicNames() {
+      const leftTopic = leftTopicInput.value.trim() || "Tema 1";
+      const rightTopic = rightTopicInput.value.trim() || "Tema 2";
+      return { leftTopic, rightTopic };
+    }
 
-        // Add visual feedback removal when dragging leaves a zone
-        document.querySelectorAll('.dropzone').forEach(zone => {
-            zone.addEventListener('dragleave', function(ev) {
-                // Only remove if we are actually leaving the zone, not just hovering over a child tile
-                if (ev.target === this) {
-                    this.classList.remove('dragover');
-                }
-            });
+    function getTileTextsInZone(zoneName) {
+      return Array.from(zones[zoneName].querySelectorAll(".tile .tile-text")).map((node) => node.textContent.trim());
+    }
+
+    function renderSentenceOutput(title, sentences) {
+      sentenceHeading.textContent = title;
+      sentenceOutput.innerHTML = "";
+      if (!sentences.length) {
+        sentenceEmpty.style.display = "block";
+        return;
+      }
+
+      sentenceEmpty.style.display = "none";
+      sentences.forEach((sentence) => {
+        const li = document.createElement("li");
+        li.textContent = sentence;
+        sentenceOutput.appendChild(li);
+      });
+    }
+
+    function clearSentenceOutput() {
+      sentenceHeading.textContent = "";
+      sentenceOutput.innerHTML = "";
+      sentenceEmpty.textContent = "Coloca tarjetas y luego genera oraciones.";
+      sentenceEmpty.style.display = "block";
+    }
+
+    function speakText(text) {
+      if (!("speechSynthesis" in window)) {
+        setFeedback("Este navegador no soporta lectura en voz alta.", "warn");
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      const voices = window.speechSynthesis.getVoices();
+      const spanishVoice = voices.find((voice) => voice.lang.toLowerCase().startsWith("es"));
+      if (spanishVoice) {
+        utterance.voice = spanishVoice;
+        utterance.lang = spanishVoice.lang;
+      } else {
+        utterance.lang = "es-ES";
+      }
+      utterance.rate = 0.9;
+      utterance.pitch = 1;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.resume();
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function speakTile(tile) {
+      const textNode = tile.querySelector(".tile-text");
+      if (!textNode) {
+        return;
+      }
+      const phrase = textNode.textContent.trim();
+      if (phrase) {
+        speakText(phrase);
+      }
+    }
+
+    function getTileById(id) {
+      return document.querySelector(`.tile[data-id='${id}']`);
+    }
+
+    function getTileZone(tile) {
+      const zone = tile.parentElement ? tile.parentElement.closest(".dropzone") : null;
+      return zone ? zone.dataset.zone : "bank";
+    }
+
+    function captureArrangement() {
+      const map = {};
+      tileData.forEach((item) => {
+        map[item.id] = getTileZone(getTileById(item.id));
+      });
+      return map;
+    }
+
+    function applyArrangement(arrangement) {
+      tileData.forEach((item) => {
+        const tile = getTileById(item.id);
+        const zoneName = arrangement[item.id] || "bank";
+        const zone = zones[zoneName] || bank;
+        zone.appendChild(tile);
+      });
+    }
+
+    function buildTiles() {
+      tileData.forEach((item) => {
+        const tile = document.createElement("button");
+        tile.type = "button";
+        tile.className = "tile";
+        tile.dataset.id = item.id;
+        tile.dataset.answer = item.answer;
+        tile.setAttribute("aria-label", `Tarjeta: ${item.text}`);
+        tile.innerHTML = `
+          <span class="tile-icon"><img class="tile-photo" src="${item.image}" alt=""></span>
+          <span class="tile-text">${item.text}</span>
+        `;
+        tile.addEventListener("pointerdown", onPointerDown);
+        tile.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            speakTile(tile);
+          }
         });
+        tile.addEventListener("dblclick", () => {
+          if (keyModeActive) {
+            return;
+          }
+          clearEvaluationIfNeeded();
+          bank.appendChild(tile);
+        });
+        bank.appendChild(tile);
+      });
+    }
 
-        // --- SENTENCE GENERATION LOGIC ---
-        // Helper function to figure out the character's name based on the book title!
-        function getCharacterName(bookTitle) {
-            let titleStr = bookTitle.toLowerCase();
-            if (titleStr.includes("amor") || titleStr.includes("pelo")) return "Zuri";
-            if (titleStr.includes("jabari") || titleStr.includes("salta")) return "Jabari";
-            return "su protagonista"; // Fallback if they type a different book
+    function resetHighlights() {
+      dropzones.forEach((zone) => zone.classList.remove("targeted"));
+    }
+
+    function findZoneUnderPointer(clientX, clientY, tile) {
+      tile.style.visibility = "hidden";
+      const target = document.elementFromPoint(clientX, clientY);
+      tile.style.visibility = "visible";
+      return target ? target.closest(".dropzone") : null;
+    }
+
+    function onPointerDown(event) {
+      if (keyModeActive) {
+        return;
+      }
+
+      const tile = event.currentTarget;
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
+
+      event.preventDefault();
+      clearEvaluationIfNeeded();
+
+      const rect = tile.getBoundingClientRect();
+      dragState.tile = tile;
+      dragState.pointerId = event.pointerId;
+      dragState.offsetX = event.clientX - rect.left;
+      dragState.offsetY = event.clientY - rect.top;
+      dragState.startX = event.clientX;
+      dragState.startY = event.clientY;
+      dragState.moved = false;
+      dragState.originZone = tile.parentElement.closest(".dropzone") || bank;
+      dragState.hoverZone = null;
+
+      tile.classList.add("dragging");
+      tile.style.position = "fixed";
+      tile.style.left = `${rect.left}px`;
+      tile.style.top = `${rect.top}px`;
+      tile.style.width = `${rect.width}px`;
+      tile.style.zIndex = "9999";
+      tile.style.margin = "0";
+      tile.setPointerCapture(event.pointerId);
+      document.body.appendChild(tile);
+
+      document.addEventListener("pointermove", onPointerMove, { passive: false });
+      document.addEventListener("pointerup", onPointerUp, { passive: false });
+      document.addEventListener("pointercancel", onPointerCancel, { passive: false });
+    }
+
+    function onPointerMove(event) {
+      if (!dragState.tile || event.pointerId !== dragState.pointerId) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const tile = dragState.tile;
+      const x = event.clientX - dragState.offsetX;
+      const y = event.clientY - dragState.offsetY;
+      if (!dragState.moved) {
+        const deltaX = Math.abs(event.clientX - dragState.startX);
+        const deltaY = Math.abs(event.clientY - dragState.startY);
+        if (deltaX > 5 || deltaY > 5) {
+          dragState.moved = true;
         }
+      }
 
-        // Phrases for when the tile is in the "Similar" (Center) section
-        const comparePhrases = {
-            't1': 'el personaje principal es una niña',
-            't2': 'vemos cómo arreglan el pelo',
-            't3': 'la historia pasa adentro',
-            't4': 'los papás ayudan a sus hijos',
-            't5': 'los personajes sienten miedo',
-            't6': 'alguien salta en la piscina',
-            't7': 'la historia pasa afuera',
-            't8': 'hay un final feliz',
-            't9': 'los personajes tienen que ser valientes'
-        };
+      tile.style.left = `${x}px`;
+      tile.style.top = `${y}px`;
 
-        // Phrases for when the tile is in the "Diferente" (Sides) sections
-        function getContrastPhrase(id, bookName) {
-            const char = getCharacterName(bookName);
-            const phrases = {
-                't1': `el personaje principal es una niña`,
-                't2': `vemos cómo le arreglan el pelo a ${char}`,
-                't3': `la historia pasa adentro`,
-                't4': `el papá ayuda a ${char}`,
-                't5': `${char} siente miedo`,
-                't6': `${char} salta en la piscina`,
-                't7': `la historia pasa afuera`,
-                't8': `hay un final feliz para ${char}`,
-                't9': `${char} tiene que ser valiente`
-            };
-            return phrases[id];
+      const zone = findZoneUnderPointer(event.clientX, event.clientY, tile);
+      resetHighlights();
+      if (zone) {
+        dragState.hoverZone = zone;
+        zone.classList.add("targeted");
+      } else {
+        dragState.hoverZone = null;
+      }
+    }
+
+    function commitDrop(targetZone) {
+      const tile = dragState.tile;
+      tile.classList.remove("dragging");
+      tile.style.position = "";
+      tile.style.left = "";
+      tile.style.top = "";
+      tile.style.width = "";
+      tile.style.zIndex = "";
+      tile.style.margin = "";
+
+      const finalZone = targetZone || dragState.originZone || bank;
+      finalZone.appendChild(tile);
+    }
+
+    function clearDragListeners() {
+      document.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("pointerup", onPointerUp);
+      document.removeEventListener("pointercancel", onPointerCancel);
+      resetHighlights();
+    }
+
+    function onPointerUp(event) {
+      if (!dragState.tile || event.pointerId !== dragState.pointerId) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const tile = dragState.tile;
+      const zone = findZoneUnderPointer(event.clientX, event.clientY, tile) || dragState.hoverZone;
+      commitDrop(zone);
+      if (!dragState.moved) {
+        speakTile(tile);
+      }
+      if (tile.hasPointerCapture(event.pointerId)) {
+        tile.releasePointerCapture(event.pointerId);
+      }
+
+      dragState.tile = null;
+      dragState.pointerId = null;
+      dragState.hoverZone = null;
+      dragState.originZone = null;
+      clearDragListeners();
+    }
+
+    function onPointerCancel(event) {
+      if (!dragState.tile || event.pointerId !== dragState.pointerId) {
+        return;
+      }
+
+      const tile = dragState.tile;
+      commitDrop(dragState.originZone);
+      if (tile.hasPointerCapture(event.pointerId)) {
+        tile.releasePointerCapture(event.pointerId);
+      }
+
+      dragState.tile = null;
+      dragState.pointerId = null;
+      dragState.hoverZone = null;
+      dragState.originZone = null;
+      clearDragListeners();
+    }
+
+    function checkAnswers() {
+      clearEvaluation();
+      let correct = 0;
+      tileData.forEach((item) => {
+        const tile = getTileById(item.id);
+        const currentZone = getTileZone(tile);
+        if (currentZone === item.answer) {
+          tile.classList.add("correct");
+          correct += 1;
+        } else {
+          tile.classList.add("incorrect");
+          tile.setAttribute("data-expected-label", zoneNames[item.answer]);
         }
+      });
 
-        function generateCompare() {
-            const centerZone = document.querySelector('.zone-center');
-            const tiles = centerZone.querySelectorAll('.tile');
-            const out = document.getElementById('sentence-output');
-            const t1 = document.getElementById('title1').value || 'Libro 1';
-            const t2 = document.getElementById('title2').value || 'Libro 2';
+      if (correct === tileData.length) {
+        setFeedback(`Perfecto: ${correct} de ${tileData.length} correctas.`, "ok");
+      } else {
+        setFeedback(`${correct} de ${tileData.length} correctas. Revisa las tarjetas en rojo.`, "warn");
+      }
+    }
 
-            if(tiles.length === 0) {
-                out.innerText = "⚠️ ¡Primero arrastra una imagen a la sección 'Similar' (centro)!";
-                return;
-            }
+    function generateCompareSentences() {
+      const { leftTopic, rightTopic } = getTopicNames();
+      const shared = getTileTextsInZone("center");
+      if (!shared.length) {
+        renderSentenceOutput("Oraciones de comparar", []);
+        sentenceEmpty.textContent = "Pon tarjetas en la parte de Similar para generar oraciones de comparar.";
+        return;
+      }
 
-            // Pick a random tile from the center to build a sentence around
-            const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
-            const phrase = comparePhrases[randomTile.id];
+      const sentences = [`${leftTopic} y ${rightTopic} son parecidos.`];
+      shared.slice(0, 3).forEach((item) => {
+        sentences.push(`Los dos tienen "${item}".`);
+      });
+      renderSentenceOutput("Oraciones de comparar", sentences);
+      sentenceEmpty.textContent = "Coloca tarjetas y luego genera oraciones.";
+    }
 
-            // Variety of compare sentence frames for 1st graders (No colons, natural flow)
-            const compareFrames = [
-                `En <strong>"${t1}"</strong> y <strong>"${t2}"</strong> ${phrase}.`,
-                `Los cuentos <strong>"${t1}"</strong> y <strong>"${t2}"</strong> son parecidos porque en los dos ${phrase}.`,
-                `Algo igual en <strong>"${t1}"</strong> y <strong>"${t2}"</strong> es que ${phrase}.`,
-                `Tanto en <strong>"${t1}"</strong> como en <strong>"${t2}"</strong> ${phrase}.`,
-                `Si lees <strong>"${t1}"</strong> y <strong>"${t2}"</strong>, verás que en ambos ${phrase}.`
-            ];
+    function generateContrastSentences() {
+      const { leftTopic, rightTopic } = getTopicNames();
+      const leftOnly = getTileTextsInZone("left");
+      const rightOnly = getTileTextsInZone("right");
+      if (!leftOnly.length || !rightOnly.length) {
+        renderSentenceOutput("Oraciones de contrastar", []);
+        sentenceEmpty.textContent = "Pon tarjetas en izquierda y derecha para generar oraciones de contrastar.";
+        return;
+      }
 
-            out.innerHTML = compareFrames[Math.floor(Math.random() * compareFrames.length)];
+      const sentences = [`${leftTopic} y ${rightTopic} son diferentes en algunas cosas.`];
+      const count = Math.min(3, Math.max(leftOnly.length, rightOnly.length));
+      for (let i = 0; i < count; i += 1) {
+        const leftItem = leftOnly[i % leftOnly.length];
+        const rightItem = rightOnly[i % rightOnly.length];
+        sentences.push(`${leftTopic} tiene "${leftItem}", pero ${rightTopic} tiene "${rightItem}".`);
+      }
+      renderSentenceOutput("Oraciones de contrastar", sentences);
+      sentenceEmpty.textContent = "Coloca tarjetas y luego genera oraciones.";
+    }
+
+    function enterKeyMode() {
+      if (keyModeActive) {
+        return;
+      }
+
+      savedArrangement = captureArrangement();
+      clearEvaluation();
+      tileData.forEach((item) => {
+        zones[item.answer].appendChild(getTileById(item.id));
+      });
+      keyModeActive = true;
+      checkBtn.disabled = true;
+      toggleKeyBtn.textContent = "Salir del modo clave";
+      setFeedback("Modo clave activo: tarjetas colocadas en sus zonas correctas.", "ok");
+    }
+
+    function exitKeyMode(restorePrevious = true) {
+      if (!keyModeActive) {
+        return;
+      }
+
+      if (restorePrevious && savedArrangement) {
+        applyArrangement(savedArrangement);
+      }
+      keyModeActive = false;
+      savedArrangement = null;
+      checkBtn.disabled = false;
+      toggleKeyBtn.textContent = "Mostrar modo clave";
+      clearEvaluation();
+      setFeedback("");
+    }
+
+    checkBtn.addEventListener("click", () => {
+      if (keyModeActive) {
+        return;
+      }
+      checkAnswers();
+    });
+
+    toggleKeyBtn.addEventListener("click", () => {
+      if (keyModeActive) {
+        exitKeyMode(true);
+      } else {
+        enterKeyMode();
+      }
+    });
+
+    compareBtn.addEventListener("click", () => {
+      generateCompareSentences();
+    });
+
+    contrastBtn.addEventListener("click", () => {
+      generateContrastSentences();
+    });
+
+    resetBtn.addEventListener("click", () => {
+      if (keyModeActive) {
+        exitKeyMode(false);
+      }
+      clearEvaluation();
+      setFeedback("");
+      clearSentenceOutput();
+      const tiles = Array.from(document.querySelectorAll(".tile"));
+      tiles.forEach((tile) => bank.appendChild(tile));
+      resetHighlights();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      if (!dragState.tile) {
+        if (keyModeActive) {
+          exitKeyMode(true);
         }
+        return;
+      }
 
-        function generateContrast() {
-            const leftZone = document.querySelector('.zone-left');
-            const rightZone = document.querySelector('.zone-right');
-            const leftTiles = leftZone.querySelectorAll('.tile');
-            const rightTiles = rightZone.querySelectorAll('.tile');
-            const out = document.getElementById('sentence-output');
-            const t1 = document.getElementById('title1').value || 'Libro 1';
-            const t2 = document.getElementById('title2').value || 'Libro 2';
+      if (dragState.pointerId !== null && dragState.tile.hasPointerCapture(dragState.pointerId)) {
+        dragState.tile.releasePointerCapture(dragState.pointerId);
+      }
+      commitDrop(dragState.originZone);
+      dragState.tile.classList.remove("dragging");
+      dragState.tile = null;
+      dragState.pointerId = null;
+      dragState.hoverZone = null;
+      dragState.originZone = null;
+      clearDragListeners();
+    });
 
-            if(leftTiles.length === 0 && rightTiles.length === 0) {
-                out.innerText = "⚠️ ¡Primero arrastra una imagen a una sección 'Diferente' (lados)!";
-                return;
-            }
-
-            // Combine available tiles from both sides into a pool
-            let pool = [];
-            leftTiles.forEach(t => pool.push({ side: 'left', id: t.id }));
-            rightTiles.forEach(t => pool.push({ side: 'right', id: t.id }));
-
-            // Pick a random tile from the sides to build a sentence around
-            const randomItem = pool[Math.floor(Math.random() * pool.length)];
-
-            // Determine which book has the detail and which does not
-            const bookA = randomItem.side === 'left' ? t1 : t2;
-            const bookB = randomItem.side === 'left' ? t2 : t1;
-            const phrase = getContrastPhrase(randomItem.id, bookA);
-
-            // Variety of contrast sentence frames for 1st graders (No colons, natural flow)
-            const contrastFrames = [
-                `En <strong>"${bookA}"</strong> ${phrase}, pero en <strong>"${bookB}"</strong> no.`,
-                `A diferencia de <strong>"${bookB}"</strong>, en <strong>"${bookA}"</strong> ${phrase}.`,
-                `<strong>"${bookA}"</strong> es diferente a <strong>"${bookB}"</strong> porque ${phrase}.`,
-                `Mientras que en <strong>"${bookA}"</strong> ${phrase}, en <strong>"${bookB}"</strong> pasa algo distinto.`,
-                `Solo en <strong>"${bookA}"</strong> ${phrase}. Esto no pasa en <strong>"${bookB}"</strong>.`
-            ];
-
-            out.innerHTML = contrastFrames[Math.floor(Math.random() * contrastFrames.length)];
-        }
-    </script>
+    buildTiles();
+  </script>
 </body>
 </html>
