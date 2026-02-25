@@ -617,6 +617,101 @@ html, body {
   font-size: 0.75rem;
 }
 
+/* LA SELVA — Indirect Comparison (3-phase) */
+
+/* Static vine reference object in pen center */
+.vine-reference {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+  z-index: 1; pointer-events: none;
+  transition: opacity 0.6s ease, filter 0.6s ease, transform 0.6s ease;
+}
+.vine-reference .vine-emoji {
+  font-size: 3.2rem;
+  filter: drop-shadow(0 0 14px rgba(76,175,80,0.7));
+  animation: vine-breathe 2.5s ease-in-out infinite;
+}
+@keyframes vine-breathe {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+.vine-reference .vine-label {
+  font-size: 0.7rem; font-weight: 800;
+  color: white;
+  background: rgba(56,142,60,0.85);
+  padding: 3px 10px; border-radius: 10px;
+  margin-top: 2px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.vine-reference.camo-hidden {
+  opacity: 0.08; filter: blur(8px);
+}
+
+/* Phase instruction banner */
+.phase-banner {
+  position: absolute; top: 28px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  color: white; padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem; font-weight: 800;
+  z-index: 10; white-space: nowrap;
+  text-align: center; max-width: 92%;
+  animation: phase-pop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+@keyframes phase-pop {
+  from { transform: translateX(-50%) scale(0.4); opacity: 0; }
+  to { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+/* Phase transition overlay */
+.phase-transition-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 10px;
+  text-align: center; color: white;
+  animation: phase-overlay-in 0.4s ease-out;
+}
+@keyframes phase-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.phase-transition-emoji {
+  font-size: 4rem;
+  animation: phase-emoji-bounce 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes phase-emoji-bounce {
+  from { transform: scale(0) rotate(-20deg); }
+  to { transform: scale(1) rotate(0); }
+}
+.phase-transition-title {
+  font-size: 1.5rem; font-weight: 900;
+  text-shadow: 0 0 20px rgba(255,215,0,0.6);
+}
+.phase-transition-sub {
+  font-size: 0.95rem; opacity: 0.85;
+}
+
+/* Uniform sizing for indirect comparison animals */
+.animal-bubble.uniform-size .animal-emoji {
+  font-size: 2.5rem !important;
+}
+
+/* Vine bubble in phase 3 — green glow */
+.animal-bubble.vine-bubble {
+  border-color: #4caf50 !important;
+  box-shadow: 0 0 14px rgba(76,175,80,0.5);
+}
+.animal-bubble.vine-bubble .animal-emoji {
+  filter: drop-shadow(0 0 6px rgba(76,175,80,0.6));
+}
+
 /* LINE AREA */
 .line-area {
   flex-shrink: 0;
@@ -858,7 +953,7 @@ html, body {
         <span style="font-size:2.9rem;--d:1.7s;--delay:0.1s">🐴</span>
       </div>
       <button class="btn btn-primary" onclick="showWorldMap()">¡JUGAR! 🚀</button>
-      <div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-top:8px">v2.0</div>
+      <div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-top:8px">v3.0</div>
     </div>
   </div>
 
@@ -973,7 +1068,13 @@ const ANIMAL_DATA = {
   squid:   { emoji:'🦑', name:'Calamar',  size:2 },
   seal:    { emoji:'🦭', name:'Foca',     size:3 },
   dolphin: { emoji:'🐬', name:'Delfín',   size:4 },
-  whale:   { emoji:'🐋', name:'Ballena',  size:6 },
+  whale:     { emoji:'🐋', name:'Ballena',  size:6 },
+  // La Selva (Jungle) — indirect comparison
+  butterfly: { emoji:'🦋', name:'Mariposa', size:1 },
+  frog:      { emoji:'🐸', name:'Rana',     size:2 },
+  parrot:    { emoji:'🦜', name:'Loro',     size:4 },
+  monkey:    { emoji:'🐒', name:'Mono',     size:5 },
+  gorilla:   { emoji:'🦍', name:'Gorila',   size:6 },
 };
 
 const SIZE_FONT = {1:'1.55rem',2:'2rem',3:'2.6rem',4:'3.2rem',5:'3.8rem',6:'4.5rem'};
@@ -1014,6 +1115,20 @@ const WORLDS = [
       { animals:['fish','squid','seal','dolphin','whale'],  timer:12 },
     ],
     boss:{ type:'caos', animals:['fish','squid','seal','dolphin','whale'], timer:20, emoji:'🐙', name:'El Caos Total' }
+  },
+  {
+    name:'La Selva', emoji:'🌴',
+    bg:'linear-gradient(160deg, #1b5e20 0%, #2e7d32 35%, #388e3c 65%, #66bb6a 100%)',
+    textColor:'white',
+    indirect: true,
+    vineSize: 3,
+    levels:[
+      { animals:['butterfly','gorilla'],                               timer:0  },
+      { animals:['butterfly','parrot','gorilla'],                      timer:40 },
+      { animals:['butterfly','frog','monkey','gorilla'],               timer:35 },
+      { animals:['butterfly','frog','parrot','monkey','gorilla'],      timer:30 },
+    ],
+    boss:{ type:'camaleon', animals:['butterfly','frog','parrot','monkey','gorilla'], timer:35, emoji:'🦎', name:'El Camaleón' }
   }
 ];
 
@@ -1041,6 +1156,11 @@ let G = {
   starPowerTimeout: null,
   star: null,
   starSpawnTimeout: null,
+  // Indirect comparison (La Selva)
+  isIndirect: false,
+  indirectPhase: 0,  // 0=off, 1=tap shorter, 2=tap taller, 3=order all
+  camaleonTimeout: null,
+  camaleonHidden: false,
 };
 
 // ============================================================
@@ -1328,8 +1448,13 @@ function startLevel(wi, li, isBoss) {
   G.combo = 0;
   G.starPower = false;
   G.star = null;
+  G.isIndirect = false;
+  G.indirectPhase = 0;
+  G.camaleonHidden = false;
+  if(G.camaleonTimeout) { clearTimeout(G.camaleonTimeout); G.camaleonTimeout = null; }
 
   const w = WORLDS[wi];
+  G.isIndirect = !!w.indirect;
   const levelData = isBoss ? w.boss : w.levels[li];
   const animalKeys = [...levelData.animals];
 
@@ -1363,6 +1488,17 @@ function startLevel(wi, li, isBoss) {
     clueBox.classList.add('hidden');
   }
 
+  // Update pen label
+  const penLabel = document.querySelector('.pen-label');
+  penLabel.textContent = w.indirect
+    ? '🔍 ¡Compara con la liana!'
+    : '✨ Toca en orden: el más pequeño primero';
+
+  // Clean up any leftover vine/phase elements
+  removeVineReference();
+  updatePhaseBanner(null);
+  document.querySelector('.line-area').style.display = '';
+
   showScreen('game');
   renderGame();
 
@@ -1371,7 +1507,14 @@ function startLevel(wi, li, isBoss) {
     if(G.totalTime > 0) startTimer();
     startPhysics();
     startBgMusic();
-    scheduleNextStar();
+    if(!w.indirect) scheduleNextStar();
+    // Start indirect comparison phases for La Selva
+    if(w.indirect) {
+      startIndirectPhase(1);
+      if(isBoss && w.boss.type === 'camaleon') {
+        startCamaleonCycle();
+      }
+    }
   }, 60);
 }
 
@@ -1387,6 +1530,278 @@ function buildClues(keys) {
     pill.textContent = `${a.name} < ${b.name}`;
     list.appendChild(pill);
   }
+}
+
+// ============================================================
+// LA SELVA — 3-Phase Indirect Comparison System
+// ============================================================
+
+function createVineReference() {
+  const pen = document.getElementById('pen');
+  // Remove any existing vine
+  const old = pen.querySelector('.vine-reference');
+  if(old) old.remove();
+
+  const vine = document.createElement('div');
+  vine.className = 'vine-reference';
+  vine.id = 'vine-ref';
+  vine.innerHTML = `
+    <div class="vine-emoji">🌿</div>
+    <div class="vine-label">La Liana</div>
+  `;
+  pen.appendChild(vine);
+}
+
+function removeVineReference() {
+  const el = document.getElementById('vine-ref');
+  if(el) el.remove();
+}
+
+function updatePhaseBanner(text) {
+  const pen = document.getElementById('pen');
+  const old = pen.querySelector('.phase-banner');
+  if(old) old.remove();
+  if(!text) return;
+
+  const banner = document.createElement('div');
+  banner.className = 'phase-banner';
+  banner.innerHTML = text;
+  pen.appendChild(banner);
+}
+
+function getVineSize() {
+  return WORLDS[G.world].vineSize || 3.5;
+}
+
+function startIndirectPhase(phase) {
+  G.indirectPhase = phase;
+  const vineSize = getVineSize();
+  const pen = document.getElementById('pen');
+
+  if(phase === 1) {
+    // Phase 1: Tap all animals SHORTER than the vine
+    createVineReference();
+    const shorter = G.gameAnimals.filter(a => a.size < vineSize && !a.isVine);
+    updatePhaseBanner(`🔍 Toca los MÁS CORTOS que 🌿 &nbsp;(0/${shorter.length})`);
+    // Hide line area during phases 1 & 2
+    document.querySelector('.line-area').style.display = 'none';
+
+  } else if(phase === 2) {
+    // Phase 2: Tap all animals TALLER than the vine
+    const taller = G.gameAnimals.filter(a => !a.placed && a.size > vineSize && !a.isVine);
+    updatePhaseBanner(`🔍 Toca los MÁS ALTOS que 🌿 &nbsp;(0/${taller.length})`);
+
+  } else if(phase === 3) {
+    // Phase 3: Order ALL (shorter + vine + taller) from shortest to tallest
+    removeVineReference();
+
+    // Re-add all animals as unplaced bouncing bubbles
+    G.gameAnimals.forEach(a => { a.placed = false; });
+    G.lineSlots = [];
+
+    // Add vine as an orderable animal
+    const vineIdx = G.gameAnimals.length;
+    G.gameAnimals.push({
+      key: '_vine', id: 'animal_vine',
+      emoji: '🌿', name: 'Liana', size: vineSize,
+      x: 0, y: 0,
+      vx: (Math.random()-0.5)*1.2, vy: (Math.random()-0.5)*1.2,
+      placed: false, shaking: false, entryDelay: 0,
+      isVine: true
+    });
+
+    // Show line area with correct number of slots
+    document.querySelector('.line-area').style.display = '';
+    updatePhaseBanner('🚀 ¡Ordena TODOS de más corto a más alto!');
+    document.querySelector('.pen-label').textContent = '🚀 ¡Incluye la liana en su lugar!';
+
+    // Render game with all animals + vine
+    renderGame();
+
+    // Re-init physics positions with fall-in
+    setTimeout(() => initAnimalsWithFallIn(), 60);
+  }
+}
+
+function showPhaseTransition(emoji, title, sub, callback) {
+  sfxLevelWin();
+  const overlay = document.createElement('div');
+  overlay.className = 'phase-transition-overlay';
+  overlay.innerHTML = `
+    <div class="phase-transition-emoji">${emoji}</div>
+    <div class="phase-transition-title">${title}</div>
+    <div class="phase-transition-sub">${sub}</div>
+  `;
+  document.body.appendChild(overlay);
+  setTimeout(() => {
+    overlay.style.animation = 'phase-overlay-in 0.3s ease-out reverse forwards';
+    setTimeout(() => {
+      overlay.remove();
+      if(callback) callback();
+    }, 300);
+  }, 1800);
+}
+
+function handleIndirectTap(animal) {
+  const vineSize = getVineSize();
+
+  if(G.indirectPhase === 1) {
+    // Phase 1: Must tap animals shorter than vine
+    if(animal.size < vineSize) {
+      // Correct!
+      sfxSuccess();
+      animal.placed = true;
+      G.combo++;
+      if(G.combo >= 2) {
+        showComboPopup(animal, G.combo);
+        sfxCombo(G.combo);
+        addCoins(G.combo - 1);
+      }
+
+      // Animate out
+      const el = document.getElementById(animal.id);
+      if(el) {
+        el.classList.add('correct-flash');
+        el.style.transition = 'transform 0.3s, opacity 0.3s';
+        el.style.transform = 'scale(1.4)';
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transform = 'scale(0.3)';
+          setTimeout(() => { if(el.parentNode) el.parentNode.removeChild(el); }, 300);
+        }, 200);
+      }
+
+      // Update counter
+      const shorter = G.gameAnimals.filter(a => a.size < vineSize && !a.isVine);
+      const done = shorter.filter(a => a.placed).length;
+      updatePhaseBanner(`🔍 Toca los MÁS CORTOS que 🌿 &nbsp;(${done}/${shorter.length})`);
+
+      // Check if all shorter animals collected
+      if(done >= shorter.length) {
+        setTimeout(() => {
+          showPhaseTransition('✅', '¡Los encontraste!',
+            'Ahora toca los MÁS ALTOS que la liana 🌿', () => {
+              startIndirectPhase(2);
+            });
+        }, 400);
+      }
+    } else {
+      // Wrong — this animal is taller!
+      sfxError();
+      G.mistakes++;
+      G.combo = 0;
+      updateHUD();
+      const el = document.getElementById(animal.id);
+      if(el) {
+        el.classList.add('shake');
+        animal.shaking = true;
+        setTimeout(() => { el.classList.remove('shake'); animal.shaking = false; }, 420);
+      }
+      const hud = document.getElementById('game-hud');
+      hud.classList.add('flash-red');
+      setTimeout(() => hud.classList.remove('flash-red'), 420);
+    }
+
+  } else if(G.indirectPhase === 2) {
+    // Phase 2: Must tap animals taller than vine
+    if(animal.size > vineSize) {
+      // Correct!
+      sfxSuccess();
+      animal.placed = true;
+      G.combo++;
+      if(G.combo >= 2) {
+        showComboPopup(animal, G.combo);
+        sfxCombo(G.combo);
+        addCoins(G.combo - 1);
+      }
+
+      const el = document.getElementById(animal.id);
+      if(el) {
+        el.classList.add('correct-flash');
+        el.style.transition = 'transform 0.3s, opacity 0.3s';
+        el.style.transform = 'scale(1.4)';
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transform = 'scale(0.3)';
+          setTimeout(() => { if(el.parentNode) el.parentNode.removeChild(el); }, 300);
+        }, 200);
+      }
+
+      const taller = G.gameAnimals.filter(a => a.size > vineSize && !a.isVine);
+      const done = taller.filter(a => a.placed).length;
+      updatePhaseBanner(`🔍 Toca los MÁS ALTOS que 🌿 &nbsp;(${done}/${taller.length})`);
+
+      if(done >= taller.length) {
+        setTimeout(() => {
+          showPhaseTransition('🚀', '¡Muy bien!',
+            'Ahora ordena TODOS de más corto a más alto — ¡incluye la liana!', () => {
+              startIndirectPhase(3);
+            });
+        }, 400);
+      }
+    } else {
+      // Wrong — this animal is shorter!
+      sfxError();
+      G.mistakes++;
+      G.combo = 0;
+      updateHUD();
+      const el = document.getElementById(animal.id);
+      if(el) {
+        el.classList.add('shake');
+        animal.shaking = true;
+        setTimeout(() => { el.classList.remove('shake'); animal.shaking = false; }, 420);
+      }
+      const hud = document.getElementById('game-hud');
+      hud.classList.add('flash-red');
+      setTimeout(() => hud.classList.remove('flash-red'), 420);
+    }
+  }
+  // Phase 3 is handled by normal tapAnimal ordering logic
+}
+
+// ============================================================
+// CAMALEÓN BOSS — Vine camouflage cycle
+// ============================================================
+function startCamaleonCycle() {
+  // After 8 seconds, the vine starts going invisible periodically
+  G.camaleonTimeout = setTimeout(() => {
+    if(G.screen !== 'game') return;
+    camaleonToggleVine(true);
+  }, 8000);
+}
+
+function camaleonToggleVine(hide) {
+  if(G.screen !== 'game') return;
+  if(G.indirectPhase === 3) return; // Stop hiding once in ordering phase
+  const vine = document.getElementById('vine-ref');
+  if(!vine) return;
+
+  if(hide) {
+    G.camaleonHidden = true;
+    vine.classList.add('camo-hidden');
+    showBossOverlay('🦎', '¡El Camaleón escondió la liana!', '¿Recuerdas quién es más corto y más alto?');
+    setTimeout(() => hideBossOverlay(), 1500);
+    G.camaleonTimeout = setTimeout(() => {
+      if(G.screen !== 'game') return;
+      camaleonToggleVine(false);
+    }, 4000 + Math.random() * 2000);
+  } else {
+    G.camaleonHidden = false;
+    vine.classList.remove('camo-hidden');
+    sfxStarSpawn();
+    G.camaleonTimeout = setTimeout(() => {
+      if(G.screen !== 'game') return;
+      camaleonToggleVine(true);
+    }, 3000);
+  }
+}
+
+function stopCamaleonCycle() {
+  if(G.camaleonTimeout) {
+    clearTimeout(G.camaleonTimeout);
+    G.camaleonTimeout = null;
+  }
+  G.camaleonHidden = false;
 }
 
 // ============================================================
@@ -1428,8 +1843,10 @@ function createAnimalBubble(animal) {
   el.id = animal.id;
   if(G.bossType === 'niebla' || G.bossType === 'caos') el.classList.add('foggy');
   if(G.starPower) el.classList.add('star-powered');
+  if(animal.isVine) el.classList.add('vine-bubble');
+  const emojiSize = SIZE_FONT[animal.size] || '2.6rem';
   el.innerHTML = `
-    <span class="animal-emoji" style="font-size:${SIZE_FONT[animal.size]}">${animal.emoji}</span>
+    <span class="animal-emoji" style="font-size:${emojiSize}">${animal.emoji}</span>
     <span class="animal-name">${animal.name}</span>
   `;
   el.style.left = animal.x + 'px';
@@ -1442,10 +1859,11 @@ function fillSlot(idx, animal) {
   const slot = document.getElementById(`slot_${idx}`);
   if(!slot) return;
   slot.classList.add('filled');
+  const slotFontSize = SIZE_FONT[animal.size] || '2.6rem';
   slot.innerHTML = `
     <div class="slot-num">${idx+1}</div>
     <div class="line-slot-content">
-      <span style="font-size:${SIZE_FONT[animal.size]};line-height:1">${animal.emoji}</span>
+      <span style="font-size:${slotFontSize};line-height:1">${animal.emoji}</span>
       <span class="slot-name">${animal.name}</span>
     </div>
   `;
@@ -1608,6 +2026,7 @@ function stopGame() {
   if(G.animFrameId) { cancelAnimationFrame(G.animFrameId); G.animFrameId = null; }
   if(G.timerInterval) { clearInterval(G.timerInterval); G.timerInterval = null; }
   clearStarTimeouts();
+  stopCamaleonCycle();
   stopBgMusic();
 }
 
@@ -1830,6 +2249,12 @@ function tapAnimal(animalId) {
   if(G.screen !== 'game') return;
   const animal = G.gameAnimals.find(a => a.id === animalId);
   if(!animal || animal.placed) return;
+
+  // Indirect comparison phases 1 & 2 have different tap logic
+  if(G.isIndirect && G.indirectPhase >= 1 && G.indirectPhase <= 2) {
+    handleIndirectTap(animal);
+    return;
+  }
 
   const unplaced = G.gameAnimals.filter(a => !a.placed).sort((a,b) => a.size - b.size);
   const expected = unplaced[0];
