@@ -45,7 +45,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Background Texture ── */
 body::before {
   content: '';
   position: fixed;
@@ -96,10 +95,42 @@ body::before {
   letter-spacing: -0.01em;
 }
 
-.header-inner p {
+.header-inner .header-sub {
   font-size: 0.8rem;
   opacity: 0.75;
   margin-top: 0.1rem;
+}
+
+/* ── Language Toggle ── */
+.lang-toggle {
+  margin-left: auto;
+  display: flex;
+  background: rgba(255,255,255,0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.lang-btn {
+  padding: 0.35rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s;
+}
+
+.lang-btn.active {
+  background: rgba(255,255,255,0.2);
+  color: var(--white);
+}
+
+.lang-btn:hover:not(.active) {
+  color: rgba(255,255,255,0.85);
 }
 
 /* ── Progress Bar ── */
@@ -211,9 +242,7 @@ body::before {
   border: 1px solid rgba(229,221,210,0.5);
 }
 
-.card-body {
-  padding: 2.5rem;
-}
+.card-body { padding: 2.5rem; }
 
 .step-panel {
   display: none;
@@ -228,9 +257,7 @@ body::before {
 }
 
 /* ── Step Header ── */
-.step-header {
-  margin-bottom: 2rem;
-}
+.step-header { margin-bottom: 2rem; }
 
 .step-eyebrow {
   font-size: 0.75rem;
@@ -250,10 +277,7 @@ body::before {
   margin-bottom: 0.4rem;
 }
 
-.step-header p {
-  color: var(--text-light);
-  font-size: 0.95rem;
-}
+.step-header p { color: var(--text-light); font-size: 0.95rem; }
 
 /* ── Tool Picker (Step 1) ── */
 .tool-grid {
@@ -262,11 +286,7 @@ body::before {
   gap: 1rem;
 }
 
-.tool-option {
-  position: relative;
-  cursor: pointer;
-}
-
+.tool-option { position: relative; cursor: pointer; }
 .tool-option input { position: absolute; opacity: 0; pointer-events: none; }
 
 .tool-card {
@@ -290,68 +310,39 @@ body::before {
 }
 
 .tool-card-icon {
-  width: 44px;
-  height: 44px;
+  width: 44px; height: 44px;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-size: 1.4rem;
   margin-bottom: 0.75rem;
 }
 
-.tool-card h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-  color: var(--charcoal);
-}
-
-.tool-card p {
-  font-size: 0.82rem;
-  color: var(--text-light);
-  line-height: 1.45;
-}
+.tool-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; color: var(--charcoal); }
+.tool-card p { font-size: 0.82rem; color: var(--text-light); line-height: 1.45; }
 
 .tool-card .tool-badge {
   display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.7rem; font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
   margin-top: 0.6rem;
 }
 
 /* ── Form Fields ── */
-.form-group {
-  margin-bottom: 1.25rem;
-}
+.form-group { margin-bottom: 1.25rem; }
 
 .form-group label {
-  display: block;
-  font-weight: 600;
-  font-size: 0.88rem;
-  margin-bottom: 0.35rem;
-  color: var(--charcoal);
+  display: block; font-weight: 600; font-size: 0.88rem;
+  margin-bottom: 0.35rem; color: var(--charcoal);
 }
 
-.form-group .hint {
-  font-size: 0.78rem;
-  color: var(--text-lighter);
-  margin-bottom: 0.35rem;
-}
+.form-group .hint { font-size: 0.78rem; color: var(--text-lighter); margin-bottom: 0.35rem; }
 
-input[type="text"],
-input[type="number"],
-select {
-  width: 100%;
-  padding: 0.7rem 0.9rem;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 0.92rem;
-  color: var(--text);
-  background: var(--white);
+input[type="text"], input[type="number"], select {
+  width: 100%; padding: 0.7rem 0.9rem;
+  border: 2px solid var(--border); border-radius: 8px;
+  font-family: inherit; font-size: 0.92rem;
+  color: var(--text); background: var(--white);
   transition: border-color 0.2s, box-shadow 0.2s;
   -webkit-appearance: none;
 }
@@ -369,175 +360,68 @@ input:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(26,107,90,0.1);
 }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
 .classroom-inputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.75rem; margin-top: 0.5rem;
 }
 
-.classroom-input-wrap {
-  position: relative;
-}
-
-.classroom-input-wrap .room-label {
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-lighter);
-  pointer-events: none;
-}
-
-.classroom-input-wrap input {
-  padding-left: 1.6rem;
-}
+.classroom-input-wrap { position: relative; }
 
 /* ── Section Checkboxes (Step 3) ── */
-.section-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-
-.section-option {
-  position: relative;
-  cursor: pointer;
-}
-
+.section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.section-option { position: relative; cursor: pointer; }
 .section-option input { position: absolute; opacity: 0; pointer-events: none; }
 
 .section-card {
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  padding: 0.9rem 1rem;
-  transition: all 0.2s;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
+  border: 2px solid var(--border); border-radius: 10px;
+  padding: 0.9rem 1rem; transition: all 0.2s;
+  display: flex; align-items: flex-start; gap: 0.75rem;
 }
 
-.section-option:hover .section-card {
-  border-color: var(--teal);
-}
-
-.section-option input:checked + .section-card {
-  border-color: var(--teal);
-  background: var(--teal-light);
-}
+.section-option:hover .section-card { border-color: var(--teal); }
+.section-option input:checked + .section-card { border-color: var(--teal); background: var(--teal-light); }
 
 .section-check {
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  border: 2px solid var(--border);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1px;
-  transition: all 0.2s;
+  width: 22px; height: 22px; border-radius: 6px;
+  border: 2px solid var(--border); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px; transition: all 0.2s;
 }
 
-.section-option input:checked + .section-card .section-check {
-  background: var(--teal);
-  border-color: var(--teal);
-}
-
-.section-check svg {
-  width: 14px;
-  height: 14px;
-  stroke: var(--white);
-  stroke-width: 3;
-  fill: none;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
+.section-option input:checked + .section-card .section-check { background: var(--teal); border-color: var(--teal); }
+.section-check svg { width: 14px; height: 14px; stroke: var(--white); stroke-width: 3; fill: none; opacity: 0; transition: opacity 0.2s; }
 .section-option input:checked + .section-card .section-check svg { opacity: 1; }
 
-.section-info h4 {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--charcoal);
-  margin-bottom: 0.15rem;
-}
-
-.section-info p {
-  font-size: 0.76rem;
-  color: var(--text-light);
-  line-height: 1.35;
-}
+.section-info h4 { font-size: 0.88rem; font-weight: 600; color: var(--charcoal); margin-bottom: 0.15rem; }
+.section-info p { font-size: 0.76rem; color: var(--text-light); line-height: 1.35; }
 
 /* ── Step 4: Options ── */
 .option-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 0; border-bottom: 1px solid var(--border);
 }
-
 .option-toggle:last-child { border-bottom: none; }
+.option-left h4 { font-size: 0.92rem; font-weight: 600; color: var(--charcoal); }
+.option-left p { font-size: 0.8rem; color: var(--text-light); margin-top: 0.15rem; }
 
-.option-left h4 {
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--charcoal);
-}
-
-.option-left p {
-  font-size: 0.8rem;
-  color: var(--text-light);
-  margin-top: 0.15rem;
-}
-
-.toggle-switch {
-  position: relative;
-  width: 48px;
-  height: 28px;
-  flex-shrink: 0;
-}
-
+.toggle-switch { position: relative; width: 48px; height: 28px; flex-shrink: 0; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
 
 .toggle-track {
-  position: absolute;
-  inset: 0;
-  background: var(--border);
-  border-radius: 14px;
-  cursor: pointer;
-  transition: background 0.25s;
+  position: absolute; inset: 0; background: var(--border);
+  border-radius: 14px; cursor: pointer; transition: background 0.25s;
 }
 
 .toggle-track::after {
-  content: '';
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  left: 3px;
-  top: 3px;
-  background: var(--white);
-  border-radius: 50%;
-  transition: transform 0.25s;
-  box-shadow: var(--shadow-sm);
+  content: ''; position: absolute; width: 22px; height: 22px;
+  left: 3px; top: 3px; background: var(--white);
+  border-radius: 50%; transition: transform 0.25s; box-shadow: var(--shadow-sm);
 }
 
-.toggle-switch input:checked + .toggle-track {
-  background: var(--teal);
-}
-
-.toggle-switch input:checked + .toggle-track::after {
-  transform: translateX(20px);
-}
+.toggle-switch input:checked + .toggle-track { background: var(--teal); }
+.toggle-switch input:checked + .toggle-track::after { transform: translateX(20px); }
 
 .sub-option {
   padding: 0.75rem 0 0.75rem 1rem;
@@ -546,598 +430,318 @@ input:focus, select:focus {
   animation: fadeSlideIn 0.3s;
 }
 
-.specials-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.special-chip {
-  position: relative;
-  cursor: pointer;
-}
-
+.specials-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.special-chip { position: relative; cursor: pointer; }
 .special-chip input { position: absolute; opacity: 0; pointer-events: none; }
 
 .chip-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.4rem 0.85rem;
-  border: 2px solid var(--border);
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 500;
-  transition: all 0.2s;
-  user-select: none;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.4rem 0.85rem; border: 2px solid var(--border);
+  border-radius: 20px; font-size: 0.82rem; font-weight: 500;
+  transition: all 0.2s; user-select: none;
 }
 
 .special-chip:hover .chip-label { border-color: var(--teal); }
-
 .special-chip input:checked + .chip-label {
-  border-color: var(--teal);
-  background: var(--teal-light);
-  color: var(--teal-dark);
-  font-weight: 600;
+  border-color: var(--teal); background: var(--teal-light);
+  color: var(--teal-dark); font-weight: 600;
 }
 
 /* ── Navigation Buttons ── */
 .card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.25rem 2.5rem;
-  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.25rem 2.5rem; border-top: 1px solid var(--border);
   background: rgba(245,237,224,0.3);
 }
 
 .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.5rem;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.7rem 1.5rem; border-radius: 8px;
+  font-family: inherit; font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.2s;
 }
 
-.btn-primary {
-  background: var(--teal);
-  color: var(--white);
-  box-shadow: 0 2px 8px rgba(26,107,90,0.2);
-}
+.btn-primary { background: var(--teal); color: var(--white); box-shadow: 0 2px 8px rgba(26,107,90,0.2); }
+.btn-primary:hover { background: var(--teal-dark); box-shadow: 0 4px 12px rgba(26,107,90,0.3); transform: translateY(-1px); }
 
-.btn-primary:hover {
-  background: var(--teal-dark);
-  box-shadow: 0 4px 12px rgba(26,107,90,0.3);
-  transform: translateY(-1px);
-}
+.btn-secondary { background: transparent; color: var(--text-light); border: 2px solid var(--border); }
+.btn-secondary:hover { border-color: var(--text-lighter); color: var(--text); }
 
-.btn-secondary {
-  background: transparent;
-  color: var(--text-light);
-  border: 2px solid var(--border);
-}
-
-.btn-secondary:hover {
-  border-color: var(--text-lighter);
-  color: var(--text);
-}
-
-.btn-ghost {
-  background: none;
-  color: var(--text-light);
-  padding: 0.7rem 1rem;
-}
-
+.btn-ghost { background: none; color: var(--text-light); padding: 0.7rem 1rem; }
 .btn-ghost:hover { color: var(--text); }
 
-.btn svg {
-  width: 16px;
-  height: 16px;
-  stroke: currentColor;
-  stroke-width: 2.5;
-  fill: none;
-}
+.btn svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2.5; fill: none; }
 
 /* ── Results (Step 5) ── */
 .results-intro {
   background: linear-gradient(135deg, var(--teal-light), var(--sage-light));
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
+  border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem;
   border: 1px solid rgba(26,107,90,0.1);
 }
 
 .results-intro h3 {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 1.2rem;
-  color: var(--teal-dark);
-  margin-bottom: 0.3rem;
+  font-family: 'Fraunces', Georgia, serif; font-size: 1.2rem;
+  color: var(--teal-dark); margin-bottom: 0.3rem;
 }
 
-.results-intro p {
-  font-size: 0.88rem;
-  color: var(--teal);
-}
+.results-intro p { font-size: 0.88rem; color: var(--teal); }
 
 .accordion { margin-bottom: 0.75rem; }
 
 .accordion-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.25rem;
-  background: var(--cream);
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--charcoal);
-  transition: all 0.2s;
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem; background: var(--cream);
+  border: 2px solid var(--border); border-radius: var(--radius);
+  cursor: pointer; font-family: inherit; font-size: 0.95rem;
+  font-weight: 600; color: var(--charcoal); transition: all 0.2s;
 }
 
-.accordion.open .accordion-header {
-  border-color: var(--teal);
-  background: var(--teal-light);
-  border-radius: var(--radius) var(--radius) 0 0;
-}
-
+.accordion.open .accordion-header { border-color: var(--teal); background: var(--teal-light); border-radius: var(--radius) var(--radius) 0 0; }
 .accordion-header:hover { border-color: var(--teal); }
 
-.accordion-icon {
-  width: 20px;
-  height: 20px;
-  transition: transform 0.3s;
-}
-
+.accordion-icon { width: 20px; height: 20px; transition: transform 0.3s; }
 .accordion.open .accordion-icon { transform: rotate(180deg); }
 
 .accordion-body {
-  display: none;
-  border: 2px solid var(--teal);
-  border-top: none;
+  display: none; border: 2px solid var(--teal); border-top: none;
   border-radius: 0 0 var(--radius) var(--radius);
-  padding: 1.5rem 1.25rem;
-  background: var(--white);
+  padding: 1.5rem 1.25rem; background: var(--white);
 }
 
 .accordion.open .accordion-body { display: block; animation: fadeSlideIn 0.3s; }
 
 /* ── Prompt Blocks ── */
 .prompt-block {
-  position: relative;
-  background: var(--charcoal);
-  color: #E8E0D6;
-  border-radius: 10px;
-  padding: 1.25rem;
-  margin: 1rem 0;
-  font-size: 0.85rem;
-  line-height: 1.65;
-  white-space: pre-wrap;
-  word-break: break-word;
+  position: relative; background: var(--charcoal); color: #E8E0D6;
+  border-radius: 10px; padding: 1.25rem; margin: 1rem 0;
+  font-size: 0.85rem; line-height: 1.65;
+  white-space: pre-wrap; word-break: break-word;
   font-family: 'DM Sans', monospace;
 }
 
 .prompt-block .prompt-label {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--coral);
-  margin-bottom: 0.6rem;
+  display: inline-block; font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--coral); margin-bottom: 0.6rem;
 }
 
 .copy-btn {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 6px;
-  padding: 0.4rem 0.7rem;
-  color: #ccc;
-  font-family: inherit;
-  font-size: 0.72rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: all 0.2s;
+  position: absolute; top: 0.75rem; right: 0.75rem;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px; padding: 0.4rem 0.7rem; color: #ccc;
+  font-family: inherit; font-size: 0.72rem; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; gap: 0.3rem; transition: all 0.2s;
 }
 
-.copy-btn:hover {
-  background: rgba(255,255,255,0.2);
-  color: var(--white);
-}
-
-.copy-btn.copied {
-  background: var(--sage);
-  border-color: var(--sage);
-  color: var(--white);
-}
-
-.copy-btn svg {
-  width: 14px;
-  height: 14px;
-  stroke: currentColor;
-  stroke-width: 2;
-  fill: none;
-}
+.copy-btn:hover { background: rgba(255,255,255,0.2); color: var(--white); }
+.copy-btn.copied { background: var(--sage); border-color: var(--sage); color: var(--white); }
+.copy-btn svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
 
 /* ── Results Prose ── */
 .result-section h4 {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 1.05rem;
-  color: var(--charcoal);
-  margin: 1.25rem 0 0.5rem;
+  font-family: 'Fraunces', Georgia, serif; font-size: 1.05rem;
+  color: var(--charcoal); margin: 1.25rem 0 0.5rem;
 }
-
 .result-section h4:first-child { margin-top: 0; }
-
-.result-section p {
-  font-size: 0.88rem;
-  color: var(--text);
-  margin-bottom: 0.5rem;
-}
-
-.result-section ol, .result-section ul {
-  font-size: 0.88rem;
-  color: var(--text);
-  padding-left: 1.2rem;
-  margin-bottom: 0.75rem;
-}
-
-.result-section li {
-  margin-bottom: 0.35rem;
-  line-height: 1.55;
-}
-
+.result-section p { font-size: 0.88rem; color: var(--text); margin-bottom: 0.5rem; }
+.result-section ol, .result-section ul { font-size: 0.88rem; color: var(--text); padding-left: 1.2rem; margin-bottom: 0.75rem; }
+.result-section li { margin-bottom: 0.35rem; line-height: 1.55; }
 .result-section strong { color: var(--charcoal); }
 
 .tip-box {
-  background: var(--coral-light);
-  border-left: 3px solid var(--coral);
-  border-radius: 0 8px 8px 0;
-  padding: 0.75rem 1rem;
-  margin: 0.75rem 0;
-  font-size: 0.84rem;
-  color: var(--text);
+  background: var(--coral-light); border-left: 3px solid var(--coral);
+  border-radius: 0 8px 8px 0; padding: 0.75rem 1rem;
+  margin: 0.75rem 0; font-size: 0.84rem; color: var(--text);
 }
-
 .tip-box strong { color: var(--coral); }
 
-/* ── Start Over button ── */
-.start-over-wrap {
-  text-align: center;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-}
+.start-over-wrap { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .card-body { padding: 1.5rem; }
   .card-footer { padding: 1rem 1.5rem; }
-
   .tool-grid { grid-template-columns: 1fr; }
   .section-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .classroom-inputs { grid-template-columns: 1fr; }
-
   .step-header h2 { font-size: 1.4rem; }
-
   .step-label { font-size: 0.65rem; max-width: 56px; }
   .step-circle { width: 30px; height: 30px; font-size: 0.75rem; }
-
   .progress-steps::before { top: 15px; }
   .progress-fill { top: 15px; }
-
   .header-inner h1 { font-size: 1.1rem; }
 }
 
 @media (max-width: 420px) {
   .site-header { padding: 1rem; }
-  .header-inner p { display: none; }
+  .header-inner .header-sub { display: none; }
+  .lang-btn { padding: 0.3rem 0.55rem; font-size: 0.72rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- ── Header ── -->
 <header class="site-header">
   <div class="header-inner">
     <div class="header-icon">&#9993;</div>
     <div>
-      <h1>Newsletter Copilot Guide</h1>
-      <p>Build your grade-level newsletter with Microsoft Copilot</p>
+      <h1 data-t="header.title">Newsletter Copilot Guide</h1>
+      <div class="header-sub" data-t="header.sub">Build your grade-level newsletter with Microsoft Copilot</div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
     </div>
   </div>
 </header>
 
-<!-- ── Progress ── -->
 <div class="progress-container">
   <div class="progress-steps">
     <div class="progress-fill" id="progressFill"></div>
     <button class="progress-step active" data-step="1" onclick="goToStep(1)">
       <div class="step-circle">1</div>
-      <span class="step-label">Choose Tool</span>
+      <span class="step-label" data-t="progress.1">Choose Tool</span>
     </button>
     <button class="progress-step" data-step="2" onclick="goToStep(2)">
       <div class="step-circle">2</div>
-      <span class="step-label">Your Info</span>
+      <span class="step-label" data-t="progress.2">Your Info</span>
     </button>
     <button class="progress-step" data-step="3" onclick="goToStep(3)">
       <div class="step-circle">3</div>
-      <span class="step-label">Sections</span>
+      <span class="step-label" data-t="progress.3">Sections</span>
     </button>
     <button class="progress-step" data-step="4" onclick="goToStep(4)">
       <div class="step-circle">4</div>
-      <span class="step-label">Options</span>
+      <span class="step-label" data-t="progress.4">Options</span>
     </button>
     <button class="progress-step" data-step="5" onclick="goToStep(5)">
       <div class="step-circle">5</div>
-      <span class="step-label">Your Guide</span>
+      <span class="step-label" data-t="progress.5">Your Guide</span>
     </button>
   </div>
 </div>
 
-<!-- ── Wizard ── -->
 <div class="wizard-container">
   <div class="wizard-card">
     <div class="card-body">
 
-      <!-- ═══ STEP 1: Choose Tool ═══ -->
+      <!-- ═══ STEP 1 ═══ -->
       <div class="step-panel active" id="step1">
         <div class="step-header">
-          <div class="step-eyebrow">Step 1 of 5</div>
-          <h2>Choose Your Tool</h2>
-          <p>Which Microsoft tool will you use to build your newsletter? Pick the one that works best for your situation.</p>
+          <div class="step-eyebrow" data-t="step1.eyebrow">Step 1 of 5</div>
+          <h2 data-t="step1.title">Choose Your Tool</h2>
+          <p data-t="step1.desc">Which Microsoft tool will you use to build your newsletter? Pick the one that works best for your situation.</p>
         </div>
-
         <div class="tool-grid">
           <label class="tool-option">
             <input type="radio" name="tool" value="sharepoint" checked>
             <div class="tool-card">
               <div class="tool-card-icon" style="background:#E0F0FF;">&#127760;</div>
               <h3>SharePoint</h3>
-              <p>Create a dedicated newsletter site parents can bookmark. Best for a polished, ongoing newsletter.</p>
-              <span class="tool-badge" style="background:var(--teal-light);color:var(--teal-dark);">Recommended</span>
+              <p data-t="tool.sharepoint.desc">Create a dedicated newsletter site parents can bookmark. Best for a polished, ongoing newsletter.</p>
+              <span class="tool-badge" style="background:var(--teal-light);color:var(--teal-dark);" data-t="tool.sharepoint.badge">Recommended</span>
             </div>
           </label>
-
           <label class="tool-option">
             <input type="radio" name="tool" value="sway">
             <div class="tool-card">
               <div class="tool-card-icon" style="background:#F0E6FF;">&#127912;</div>
               <h3>Sway</h3>
-              <p>Create beautiful, scrollable pages quickly. Great if you want something visual with minimal setup.</p>
-              <span class="tool-badge" style="background:#F0E6FF;color:#6B3FA0;">Quick & Visual</span>
+              <p data-t="tool.sway.desc">Create beautiful, scrollable pages quickly. Great if you want something visual with minimal setup.</p>
+              <span class="tool-badge" style="background:#F0E6FF;color:#6B3FA0;" data-t="tool.sway.badge">Quick & Visual</span>
             </div>
           </label>
-
           <label class="tool-option">
             <input type="radio" name="tool" value="word">
             <div class="tool-card">
               <div class="tool-card-icon" style="background:#E3F2FD;">&#128196;</div>
               <h3>Word / Outlook</h3>
-              <p>Draft in Word, email via Outlook. Best if your school already sends newsletters by email.</p>
-              <span class="tool-badge" style="background:var(--cream-dark);color:var(--text-light);">Familiar</span>
+              <p data-t="tool.word.desc">Draft in Word, email via Outlook. Best if your school already sends newsletters by email.</p>
+              <span class="tool-badge" style="background:var(--cream-dark);color:var(--text-light);" data-t="tool.word.badge">Familiar</span>
             </div>
           </label>
-
           <label class="tool-option">
             <input type="radio" name="tool" value="copilot-web">
             <div class="tool-card">
               <div class="tool-card-icon" style="background:#FFF3E0;">&#10024;</div>
               <h3>copilot.microsoft.com</h3>
-              <p>Use the Copilot web app to generate text, then paste into any tool. Works as a fallback for any workflow.</p>
-              <span class="tool-badge" style="background:var(--coral-light);color:var(--coral);">Flexible</span>
+              <p data-t="tool.copilot.desc">Use the Copilot web app to generate text, then paste into any tool. Works as a fallback for any workflow.</p>
+              <span class="tool-badge" style="background:var(--coral-light);color:var(--coral);" data-t="tool.copilot.badge">Flexible</span>
             </div>
           </label>
         </div>
       </div>
 
-      <!-- ═══ STEP 2: Grade & Info ═══ -->
+      <!-- ═══ STEP 2 ═══ -->
       <div class="step-panel" id="step2">
         <div class="step-header">
-          <div class="step-eyebrow">Step 2 of 5</div>
-          <h2>Your Grade &amp; Info</h2>
-          <p>Tell us about your grade level so we can personalize your prompts and guide.</p>
+          <div class="step-eyebrow" data-t="step2.eyebrow">Step 2 of 5</div>
+          <h2 data-t="step2.title">Your Grade &amp; Info</h2>
+          <p data-t="step2.desc">Tell us about your grade level so we can personalize your prompts and guide.</p>
         </div>
-
         <div class="form-row">
           <div class="form-group">
-            <label for="gradeLevel">Grade Level</label>
+            <label for="gradeLevel" data-t="step2.grade">Grade Level</label>
             <select id="gradeLevel">
               <option value="Pre-K">Pre-K</option>
-              <option value="Kindergarten">Kindergarten</option>
-              <option value="1st" selected>1st Grade</option>
-              <option value="2nd">2nd Grade</option>
-              <option value="3rd">3rd Grade</option>
-              <option value="4th">4th Grade</option>
-              <option value="5th">5th Grade</option>
+              <option value="Kindergarten" data-t-val="grade.k">Kindergarten</option>
+              <option value="1st" selected data-t-val="grade.1">1st Grade</option>
+              <option value="2nd" data-t-val="grade.2">2nd Grade</option>
+              <option value="3rd" data-t-val="grade.3">3rd Grade</option>
+              <option value="4th" data-t-val="grade.4">4th Grade</option>
+              <option value="5th" data-t-val="grade.5">5th Grade</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label for="schoolName">School Name</label>
+            <label for="schoolName" data-t="step2.school">School Name</label>
             <input type="text" id="schoolName" value="Bancroft ES" placeholder="e.g., Bancroft ES">
           </div>
         </div>
-
         <div class="form-group">
-          <label for="numRooms">Number of Classrooms</label>
-          <p class="hint">How many classrooms are in your grade level?</p>
+          <label for="numRooms" data-t="step2.numRooms">Number of Classrooms</label>
+          <p class="hint" data-t="step2.numRoomsHint">How many classrooms are in your grade level?</p>
           <select id="numRooms" onchange="renderClassroomInputs()">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3" selected>3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3" selected>3</option><option value="4">4</option>
+            <option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option>
           </select>
         </div>
-
         <div class="form-group">
-          <label>Classroom Names</label>
-          <p class="hint">Enter a name, teacher name, or identifier for each classroom.</p>
+          <label data-t="step2.classroomNames">Classroom Names</label>
+          <p class="hint" data-t="step2.classroomHint">Enter a name, teacher name, or identifier for each classroom.</p>
           <div class="classroom-inputs" id="classroomInputs"></div>
         </div>
       </div>
 
-      <!-- ═══ STEP 3: Sections ═══ -->
+      <!-- ═══ STEP 3 ═══ -->
       <div class="step-panel" id="step3">
         <div class="step-header">
-          <div class="step-eyebrow">Step 3 of 5</div>
-          <h2>Newsletter Sections</h2>
-          <p>Choose which sections to include. We'll generate Copilot prompts for each one you select.</p>
+          <div class="step-eyebrow" data-t="step3.eyebrow">Step 3 of 5</div>
+          <h2 data-t="step3.title">Newsletter Sections</h2>
+          <p data-t="step3.desc">Choose which sections to include. We'll generate Copilot prompts for each one you select.</p>
         </div>
-
-        <div class="section-grid">
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="welcome" checked>
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Welcome Message</h4>
-                <p>Warm greeting summarizing the week ahead</p>
-              </div>
-            </div>
-          </label>
-
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="math" checked>
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Math News</h4>
-                <p>What students are learning in math this week</p>
-              </div>
-            </div>
-          </label>
-
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="literacy" checked>
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Literacy / ELA News</h4>
-                <p>Reading and writing focus for the week</p>
-              </div>
-            </div>
-          </label>
-
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="ask" checked>
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Ask Your Child</h4>
-                <p>Conversation starters for parents</p>
-              </div>
-            </div>
-          </label>
-
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="vocab" checked>
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Vocabulary</h4>
-                <p>Weekly vocabulary words with definitions</p>
-              </div>
-            </div>
-          </label>
-
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="books" checked>
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Books &amp; Read-Alouds</h4>
-                <p>Books being read in class with discussion Qs</p>
-              </div>
-            </div>
-          </label>
-
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="reminders" checked>
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Important Reminders</h4>
-                <p>Upcoming dates, events, deadlines</p>
-              </div>
-            </div>
-          </label>
-
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="specials" checked>
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Specials Schedule</h4>
-                <p>Art, Music, PE, Library rotation</p>
-              </div>
-            </div>
-          </label>
-
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="recognition" checked>
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Student Recognition</h4>
-                <p>Celebrating students (ROARS or similar)</p>
-              </div>
-            </div>
-          </label>
-
-          <label class="section-option">
-            <input type="checkbox" name="sections" value="custom">
-            <div class="section-card">
-              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
-              <div class="section-info">
-                <h4>Other / Custom</h4>
-                <p>Add your own section</p>
-              </div>
-            </div>
-          </label>
-        </div>
-
+        <div class="section-grid" id="sectionGrid"></div>
         <div id="customSectionWrap" style="display:none;margin-top:1rem;">
           <div class="form-group">
-            <label for="customSectionName">Custom Section Name</label>
-            <input type="text" id="customSectionName" placeholder="e.g., Science Corner, Social Studies Update">
+            <label for="customSectionName" data-t="step3.customLabel">Custom Section Name</label>
+            <input type="text" id="customSectionName" data-t-placeholder="step3.customPlaceholder" placeholder="e.g., Science Corner, Social Studies Update">
           </div>
         </div>
       </div>
 
-      <!-- ═══ STEP 4: Options ═══ -->
+      <!-- ═══ STEP 4 ═══ -->
       <div class="step-panel" id="step4">
         <div class="step-header">
-          <div class="step-eyebrow">Step 4 of 5</div>
-          <h2>Additional Options</h2>
-          <p>Customize your newsletter further with these optional settings.</p>
+          <div class="step-eyebrow" data-t="step4.eyebrow">Step 4 of 5</div>
+          <h2 data-t="step4.title">Additional Options</h2>
+          <p data-t="step4.desc">Customize your newsletter further with these optional settings.</p>
         </div>
-
         <div class="option-toggle">
           <div class="option-left">
-            <h4>Bilingual Newsletter</h4>
-            <p>Include a translated version alongside English</p>
+            <h4 data-t="step4.bilingual">Bilingual Newsletter</h4>
+            <p data-t="step4.bilingualDesc">Include a translated version alongside English</p>
           </div>
           <label class="toggle-switch">
             <input type="checkbox" id="bilingualToggle" onchange="toggleBilingual()">
@@ -1146,75 +750,68 @@ input:focus, select:focus {
         </div>
         <div class="sub-option" id="bilingualOptions" style="display:none;">
           <div class="form-group" style="margin-bottom:0;">
-            <label for="bilingualLang">Second Language</label>
+            <label for="bilingualLang" data-t="step4.secondLang">Second Language</label>
             <select id="bilingualLang">
-              <option value="Spanish" selected>Spanish</option>
+              <option value="Spanish" data-t-val="lang.spanish">Spanish</option>
               <option value="Amharic">Amharic</option>
-              <option value="Arabic">Arabic</option>
-              <option value="Chinese">Chinese (Simplified)</option>
-              <option value="French">French</option>
-              <option value="Korean">Korean</option>
-              <option value="Vietnamese">Vietnamese</option>
+              <option value="Arabic" data-t-val="lang.arabic">Arabic</option>
+              <option value="Chinese" data-t-val="lang.chinese">Chinese (Simplified)</option>
+              <option value="French" data-t-val="lang.french">French</option>
+              <option value="Korean" data-t-val="lang.korean">Korean</option>
+              <option value="Vietnamese" data-t-val="lang.vietnamese">Vietnamese</option>
             </select>
           </div>
         </div>
-
         <div class="option-toggle">
           <div class="option-left">
-            <h4>Student Recognition Program</h4>
-            <p>Name of your positive behavior program</p>
+            <h4 data-t="step4.recognition">Student Recognition Program</h4>
+            <p data-t="step4.recognitionDesc">Name of your positive behavior program</p>
           </div>
           <div style="flex-shrink:0;width:160px;">
             <input type="text" id="recognitionName" value="ROARS" style="text-align:center;font-weight:600;">
           </div>
         </div>
-
         <div class="form-group" style="margin-top:1.5rem;">
-          <label>Specials Offered</label>
-          <p class="hint">Select all the specials your grade level has</p>
+          <label data-t="step4.specials">Specials Offered</label>
+          <p class="hint" data-t="step4.specialsHint">Select all the specials your grade level has</p>
           <div class="specials-grid">
-            <label class="special-chip"><input type="checkbox" name="specials" value="Art" checked><span class="chip-label">&#127912; Art</span></label>
-            <label class="special-chip"><input type="checkbox" name="specials" value="Music" checked><span class="chip-label">&#127925; Music</span></label>
-            <label class="special-chip"><input type="checkbox" name="specials" value="PE" checked><span class="chip-label">&#9917; PE</span></label>
-            <label class="special-chip"><input type="checkbox" name="specials" value="Library" checked><span class="chip-label">&#128218; Library</span></label>
-            <label class="special-chip"><input type="checkbox" name="specials" value="Science" checked><span class="chip-label">&#128300; Science</span></label>
-            <label class="special-chip"><input type="checkbox" name="specials" value="Tech"><span class="chip-label">&#128187; Tech</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Art" checked><span class="chip-label" data-t="spec.art">&#127912; Art</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Music" checked><span class="chip-label" data-t="spec.music">&#127925; Music</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="PE" checked><span class="chip-label" data-t="spec.pe">&#9917; PE</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Library" checked><span class="chip-label" data-t="spec.library">&#128218; Library</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Science" checked><span class="chip-label" data-t="spec.science">&#128300; Science</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Tech"><span class="chip-label" data-t="spec.tech">&#128187; Tech</span></label>
             <label class="special-chip"><input type="checkbox" name="specials" value="STEM"><span class="chip-label">&#9881; STEM</span></label>
-            <label class="special-chip"><input type="checkbox" name="specials" value="Spanish"><span class="chip-label">&#127466;&#127480; Spanish</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Spanish"><span class="chip-label" data-t="spec.spanish">&#127466;&#127480; Spanish</span></label>
           </div>
         </div>
       </div>
 
-      <!-- ═══ STEP 5: Results ═══ -->
+      <!-- ═══ STEP 5 ═══ -->
       <div class="step-panel" id="step5">
         <div class="step-header">
-          <div class="step-eyebrow">Step 5 of 5</div>
-          <h2>Your Personalized Guide</h2>
-          <p>Here's everything you need to create and maintain your newsletter.</p>
+          <div class="step-eyebrow" data-t="step5.eyebrow">Step 5 of 5</div>
+          <h2 data-t="step5.title">Your Personalized Guide</h2>
+          <p data-t="step5.desc">Here's everything you need to create and maintain your newsletter.</p>
         </div>
-
         <div class="results-intro" id="resultsIntro"></div>
-
         <div id="resultsContent"></div>
-
         <div class="start-over-wrap">
           <button class="btn btn-secondary" onclick="startOver()">
             <svg viewBox="0 0 16 16"><path d="M2 8a6 6 0 1 1 1.76 4.24" stroke-linecap="round"/><polyline points="2 4 2 8 6 8"/></svg>
-            Start Over
+            <span data-t="btn.startOver">Start Over</span>
           </button>
         </div>
       </div>
 
-    </div><!-- /card-body -->
-
-    <!-- ── Footer Nav ── -->
+    </div>
     <div class="card-footer" id="cardFooter">
       <button class="btn btn-ghost" id="prevBtn" onclick="prevStep()" style="visibility:hidden;">
         <svg viewBox="0 0 16 16"><polyline points="10 3 5 8 10 13"/></svg>
-        Back
+        <span data-t="btn.back">Back</span>
       </button>
       <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">
-        Continue
+        <span data-t="btn.continue">Continue</span>
         <svg viewBox="0 0 16 16"><polyline points="6 3 11 8 6 13"/></svg>
       </button>
     </div>
@@ -1222,86 +819,279 @@ input:focus, select:focus {
 </div>
 
 <script>
-// ── State ──
+// ════════════════════════════════════════
+// TRANSLATIONS
+// ════════════════════════════════════════
+let lang = 'en';
+
+const T = {
+  en: {
+    'header.title': 'Newsletter Copilot Guide',
+    'header.sub': 'Build your grade-level newsletter with Microsoft Copilot',
+    'progress.1': 'Choose Tool', 'progress.2': 'Your Info', 'progress.3': 'Sections',
+    'progress.4': 'Options', 'progress.5': 'Your Guide',
+    'step1.eyebrow': 'Step 1 of 5', 'step1.title': 'Choose Your Tool',
+    'step1.desc': 'Which Microsoft tool will you use to build your newsletter? Pick the one that works best for your situation.',
+    'tool.sharepoint.desc': 'Create a dedicated newsletter site parents can bookmark. Best for a polished, ongoing newsletter.',
+    'tool.sharepoint.badge': 'Recommended',
+    'tool.sway.desc': 'Create beautiful, scrollable pages quickly. Great if you want something visual with minimal setup.',
+    'tool.sway.badge': 'Quick & Visual',
+    'tool.word.desc': 'Draft in Word, email via Outlook. Best if your school already sends newsletters by email.',
+    'tool.word.badge': 'Familiar',
+    'tool.copilot.desc': 'Use the Copilot web app to generate text, then paste into any tool. Works as a fallback for any workflow.',
+    'tool.copilot.badge': 'Flexible',
+    'step2.eyebrow': 'Step 2 of 5', 'step2.title': 'Your Grade & Info',
+    'step2.desc': 'Tell us about your grade level so we can personalize your prompts and guide.',
+    'step2.grade': 'Grade Level', 'step2.school': 'School Name',
+    'step2.numRooms': 'Number of Classrooms',
+    'step2.numRoomsHint': 'How many classrooms are in your grade level?',
+    'step2.classroomNames': 'Classroom Names',
+    'step2.classroomHint': 'Enter a name, teacher name, or identifier for each classroom.',
+    'step2.classroomPlaceholder': 'Classroom',
+    'grade.k': 'Kindergarten', 'grade.1': '1st Grade', 'grade.2': '2nd Grade',
+    'grade.3': '3rd Grade', 'grade.4': '4th Grade', 'grade.5': '5th Grade',
+    'step3.eyebrow': 'Step 3 of 5', 'step3.title': 'Newsletter Sections',
+    'step3.desc': "Choose which sections to include. We'll generate Copilot prompts for each one you select.",
+    'step3.customLabel': 'Custom Section Name',
+    'step3.customPlaceholder': 'e.g., Science Corner, Social Studies Update',
+    'step4.eyebrow': 'Step 4 of 5', 'step4.title': 'Additional Options',
+    'step4.desc': 'Customize your newsletter further with these optional settings.',
+    'step4.bilingual': 'Bilingual Newsletter',
+    'step4.bilingualDesc': 'Include a translated version alongside English',
+    'step4.secondLang': 'Second Language',
+    'step4.recognition': 'Student Recognition Program',
+    'step4.recognitionDesc': 'Name of your positive behavior program',
+    'step4.specials': 'Specials Offered',
+    'step4.specialsHint': 'Select all the specials your grade level has',
+    'lang.spanish': 'Spanish', 'lang.arabic': 'Arabic', 'lang.chinese': 'Chinese (Simplified)',
+    'lang.french': 'French', 'lang.korean': 'Korean', 'lang.vietnamese': 'Vietnamese',
+    'spec.art': '&#127912; Art', 'spec.music': '&#127925; Music', 'spec.pe': '&#9917; PE',
+    'spec.library': '&#128218; Library', 'spec.science': '&#128300; Science',
+    'spec.tech': '&#128187; Tech', 'spec.spanish': '&#127466;&#127480; Spanish',
+    'step5.eyebrow': 'Step 5 of 5', 'step5.title': 'Your Personalized Guide',
+    'step5.desc': "Here's everything you need to create and maintain your newsletter.",
+    'btn.back': 'Back', 'btn.continue': 'Continue', 'btn.generate': 'Generate Guide',
+    'btn.startOver': 'Start Over', 'btn.copy': 'Copy', 'btn.copied': 'Copied!',
+    // Section names
+    'sec.welcome': 'Welcome Message', 'sec.welcome.desc': 'Warm greeting summarizing the week ahead',
+    'sec.math': 'Math News', 'sec.math.desc': 'What students are learning in math this week',
+    'sec.literacy': 'Literacy / ELA News', 'sec.literacy.desc': 'Reading and writing focus for the week',
+    'sec.ask': 'Ask Your Child', 'sec.ask.desc': 'Conversation starters for parents',
+    'sec.vocab': 'Vocabulary', 'sec.vocab.desc': 'Weekly vocabulary words with definitions',
+    'sec.books': 'Books & Read-Alouds', 'sec.books.desc': 'Books being read in class with discussion Qs',
+    'sec.reminders': 'Important Reminders', 'sec.reminders.desc': 'Upcoming dates, events, deadlines',
+    'sec.specials': 'Specials Schedule', 'sec.specials.desc': 'Art, Music, PE, Library rotation',
+    'sec.recognition': 'Student Recognition', 'sec.recognition.desc': 'Celebrating students (ROARS or similar)',
+    'sec.custom': 'Other / Custom', 'sec.custom.desc': 'Add your own section',
+    // Accordion titles
+    'acc.setup': 'Setup Instructions', 'acc.prompts': 'Section-by-Section Prompts',
+    'acc.workflow': 'Weekly Workflow', 'acc.cheatsheet': 'Prompt Cheat Sheet',
+    'acc.troubleshoot': 'Troubleshooting',
+  },
+  es: {
+    'header.title': 'Guía de Newsletter con Copilot',
+    'header.sub': 'Crea el boletín de tu grado con Microsoft Copilot',
+    'progress.1': 'Herramienta', 'progress.2': 'Tu info', 'progress.3': 'Secciones',
+    'progress.4': 'Opciones', 'progress.5': 'Tu guía',
+    'step1.eyebrow': 'Paso 1 de 5', 'step1.title': 'Elige tu herramienta',
+    'step1.desc': '¿Qué herramienta de Microsoft usarás para crear tu boletín? Elige la que mejor se adapte a tu situación.',
+    'tool.sharepoint.desc': 'Crea un sitio dedicado que las familias pueden guardar. Ideal para un boletín profesional y continuo.',
+    'tool.sharepoint.badge': 'Recomendado',
+    'tool.sway.desc': 'Crea páginas bonitas y desplazables rápidamente. Ideal si quieres algo visual con poca configuración.',
+    'tool.sway.badge': 'Rápido y visual',
+    'tool.word.desc': 'Redacta en Word, envía por Outlook. Ideal si tu escuela ya envía boletines por correo.',
+    'tool.word.badge': 'Familiar',
+    'tool.copilot.desc': 'Usa la app web de Copilot para generar texto y pégalo en cualquier herramienta. Funciona como alternativa.',
+    'tool.copilot.badge': 'Flexible',
+    'step2.eyebrow': 'Paso 2 de 5', 'step2.title': 'Tu grado e información',
+    'step2.desc': 'Cuéntanos sobre tu grado para personalizar las instrucciones y los prompts.',
+    'step2.grade': 'Nivel de grado', 'step2.school': 'Nombre de la escuela',
+    'step2.numRooms': 'Número de salones',
+    'step2.numRoomsHint': '¿Cuántos salones hay en tu grado?',
+    'step2.classroomNames': 'Nombres de los salones',
+    'step2.classroomHint': 'Escribe un nombre, nombre del maestro o identificador para cada salón.',
+    'step2.classroomPlaceholder': 'Salón',
+    'grade.k': 'Kínder', 'grade.1': '1.er grado', 'grade.2': '2.o grado',
+    'grade.3': '3.er grado', 'grade.4': '4.o grado', 'grade.5': '5.o grado',
+    'step3.eyebrow': 'Paso 3 de 5', 'step3.title': 'Secciones del boletín',
+    'step3.desc': 'Elige qué secciones incluir. Generaremos prompts de Copilot para cada una.',
+    'step3.customLabel': 'Nombre de sección personalizada',
+    'step3.customPlaceholder': 'ej., Rincón de ciencias, Estudios sociales',
+    'step4.eyebrow': 'Paso 4 de 5', 'step4.title': 'Opciones adicionales',
+    'step4.desc': 'Personaliza tu boletín con estas opciones adicionales.',
+    'step4.bilingual': 'Boletín bilingüe',
+    'step4.bilingualDesc': 'Incluir una versión traducida junto al inglés',
+    'step4.secondLang': 'Segundo idioma',
+    'step4.recognition': 'Programa de reconocimiento',
+    'step4.recognitionDesc': 'Nombre de tu programa de comportamiento positivo',
+    'step4.specials': 'Clases especiales',
+    'step4.specialsHint': 'Selecciona todas las clases especiales de tu grado',
+    'lang.spanish': 'Español', 'lang.arabic': 'Árabe', 'lang.chinese': 'Chino (simplificado)',
+    'lang.french': 'Francés', 'lang.korean': 'Coreano', 'lang.vietnamese': 'Vietnamita',
+    'spec.art': '&#127912; Arte', 'spec.music': '&#127925; Música', 'spec.pe': '&#9917; Ed. Física',
+    'spec.library': '&#128218; Biblioteca', 'spec.science': '&#128300; Ciencias',
+    'spec.tech': '&#128187; Tecnología', 'spec.spanish': '&#127466;&#127480; Español',
+    'step5.eyebrow': 'Paso 5 de 5', 'step5.title': 'Tu guía personalizada',
+    'step5.desc': 'Aquí tienes todo lo que necesitas para crear y mantener tu boletín.',
+    'btn.back': 'Atrás', 'btn.continue': 'Continuar', 'btn.generate': 'Generar guía',
+    'btn.startOver': 'Empezar de nuevo', 'btn.copy': 'Copiar', 'btn.copied': '¡Copiado!',
+    'sec.welcome': 'Mensaje de bienvenida', 'sec.welcome.desc': 'Saludo cálido resumiendo la semana',
+    'sec.math': 'Noticias de matemáticas', 'sec.math.desc': 'Lo que los estudiantes aprenden en matemáticas',
+    'sec.literacy': 'Noticias de lectoescritura', 'sec.literacy.desc': 'Enfoque de lectura y escritura de la semana',
+    'sec.ask': 'Pregúntale a tu hijo/a', 'sec.ask.desc': 'Preguntas para conversar en casa',
+    'sec.vocab': 'Vocabulario', 'sec.vocab.desc': 'Palabras de vocabulario con definiciones',
+    'sec.books': 'Libros y lecturas', 'sec.books.desc': 'Libros que se leen en clase con preguntas',
+    'sec.reminders': 'Recordatorios importantes', 'sec.reminders.desc': 'Fechas, eventos y plazos próximos',
+    'sec.specials': 'Horario de especiales', 'sec.specials.desc': 'Rotación de Arte, Música, Ed. Física, etc.',
+    'sec.recognition': 'Reconocimiento estudiantil', 'sec.recognition.desc': 'Celebrando a los estudiantes (ROARS o similar)',
+    'sec.custom': 'Otra / Personalizada', 'sec.custom.desc': 'Agrega tu propia sección',
+    'acc.setup': 'Instrucciones de configuración', 'acc.prompts': 'Prompts sección por sección',
+    'acc.workflow': 'Flujo de trabajo semanal', 'acc.cheatsheet': 'Hoja de referencia de prompts',
+    'acc.troubleshoot': 'Solución de problemas',
+  }
+};
+
+function t(key) { return T[lang][key] || T['en'][key] || key; }
+
+function setLang(newLang) {
+  lang = newLang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim() === newLang.toUpperCase());
+  });
+  applyTranslations();
+  renderSectionGrid();
+  renderClassroomInputs();
+  if (currentStep === 5) generateResults();
+  // Re-apply step button text
+  updateNavButtons();
+}
+
+function applyTranslations() {
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    const val = t(key);
+    if (val) el.innerHTML = val;
+  });
+  document.querySelectorAll('[data-t-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-t-placeholder');
+    el.placeholder = t(key);
+  });
+  document.querySelectorAll('[data-t-val]').forEach(el => {
+    const key = el.getAttribute('data-t-val');
+    const val = t(key);
+    if (val) el.textContent = val;
+  });
+}
+
+// ════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════
 let currentStep = 1;
 const totalSteps = 5;
+
+const sectionDefs = [
+  { id: 'welcome', checked: true },
+  { id: 'math', checked: true },
+  { id: 'literacy', checked: true },
+  { id: 'ask', checked: true },
+  { id: 'vocab', checked: true },
+  { id: 'books', checked: true },
+  { id: 'reminders', checked: true },
+  { id: 'specials', checked: true },
+  { id: 'recognition', checked: true },
+  { id: 'custom', checked: false },
+];
+
+function renderSectionGrid() {
+  const grid = document.getElementById('sectionGrid');
+  // Preserve checked state
+  const checkedState = {};
+  grid.querySelectorAll('input[name="sections"]').forEach(cb => {
+    checkedState[cb.value] = cb.checked;
+  });
+  const svg = '<svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg>';
+  grid.innerHTML = sectionDefs.map(s => {
+    const isChecked = (checkedState[s.id] !== undefined) ? checkedState[s.id] : s.checked;
+    return `<label class="section-option">
+      <input type="checkbox" name="sections" value="${s.id}" ${isChecked ? 'checked' : ''}>
+      <div class="section-card">
+        <div class="section-check">${svg}</div>
+        <div class="section-info">
+          <h4>${t('sec.' + s.id)}</h4>
+          <p>${t('sec.' + s.id + '.desc')}</p>
+        </div>
+      </div>
+    </label>`;
+  }).join('');
+  // Re-bind custom toggle
+  grid.querySelectorAll('input[name="sections"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const customChecked = document.querySelector('input[name="sections"][value="custom"]')?.checked;
+      document.getElementById('customSectionWrap').style.display = customChecked ? 'block' : 'none';
+    });
+  });
+}
 
 // ── Navigation ──
 function goToStep(step) {
   if (step < 1 || step > totalSteps) return;
   if (step === 5) generateResults();
-
   currentStep = step;
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('step' + step).classList.add('active');
-
-  // Progress
   document.querySelectorAll('.progress-step').forEach(s => {
     const n = +s.dataset.step;
     s.classList.remove('active', 'completed');
     if (n === step) s.classList.add('active');
     else if (n < step) s.classList.add('completed');
   });
-
   const fill = document.getElementById('progressFill');
   const pct = ((step - 1) / (totalSteps - 1)) * 100;
   const containerW = fill.parentElement.offsetWidth - 48;
   fill.style.width = (containerW * pct / 100) + 'px';
-
-  // Buttons
-  const prev = document.getElementById('prevBtn');
-  const next = document.getElementById('nextBtn');
-  prev.style.visibility = step === 1 ? 'hidden' : 'visible';
-  if (step === totalSteps) {
-    next.style.display = 'none';
-  } else if (step === totalSteps - 1) {
-    next.innerHTML = 'Generate Guide <svg viewBox="0 0 16 16"><polyline points="6 3 11 8 6 13"/></svg>';
-    next.style.display = '';
-  } else {
-    next.innerHTML = 'Continue <svg viewBox="0 0 16 16"><polyline points="6 3 11 8 6 13"/></svg>';
-    next.style.display = '';
-  }
-
+  updateNavButtons();
   document.getElementById('cardFooter').style.display = step === totalSteps ? 'none' : '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function updateNavButtons() {
+  const prev = document.getElementById('prevBtn');
+  const next = document.getElementById('nextBtn');
+  prev.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+  if (currentStep === totalSteps) {
+    next.style.display = 'none';
+  } else {
+    next.style.display = '';
+    const label = currentStep === totalSteps - 1 ? t('btn.generate') : t('btn.continue');
+    next.innerHTML = `<span>${label}</span> <svg viewBox="0 0 16 16"><polyline points="6 3 11 8 6 13"/></svg>`;
+  }
+  prev.innerHTML = `<svg viewBox="0 0 16 16"><polyline points="10 3 5 8 10 13"/></svg> <span>${t('btn.back')}</span>`;
+}
+
 function nextStep() { goToStep(currentStep + 1); }
 function prevStep() { goToStep(currentStep - 1); }
-
-function startOver() {
-  goToStep(1);
-}
+function startOver() { goToStep(1); }
 
 // ── Classroom Inputs ──
 function renderClassroomInputs() {
   const n = +document.getElementById('numRooms').value;
   const wrap = document.getElementById('classroomInputs');
   const existing = {};
-  wrap.querySelectorAll('input').forEach(inp => {
-    existing[inp.dataset.index] = inp.value;
-  });
+  wrap.querySelectorAll('input').forEach(inp => { existing[inp.dataset.index] = inp.value; });
+  const ph = t('step2.classroomPlaceholder');
   wrap.innerHTML = '';
   for (let i = 0; i < n; i++) {
     const div = document.createElement('div');
     div.className = 'classroom-input-wrap';
-    div.innerHTML = `<input type="text" data-index="${i}" placeholder="Classroom ${i + 1}" value="${existing[i] || ''}">`;
+    div.innerHTML = `<input type="text" data-index="${i}" placeholder="${ph} ${i + 1}" value="${existing[i] || ''}">`;
     wrap.appendChild(div);
   }
 }
 
-// ── Custom Section Toggle ──
-document.querySelectorAll('input[name="sections"]').forEach(cb => {
-  cb.addEventListener('change', () => {
-    const customChecked = document.querySelector('input[name="sections"][value="custom"]').checked;
-    document.getElementById('customSectionWrap').style.display = customChecked ? 'block' : 'none';
-  });
-});
-
-// ── Bilingual Toggle ──
 function toggleBilingual() {
-  const on = document.getElementById('bilingualToggle').checked;
-  document.getElementById('bilingualOptions').style.display = on ? 'block' : 'none';
+  document.getElementById('bilingualOptions').style.display =
+    document.getElementById('bilingualToggle').checked ? 'block' : 'none';
 }
 
 // ── Gather Data ──
@@ -1309,10 +1099,10 @@ function gatherData() {
   const tool = document.querySelector('input[name="tool"]:checked')?.value || 'sharepoint';
   const grade = document.getElementById('gradeLevel').value;
   const school = document.getElementById('schoolName').value || 'your school';
-  const numRooms = +document.getElementById('numRooms').value;
   const classrooms = [];
+  const ph = t('step2.classroomPlaceholder');
   document.querySelectorAll('#classroomInputs input').forEach(inp => {
-    classrooms.push(inp.value || `Classroom ${+inp.dataset.index + 1}`);
+    classrooms.push(inp.value || `${ph} ${+inp.dataset.index + 1}`);
   });
   const sections = [];
   document.querySelectorAll('input[name="sections"]:checked').forEach(cb => sections.push(cb.value));
@@ -1322,49 +1112,49 @@ function gatherData() {
   const recognition = document.getElementById('recognitionName').value || 'ROARS';
   const specials = [];
   document.querySelectorAll('input[name="specials"]:checked').forEach(cb => specials.push(cb.value));
-
-  const gradeLabel = grade === 'Pre-K' ? 'Pre-K' :
-                     grade === 'Kindergarten' ? 'Kindergarten' : grade + ' grade';
-
-  return { tool, grade, gradeLabel, school, numRooms, classrooms, sections, customName, bilingual, bilingualLang, recognition, specials };
+  const gradeLabel = gradeToLabel(grade);
+  return { tool, grade, gradeLabel, school, classrooms, sections, customName, bilingual, bilingualLang, recognition, specials };
 }
 
-// ── Tool Info ──
+function gradeToLabel(grade) {
+  if (grade === 'Pre-K') return 'Pre-K';
+  if (grade === 'Kindergarten') return lang === 'es' ? 'Kínder' : 'Kindergarten';
+  const ordinals_en = { '1st': '1st', '2nd': '2nd', '3rd': '3rd', '4th': '4th', '5th': '5th' };
+  const ordinals_es = { '1st': '1.er', '2nd': '2.o', '3rd': '3.er', '4th': '4.o', '5th': '5.o' };
+  const o = lang === 'es' ? ordinals_es[grade] : ordinals_en[grade];
+  return lang === 'es' ? `${o} grado` : `${o} grade`;
+}
+
 const toolInfo = {
-  sharepoint: { name: 'SharePoint', icon: '&#127760;' },
-  sway:       { name: 'Sway', icon: '&#127912;' },
-  word:       { name: 'Word / Outlook', icon: '&#128196;' },
-  'copilot-web': { name: 'copilot.microsoft.com', icon: '&#10024;' }
+  sharepoint: { name: 'SharePoint' },
+  sway:       { name: 'Sway' },
+  word:       { name: 'Word / Outlook' },
+  'copilot-web': { name: 'copilot.microsoft.com' }
 };
 
-// ── Generate Results ──
+// ════════════════════════════════════════
+// GENERATE RESULTS
+// ════════════════════════════════════════
+
 function generateResults() {
   const d = gatherData();
   const ti = toolInfo[d.tool];
+  const isEs = lang === 'es';
 
-  // Intro
+  const sLabel = isEs ? 'secciones' : 'sections';
+  const clLabel = d.classrooms.length > 1 ? (isEs ? 'salones' : 'classrooms') : (isEs ? 'salón' : 'classroom');
+  const biLabel = d.bilingual ? ` &bull; ${isEs ? 'Bilingüe' : 'Bilingual'} (${d.bilingualLang})` : '';
   document.getElementById('resultsIntro').innerHTML = `
-    <h3>${d.gradeLabel} Newsletter &mdash; ${d.school}</h3>
-    <p>Using <strong>${ti.name}</strong> &bull; ${d.classrooms.length} classroom${d.classrooms.length > 1 ? 's' : ''} &bull; ${d.sections.length} sections${d.bilingual ? ' &bull; Bilingual (' + d.bilingualLang + ')' : ''}</p>
+    <h3>${isEs ? 'Boletín de' : ''} ${d.gradeLabel} ${isEs ? '' : 'Newsletter'} &mdash; ${d.school}</h3>
+    <p>${isEs ? 'Usando' : 'Using'} <strong>${ti.name}</strong> &bull; ${d.classrooms.length} ${clLabel} &bull; ${d.sections.length} ${sLabel}${biLabel}</p>
   `;
 
   let html = '';
-
-  // 1. Setup Instructions
-  html += accordion('Setup Instructions', 'setup', generateSetup(d), true);
-
-  // 2. Section Prompts
-  html += accordion('Section-by-Section Prompts', 'prompts', generateSectionPrompts(d));
-
-  // 3. Weekly Workflow
-  html += accordion('Weekly Workflow', 'workflow', generateWorkflow(d));
-
-  // 4. Prompt Cheat Sheet
-  html += accordion('Prompt Cheat Sheet', 'cheatsheet', generateCheatSheet(d));
-
-  // 5. Troubleshooting
-  html += accordion('Troubleshooting', 'troubleshoot', generateTroubleshooting(d));
-
+  html += accordion(t('acc.setup'), 'setup', generateSetup(d), true);
+  html += accordion(t('acc.prompts'), 'prompts', generateSectionPrompts(d));
+  html += accordion(t('acc.workflow'), 'workflow', generateWorkflow(d));
+  html += accordion(t('acc.cheatsheet'), 'cheatsheet', generateCheatSheet(d));
+  html += accordion(t('acc.troubleshoot'), 'troubleshoot', generateTroubleshooting(d));
   document.getElementById('resultsContent').innerHTML = html;
 }
 
@@ -1378,27 +1168,51 @@ function accordion(title, id, content, openByDefault = false) {
   </div>`;
 }
 
-function toggleAccordion(id) {
-  document.getElementById(id).classList.toggle('open');
-}
+function toggleAccordion(id) { document.getElementById(id).classList.toggle('open'); }
 
 function promptBlock(label, text) {
-  const escapedText = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const copyId = 'copy-' + Math.random().toString(36).substring(2, 9);
   return `<div class="prompt-block">
     <span class="prompt-label">${label}</span>
     <button class="copy-btn" id="${copyId}" onclick="copyPrompt(this)">
       <svg viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V3a1.5 1.5 0 0 1 1.5-1.5H11"/></svg>
-      Copy
+      ${t('btn.copy')}
     </button>
-    <div class="prompt-text">${escapedText}</div>
+    <div class="prompt-text">${escaped}</div>
   </div>`;
 }
 
-// ── Setup Instructions ──
+// ── Setup ──
 function generateSetup(d) {
+  const isEs = lang === 'es';
   if (d.tool === 'sharepoint') {
-    return `<h4>Create Your SharePoint Newsletter Site</h4>
+    return isEs ? `<h4>Crea tu sitio de SharePoint para el boletín</h4>
+<ol>
+  <li>Ve a <strong>sharepoint.com</strong> (o el portal de SharePoint de tu distrito)</li>
+  <li>Haz clic en <strong>+ Crear sitio</strong> &rarr; <strong>Sitio de comunicación</strong></li>
+  <li>Elige la plantilla <strong>En blanco</strong></li>
+  <li>Ponle nombre: <strong>Boletín de ${d.gradeLabel} &mdash; ${d.school}</strong></li>
+  <li>Configura el acceso compartido a "Cualquier persona con el enlace" (consulta con tu administrador)</li>
+</ol>
+<h4>Personaliza la apariencia</h4>
+<ol>
+  <li>Haz clic en el <strong>engranaje de Configuración</strong> (arriba a la derecha) &rarr; <strong>Cambiar la apariencia</strong></li>
+  <li>Elige un <strong>color de tema</strong> que represente tu grado</li>
+  <li>Sube una imagen de encabezado o el logo de la escuela</li>
+  <li>Agrega enlaces de navegación: ParentSquare, calendario escolar, menú de almuerzo</li>
+</ol>
+<h4>Crea tu primer boletín</h4>
+<ol>
+  <li>Haz clic en <strong>+ Nuevo</strong> &rarr; <strong>Publicación de noticias</strong> (recomendado &mdash; crea un feed automático)</li>
+  <li>Ponle título con la fecha: <em>"Semana del [fecha]"</em></li>
+  <li>Usa <strong>fondos de sección</strong> (Neutral, Suave, Fuerte) para separar visualmente las secciones</li>
+  <li>Agrega cada sección del boletín como un <strong>elemento web de Texto</strong></li>
+  <li>Usa el ícono de Copilot (estrella) en los elementos de texto para generar contenido</li>
+</ol>
+<div class="tip-box"><strong>Consejo:</strong> Usa <strong>publicaciones de noticias</strong> en lugar de páginas normales. Tu página principal mostrará automáticamente el boletín más reciente arriba, como un blog.</div>` :
+
+    `<h4>Create Your SharePoint Newsletter Site</h4>
 <ol>
   <li>Go to <strong>sharepoint.com</strong> (or your district's SharePoint portal)</li>
   <li>Click <strong>+ Create site</strong> &rarr; <strong>Communication site</strong></li>
@@ -1406,7 +1220,6 @@ function generateSetup(d) {
   <li>Name it: <strong>${d.gradeLabel} Newsletter &mdash; ${d.school}</strong></li>
   <li>Set sharing to "Anyone with the link" (check with your admin)</li>
 </ol>
-
 <h4>Customize the Look</h4>
 <ol>
   <li>Click <strong>Settings gear</strong> (top right) &rarr; <strong>Change the look</strong></li>
@@ -1414,28 +1227,49 @@ function generateSetup(d) {
   <li>Upload a header image or school logo</li>
   <li>Add navigation links: ParentSquare, school calendar, lunch menu</li>
 </ol>
-
 <h4>Create Your First Newsletter</h4>
 <ol>
-  <li>Click <strong>+ New</strong> &rarr; <strong>News post</strong> (recommended over regular pages &mdash; creates an automatic feed)</li>
+  <li>Click <strong>+ New</strong> &rarr; <strong>News post</strong> (recommended &mdash; creates an automatic feed)</li>
   <li>Title it with the date: <em>"Week of [date]"</em></li>
-  <li>Use <strong>section backgrounds</strong> (Neutral, Soft, Strong) for visual separation between sections</li>
+  <li>Use <strong>section backgrounds</strong> (Neutral, Soft, Strong) for visual separation</li>
   <li>Add each newsletter section as a <strong>Text web part</strong></li>
   <li>Use the Copilot sparkle icon in text web parts to generate content</li>
 </ol>
-
-<div class="tip-box"><strong>Pro Tip:</strong> Use <strong>News posts</strong> instead of regular pages. Your homepage will automatically show the latest newsletter at the top, like a blog &mdash; newest first.</div>`;
+<div class="tip-box"><strong>Pro Tip:</strong> Use <strong>News posts</strong> instead of regular pages. Your homepage will automatically show the latest newsletter at the top, like a blog.</div>`;
   }
 
   if (d.tool === 'sway') {
-    return `<h4>Create Your Sway Newsletter</h4>
+    return isEs ? `<h4>Crea tu boletín en Sway</h4>
+<ol>
+  <li>Ve a <strong>sway.cloud.microsoft</strong> o abre Sway desde tu lanzador de Office 365</li>
+  <li>Haz clic en <strong>+ Crear nuevo</strong></li>
+  <li>Ponle título: <strong>Boletín de ${d.gradeLabel} &mdash; ${d.school}</strong></li>
+  <li>Elige un estilo de diseño &mdash; <strong>desplazamiento vertical</strong> funciona mejor para boletines</li>
+</ol>
+<h4>Construye tus secciones</h4>
+<ol>
+  <li>Agrega <strong>tarjetas de encabezado</strong> para cada título de sección</li>
+  <li>Agrega <strong>tarjetas de texto</strong> para el contenido debajo de cada encabezado</li>
+  <li>Usa <strong>tarjetas de imagen</strong> para agregar interés visual</li>
+  <li>Sway tiene un botón de <strong>Diseño</strong> &mdash; haz clic para dar estilo automáticamente</li>
+</ol>
+<h4>Usar Copilot con Sway</h4>
+<p>Usa <strong>copilot.microsoft.com</strong> o <strong>Copilot en Word</strong> para generar tu texto, luego pégalo en tus tarjetas de Sway.</p>
+<h4>Compártelo</h4>
+<ol>
+  <li>Haz clic en <strong>Compartir</strong></li>
+  <li>Elige <strong>"Cualquier persona con un enlace"</strong></li>
+  <li>Copia el enlace y compártelo con las familias</li>
+</ol>
+<div class="tip-box"><strong>Consejo:</strong> Sway hace tu boletín bonito y adaptable a celulares automáticamente. Es la forma más rápida de obtener un resultado profesional.</div>` :
+
+    `<h4>Create Your Sway Newsletter</h4>
 <ol>
   <li>Go to <strong>sway.cloud.microsoft</strong> or open Sway from your Office 365 app launcher</li>
   <li>Click <strong>+ Create New</strong></li>
   <li>Title it: <strong>${d.gradeLabel} Newsletter &mdash; ${d.school}</strong></li>
   <li>Choose a layout style &mdash; <strong>vertical scrolling</strong> works best for newsletters</li>
 </ol>
-
 <h4>Build Your Sections</h4>
 <ol>
   <li>Add <strong>Heading cards</strong> for each section title</li>
@@ -1443,29 +1277,48 @@ function generateSetup(d) {
   <li>Use <strong>Image cards</strong> to break up text and add visual interest</li>
   <li>Sway has a built-in <strong>Design</strong> button &mdash; click it to auto-style your newsletter</li>
 </ol>
-
 <h4>Using Copilot with Sway</h4>
 <p>Use <strong>copilot.microsoft.com</strong> or <strong>Copilot in Word</strong> to generate your text, then paste it into your Sway cards.</p>
-
 <h4>Share It</h4>
 <ol>
   <li>Click <strong>Share</strong> at the top</li>
   <li>Choose <strong>"Anyone with a link"</strong> for view access</li>
   <li>Copy the link and share with families</li>
 </ol>
-
-<div class="tip-box"><strong>Pro Tip:</strong> Sway automatically makes your newsletter beautiful and mobile-friendly. It's the fastest way to get a polished-looking result.</div>`;
+<div class="tip-box"><strong>Pro Tip:</strong> Sway automatically makes your newsletter beautiful and mobile-friendly.</div>`;
   }
 
   if (d.tool === 'word') {
-    return `<h4>Create Your Newsletter in Word</h4>
+    return isEs ? `<h4>Crea tu boletín en Word</h4>
+<ol>
+  <li>Abre <strong>Microsoft Word</strong> (escritorio o en línea en office.com)</li>
+  <li>Comienza un <strong>documento en blanco</strong> o busca plantillas de "Newsletter"</li>
+  <li>Ponle título: <strong>Boletín semanal de ${d.gradeLabel} &mdash; ${d.school}</strong></li>
+  <li>Usa <strong>Encabezados</strong> (Título 1, Título 2) para cada sección</li>
+</ol>
+<h4>Usa Copilot en Word</h4>
+<ol>
+  <li>Haz clic en el <strong>ícono de Copilot</strong> en la barra de herramientas</li>
+  <li>Escribe tu prompt para generar el contenido de la sección</li>
+  <li>Haz clic en <strong>Insertar</strong> para agregar el texto generado</li>
+  <li>Edita según sea necesario, luego pasa a la siguiente sección</li>
+</ol>
+<h4>Envía por Outlook</h4>
+<ol>
+  <li>Selecciona todo el contenido (<strong>Ctrl+A</strong>)</li>
+  <li>Copia (<strong>Ctrl+C</strong>)</li>
+  <li>Abre Outlook, crea un nuevo correo</li>
+  <li>Pega en el cuerpo del correo (<strong>Ctrl+V</strong>)</li>
+</ol>
+<div class="tip-box"><strong>Consejo:</strong> Guarda tu primer boletín como <strong>plantilla</strong> (Archivo &rarr; Guardar como plantilla). Cada semana la duplicas y solo actualizas el contenido.</div>` :
+
+    `<h4>Create Your Newsletter in Word</h4>
 <ol>
   <li>Open <strong>Microsoft Word</strong> (desktop or online at office.com)</li>
   <li>Start a <strong>blank document</strong> or search templates for "Newsletter"</li>
   <li>Title it: <strong>${d.gradeLabel} Weekly Newsletter &mdash; ${d.school}</strong></li>
-  <li>Use <strong>Headings</strong> (Heading 1, Heading 2) for each section &mdash; this keeps formatting consistent</li>
+  <li>Use <strong>Headings</strong> (Heading 1, Heading 2) for each section</li>
 </ol>
-
 <h4>Use Copilot in Word</h4>
 <ol>
   <li>Click the <strong>Copilot icon</strong> in the toolbar (or press Alt+I)</li>
@@ -1473,37 +1326,46 @@ function generateSetup(d) {
   <li>Click <strong>Insert</strong> to add the generated text</li>
   <li>Edit as needed, then move to the next section</li>
 </ol>
-
 <h4>Send via Outlook</h4>
 <ol>
   <li>Select all your newsletter content (<strong>Ctrl+A</strong>)</li>
   <li>Copy (<strong>Ctrl+C</strong>)</li>
   <li>Open Outlook, create a new email</li>
-  <li>Paste into the email body (<strong>Ctrl+V</strong>) &mdash; formatting carries over</li>
-  <li>Or attach the Word doc / share a OneDrive link</li>
+  <li>Paste into the email body (<strong>Ctrl+V</strong>)</li>
 </ol>
-
 <div class="tip-box"><strong>Pro Tip:</strong> Save your first newsletter as a <strong>template</strong> (File &rarr; Save As Template). Each week you'll duplicate it and just update the content.</div>`;
   }
 
   // copilot-web
-  return `<h4>Using copilot.microsoft.com</h4>
-<p>This approach works with <strong>any tool</strong> &mdash; you'll generate all your newsletter text in Copilot's web interface, then paste it wherever you need it.</p>
+  return isEs ? `<h4>Usando copilot.microsoft.com</h4>
+<p>Este método funciona con <strong>cualquier herramienta</strong> &mdash; genera todo tu texto en la interfaz web de Copilot y pégalo donde lo necesites.</p>
+<ol>
+  <li>Ve a <strong>copilot.microsoft.com</strong> e inicia sesión con tu cuenta escolar</li>
+  <li>Usa los prompts a continuación para generar cada sección de tu boletín</li>
+  <li>Copia el texto generado y pégalo en tu plataforma elegida</li>
+</ol>
+<h4>Mejores prácticas</h4>
+<ul>
+  <li>Mantén una <strong>conversación dedicada</strong> en Copilot para tu boletín &mdash; Copilot recuerda el contexto dentro del chat</li>
+  <li>Comienza cada semana diciendo: <em>"Estoy actualizando mi boletín de ${d.gradeLabel} para la semana del [fecha]"</em></li>
+  <li>Haz preguntas de seguimiento si no queda bien: <em>"Hazlo más corto"</em> o <em>"Usa un tono más cálido"</em></li>
+</ul>
+<div class="tip-box"><strong>Consejo:</strong> Puedes pegar el boletín de la semana anterior y decir <em>"Reescribe esto para la semana del [fecha], cambiando el tema de matemáticas a [X] y el de lectura a [Y]."</em></div>` :
 
+  `<h4>Using copilot.microsoft.com</h4>
+<p>This approach works with <strong>any tool</strong> &mdash; generate all your text in Copilot's web interface, then paste it wherever you need it.</p>
 <ol>
   <li>Go to <strong>copilot.microsoft.com</strong> and sign in with your school account</li>
-  <li>Use the prompts below to generate each section of your newsletter</li>
-  <li>Copy the generated text and paste it into your chosen platform (SharePoint, email, Google Docs, etc.)</li>
+  <li>Use the prompts below to generate each section</li>
+  <li>Copy the generated text and paste it into your chosen platform</li>
 </ol>
-
 <h4>Best Practices</h4>
 <ul>
-  <li>Keep a <strong>dedicated Copilot conversation</strong> for your newsletter &mdash; Copilot remembers context within a chat</li>
+  <li>Keep a <strong>dedicated Copilot conversation</strong> for your newsletter</li>
   <li>Start each week by saying: <em>"I'm updating my ${d.gradeLabel} newsletter for the week of [date]"</em></li>
-  <li>Ask follow-up questions if the output isn't quite right: <em>"Make it shorter"</em> or <em>"Use a warmer tone"</em></li>
+  <li>Ask follow-up questions if needed: <em>"Make it shorter"</em> or <em>"Use a warmer tone"</em></li>
 </ul>
-
-<div class="tip-box"><strong>Pro Tip:</strong> You can paste the entire previous week's newsletter into Copilot and say <em>"Rewrite this for the week of [date], updating the math topic to [X] and literacy to [Y]."</em> It's the fastest way to update week to week.</div>`;
+<div class="tip-box"><strong>Pro Tip:</strong> Paste the previous week's newsletter into Copilot and say <em>"Rewrite this for the week of [date], updating the math topic to [X] and literacy to [Y]."</em></div>`;
 }
 
 // ── Section Prompts ──
@@ -1511,155 +1373,233 @@ function generateSectionPrompts(d) {
   let html = '';
   const g = d.gradeLabel;
   const classroomList = d.classrooms.join(', ');
+  const isEs = lang === 'es';
+  const promptLabel = isEs ? 'Prompt de Copilot' : 'Copilot Prompt';
 
   if (d.sections.includes('welcome')) {
-    html += `<h4>Welcome Message</h4>
-<p>A warm greeting summarizing the week ahead.</p>
-${promptBlock('Copilot Prompt', `Write a warm, friendly welcome message for a ${g} weekly classroom newsletter dated [date]. Mention that this week students will be learning about [topic in math] and [topic in literacy]. Keep it to 3-4 sentences. Use a warm, encouraging tone that makes families feel included in their child's learning.`)}`;
+    html += isEs
+      ? `<h4>Mensaje de bienvenida</h4><p>Un saludo cálido resumiendo la semana.</p>
+${promptBlock(promptLabel, `Escribe un mensaje de bienvenida cálido y amigable para un boletín semanal de ${g} con fecha [fecha]. Menciona que esta semana los estudiantes aprenderán sobre [tema de matemáticas] y [tema de lectoescritura]. Mantenlo en 3-4 oraciones. Usa un tono cálido y alentador que haga que las familias se sientan incluidas en el aprendizaje de sus hijos.`)}`
+      : `<h4>Welcome Message</h4><p>A warm greeting summarizing the week ahead.</p>
+${promptBlock(promptLabel, `Write a warm, friendly welcome message for a ${g} weekly classroom newsletter dated [date]. Mention that this week students will be learning about [topic in math] and [topic in literacy]. Keep it to 3-4 sentences. Use a warm, encouraging tone that makes families feel included in their child's learning.`)}`;
   }
 
   if (d.sections.includes('math')) {
-    html += `<h4>Math News</h4>
-<p>What students are learning in math, explained for parents with a home practice idea.</p>
-${promptBlock('Copilot Prompt', `Write a short math update for a ${g} parent newsletter. This week we are working on [topic/module/lesson]. Explain what students are learning in simple, parent-friendly language. Include 1 suggestion for how families can practice this skill at home. Keep it to 1 short paragraph.`)}`;
+    html += isEs
+      ? `<h4>Noticias de matemáticas</h4><p>Lo que los estudiantes aprenden en matemáticas, explicado para las familias.</p>
+${promptBlock(promptLabel, `Escribe una breve actualización de matemáticas para un boletín de padres de ${g}. Esta semana estamos trabajando en [tema/módulo/lección]. Explica lo que los estudiantes están aprendiendo en un lenguaje sencillo para padres. Incluye 1 sugerencia de cómo las familias pueden practicar esta habilidad en casa. Mantenlo en 1 párrafo corto.`)}`
+      : `<h4>Math News</h4><p>What students are learning in math, explained for parents.</p>
+${promptBlock(promptLabel, `Write a short math update for a ${g} parent newsletter. This week we are working on [topic/module/lesson]. Explain what students are learning in simple, parent-friendly language. Include 1 suggestion for how families can practice this skill at home. Keep it to 1 short paragraph.`)}`;
   }
 
   if (d.sections.includes('literacy')) {
-    html += `<h4>Literacy / ELA News</h4>
-<p>Reading and writing focus for the week, with home support suggestions.</p>
-${promptBlock('Copilot Prompt', `Write a short literacy update for a ${g} parent newsletter. This week in reading, we are focusing on [skill — e.g., identifying the main idea, making inferences]. In writing, students are working on [skill — e.g., persuasive paragraphs, personal narratives]. Explain in parent-friendly language and suggest one way families can support this at home. Keep it to 1 short paragraph.`)}`;
+    html += isEs
+      ? `<h4>Noticias de lectoescritura</h4><p>Enfoque de lectura y escritura de la semana.</p>
+${promptBlock(promptLabel, `Escribe una breve actualización de lectoescritura para un boletín de padres de ${g}. Esta semana en lectura nos enfocamos en [destreza — ej., identificar la idea principal, hacer inferencias]. En escritura, los estudiantes trabajan en [destreza — ej., párrafos persuasivos, narrativas personales]. Explícalo para padres y sugiere una forma en que las familias pueden apoyar en casa. Mantenlo en 1 párrafo corto.`)}`
+      : `<h4>Literacy / ELA News</h4><p>Reading and writing focus for the week.</p>
+${promptBlock(promptLabel, `Write a short literacy update for a ${g} parent newsletter. This week in reading, we are focusing on [skill — e.g., identifying the main idea, making inferences]. In writing, students are working on [skill — e.g., persuasive paragraphs, personal narratives]. Explain in parent-friendly language and suggest one way families can support this at home. Keep it to 1 short paragraph.`)}`;
   }
 
   if (d.sections.includes('ask')) {
-    html += `<h4>Ask Your Child</h4>
-<p>Conversation starters so parents get more than "Fine." at dinner.</p>
-${promptBlock('Copilot Prompt', `Generate 4 specific conversation-starter questions that parents can ask their ${g}r about school this week. This week we learned about [topics]. Make the questions engaging and open-ended so kids have something concrete to talk about. Format as a bulleted list.`)}`;
+    html += isEs
+      ? `<h4>Pregúntale a tu hijo/a</h4><p>Preguntas para que los padres conversen más allá de "¿Cómo te fue?" / "Bien."</p>
+${promptBlock(promptLabel, `Genera 4 preguntas específicas para iniciar conversaciones que los padres puedan hacerle a su hijo/a de ${g} sobre la escuela esta semana. Esta semana aprendimos sobre [temas]. Haz las preguntas interesantes y abiertas para que los niños tengan algo concreto de qué hablar. Formato de lista con viñetas.`)}`
+      : `<h4>Ask Your Child</h4><p>Conversation starters so parents get more than "Fine." at dinner.</p>
+${promptBlock(promptLabel, `Generate 4 specific conversation-starter questions that parents can ask their ${g}r about school this week. This week we learned about [topics]. Make the questions engaging and open-ended so kids have something concrete to talk about. Format as a bulleted list.`)}`;
   }
 
   if (d.sections.includes('vocab')) {
-    html += `<h4>Vocabulary</h4>
-<p>Format the week's vocabulary words with kid-friendly definitions.</p>
-${promptBlock('Copilot Prompt', `Format the following vocabulary words into a clean list with simple, kid-friendly definitions appropriate for ${g}: [word1, word2, word3, word4, word5]`)}`;
+    html += isEs
+      ? `<h4>Vocabulario</h4><p>Palabras de vocabulario con definiciones para niños.</p>
+${promptBlock(promptLabel, `Formatea las siguientes palabras de vocabulario en una lista limpia con definiciones simples y apropiadas para ${g}: [palabra1, palabra2, palabra3, palabra4, palabra5]`)}`
+      : `<h4>Vocabulary</h4><p>Format the week's vocabulary words with kid-friendly definitions.</p>
+${promptBlock(promptLabel, `Format the following vocabulary words into a clean list with simple, kid-friendly definitions appropriate for ${g}: [word1, word2, word3, word4, word5]`)}`;
   }
 
   if (d.sections.includes('books')) {
-    html += `<h4>Books &amp; Read-Alouds</h4>
-<p>Description and discussion questions for the week's books.</p>
-${promptBlock('Copilot Prompt', `Write a short description of the book "[Title]" by [Author] for a ${g} parent newsletter. Include 2 discussion questions families can use after reading or listening to the book together. Keep the description to 2 sentences.`)}`;
+    html += isEs
+      ? `<h4>Libros y lecturas</h4><p>Descripción y preguntas de discusión para los libros de la semana.</p>
+${promptBlock(promptLabel, `Escribe una breve descripción del libro "[Título]" de [Autor] para un boletín de padres de ${g}. Incluye 2 preguntas de discusión que las familias puedan usar después de leer o escuchar el libro juntos. Mantén la descripción en 2 oraciones.`)}`
+      : `<h4>Books &amp; Read-Alouds</h4><p>Description and discussion questions for the week's books.</p>
+${promptBlock(promptLabel, `Write a short description of the book "[Title]" by [Author] for a ${g} parent newsletter. Include 2 discussion questions families can use after reading or listening to the book together. Keep the description to 2 sentences.`)}`;
   }
 
   if (d.sections.includes('reminders')) {
-    html += `<h4>Important Reminders</h4>
-<p>Format upcoming dates and events into a scannable list.</p>
-${promptBlock('Copilot Prompt', `Format the following school reminders into a clear, scannable list for a parent newsletter. Each item should have the date bolded and a brief description: [list your reminders — e.g., Picture Day is March 5, Spring Break is March 16-20]`)}`;
+    html += isEs
+      ? `<h4>Recordatorios importantes</h4><p>Formatea las fechas y eventos próximos.</p>
+${promptBlock(promptLabel, `Formatea los siguientes recordatorios escolares en una lista clara y fácil de leer para un boletín de padres. Cada elemento debe tener la fecha en negritas y una breve descripción: [lista de recordatorios — ej., Día de fotos es el 5 de marzo, Vacaciones de primavera del 16 al 20 de marzo]`)}`
+      : `<h4>Important Reminders</h4><p>Format upcoming dates and events into a scannable list.</p>
+${promptBlock(promptLabel, `Format the following school reminders into a clear, scannable list for a parent newsletter. Each item should have the date bolded and a brief description: [list your reminders — e.g., Picture Day is March 5, Spring Break is March 16-20]`)}`;
   }
 
   if (d.sections.includes('specials')) {
-    html += `<h4>Specials Schedule</h4>
-<p>Build a weekly rotation table for your classrooms.</p>
-${promptBlock('Copilot Prompt', `Create a weekly specials schedule table for ${g} at ${d.school}. The classrooms are: ${classroomList}. The specials are: ${d.specials.join(', ')}. Here is the rotation: [Monday: ${d.classrooms[0]} has ${d.specials[0] || 'Art'}, ${d.classrooms.length > 1 ? d.classrooms[1] + ' has ' + (d.specials[1] || 'Music') : ''}, etc.]. Format it as a clean table with days as columns and classrooms as rows.`)}`;
+    html += isEs
+      ? `<h4>Horario de especiales</h4><p>Crea una tabla de rotación semanal para tus salones.</p>
+${promptBlock(promptLabel, `Crea una tabla de horario de especiales semanal para ${g} en ${d.school}. Los salones son: ${classroomList}. Las clases especiales son: ${d.specials.join(', ')}. La rotación es: [Lunes: ${d.classrooms[0]} tiene ${d.specials[0] || 'Arte'}, ${d.classrooms.length > 1 ? d.classrooms[1] + ' tiene ' + (d.specials[1] || 'Música') : ''}, etc.]. Formatea como tabla con días como columnas y salones como filas.`)}`
+      : `<h4>Specials Schedule</h4><p>Build a weekly rotation table for your classrooms.</p>
+${promptBlock(promptLabel, `Create a weekly specials schedule table for ${g} at ${d.school}. The classrooms are: ${classroomList}. The specials are: ${d.specials.join(', ')}. Here is the rotation: [Monday: ${d.classrooms[0]} has ${d.specials[0] || 'Art'}, ${d.classrooms.length > 1 ? d.classrooms[1] + ' has ' + (d.specials[1] || 'Music') : ''}, etc.]. Format it as a clean table with days as columns and classrooms as rows.`)}`;
   }
 
   if (d.sections.includes('recognition')) {
-    html += `<h4>Student Recognition (${d.recognition})</h4>
-<p>Celebrate one student per classroom. Copilot can format it for you — you pick the students!</p>
-${promptBlock('Copilot Prompt', `Format the following student recognitions into a celebratory section for a school newsletter. The program is called "${d.recognition}." Use a fun, congratulatory tone. Classrooms and students: [${d.classrooms.map((c, i) => c + ': [Student ' + (i+1) + ' Name]').join(', ')}]`)}`;
+    html += isEs
+      ? `<h4>Reconocimiento estudiantil (${d.recognition})</h4><p>Celebra a un estudiante por salón. ¡Copilot lo formatea, tú eliges a los estudiantes!</p>
+${promptBlock(promptLabel, `Formatea los siguientes reconocimientos estudiantiles en una sección festiva para un boletín escolar. El programa se llama "${d.recognition}." Usa un tono divertido y de felicitación. Salones y estudiantes: [${d.classrooms.map((c, i) => c + ': [Estudiante ' + (i+1) + ']').join(', ')}]`)}`
+      : `<h4>Student Recognition (${d.recognition})</h4><p>Celebrate one student per classroom. Copilot formats it — you pick the students!</p>
+${promptBlock(promptLabel, `Format the following student recognitions into a celebratory section for a school newsletter. The program is called "${d.recognition}." Use a fun, congratulatory tone. Classrooms and students: [${d.classrooms.map((c, i) => c + ': [Student ' + (i+1) + ' Name]').join(', ')}]`)}`;
   }
 
   if (d.sections.includes('custom') && d.customName) {
-    html += `<h4>${d.customName}</h4>
-<p>Your custom section.</p>
-${promptBlock('Copilot Prompt', `Write a short, parent-friendly update for a ${g} newsletter section called "${d.customName}." This week: [describe what's happening]. Keep it to 1 short paragraph with a warm, informative tone.`)}`;
+    html += isEs
+      ? `<h4>${d.customName}</h4><p>Tu sección personalizada.</p>
+${promptBlock(promptLabel, `Escribe una breve actualización para padres de una sección del boletín de ${g} llamada "${d.customName}." Esta semana: [describe lo que está pasando]. Mantenlo en 1 párrafo corto con un tono cálido e informativo.`)}`
+      : `<h4>${d.customName}</h4><p>Your custom section.</p>
+${promptBlock(promptLabel, `Write a short, parent-friendly update for a ${g} newsletter section called "${d.customName}." This week: [describe what's happening]. Keep it to 1 short paragraph with a warm, informative tone.`)}`;
   }
 
   if (d.bilingual) {
-    html += `<h4>Translation to ${d.bilingualLang}</h4>
-<p>After writing all your sections in English, use this prompt to translate.</p>
-${promptBlock('Translation Prompt', `Translate the following school newsletter to ${d.bilingualLang}. Use a warm, parent-friendly tone. Keep proper nouns in English (names, ${d.school}, program names like ${d.recognition}, ParentSquare). Preserve all formatting (headings, bullet points, bold text):
+    const transLabel = isEs ? 'Prompt de traducción' : 'Translation Prompt';
+    html += isEs
+      ? `<h4>Traducción a ${d.bilingualLang}</h4><p>Después de escribir todas las secciones en inglés, usa este prompt para traducir.</p>
+${promptBlock(transLabel, `Traduce el siguiente boletín escolar a ${d.bilingualLang}. Usa un tono cálido y amigable para padres. Mantén los nombres propios en inglés (nombres, ${d.school}, nombres de programas como ${d.recognition}, ParentSquare). Conserva todo el formato (encabezados, viñetas, texto en negritas):
+
+[pega tu texto del boletín en inglés aquí]`)}
+<div class="tip-box"><strong>Importante:</strong> Siempre pide a un colega bilingüe que revise las traducciones de Copilot antes de publicar. Las traducciones de IA son buenas pero no perfectas, especialmente con terminología educativa.</div>`
+      : `<h4>Translation to ${d.bilingualLang}</h4><p>After writing all your sections in English, use this prompt to translate.</p>
+${promptBlock(transLabel, `Translate the following school newsletter to ${d.bilingualLang}. Use a warm, parent-friendly tone. Keep proper nouns in English (names, ${d.school}, program names like ${d.recognition}, ParentSquare). Preserve all formatting (headings, bullet points, bold text):
 
 [paste your English newsletter text here]`)}
-<div class="tip-box"><strong>Important:</strong> Always have a native speaker or bilingual colleague review Copilot's translations before publishing. AI translations are good but not perfect, especially with educational terminology.</div>`;
+<div class="tip-box"><strong>Important:</strong> Always have a native speaker or bilingual colleague review Copilot's translations before publishing.</div>`;
   }
 
   return html;
 }
 
-// ── Weekly Workflow ──
+// ── Workflow ──
+const sectionNamesEn = { welcome:'welcome message', math:'math news', literacy:'literacy news', ask:'4 "ask your child" questions', vocab:'vocabulary definitions', books:'book description with discussion questions', reminders:'formatted reminders', recognition:'student recognition', custom:'custom section' };
+const sectionNamesEs = { welcome:'mensaje de bienvenida', math:'noticias de matemáticas', literacy:'noticias de lectoescritura', ask:'4 preguntas de "pregúntale a tu hijo/a"', vocab:'definiciones de vocabulario', books:'descripción del libro con preguntas', reminders:'recordatorios formateados', recognition:'reconocimiento estudiantil', custom:'sección personalizada' };
+
 function generateWorkflow(d) {
   const g = d.gradeLabel;
-  let duplicateStep = '';
+  const isEs = lang === 'es';
+  const sNames = isEs ? sectionNamesEs : sectionNamesEn;
+  const promptLabel = isEs ? 'Prompt completo del boletín' : 'Full Newsletter Prompt';
+
+  let dupStep = '';
   if (d.tool === 'sharepoint') {
-    duplicateStep = `<li><strong>Duplicate last week's page:</strong> Go to your site's <strong>Pages</strong> library, find last week, click <strong>&hellip;</strong> &rarr; <strong>Copy</strong>, rename with the new date</li>`;
+    dupStep = isEs
+      ? `<li><strong>Duplica la página de la semana anterior:</strong> Ve a la biblioteca de <strong>Páginas</strong>, encuentra la semana pasada, haz clic en <strong>&hellip;</strong> &rarr; <strong>Copiar</strong>, renombra con la nueva fecha</li>`
+      : `<li><strong>Duplicate last week's page:</strong> Go to your site's <strong>Pages</strong> library, find last week, click <strong>&hellip;</strong> &rarr; <strong>Copy</strong>, rename with the new date</li>`;
   } else if (d.tool === 'word') {
-    duplicateStep = `<li><strong>Duplicate last week's document:</strong> Open last week's file, <strong>Save As</strong> with the new date</li>`;
+    dupStep = isEs
+      ? `<li><strong>Duplica el documento anterior:</strong> Abre el archivo de la semana pasada, <strong>Guardar como</strong> con la nueva fecha</li>`
+      : `<li><strong>Duplicate last week's document:</strong> Open last week's file, <strong>Save As</strong> with the new date</li>`;
   } else if (d.tool === 'sway') {
-    duplicateStep = `<li><strong>Duplicate last week's Sway:</strong> Open it, click <strong>&hellip;</strong> &rarr; <strong>Duplicate</strong>, rename with the new date</li>`;
+    dupStep = isEs
+      ? `<li><strong>Duplica el Sway anterior:</strong> Ábrelo, haz clic en <strong>&hellip;</strong> &rarr; <strong>Duplicar</strong>, renombra con la nueva fecha</li>`
+      : `<li><strong>Duplicate last week's Sway:</strong> Open it, click <strong>&hellip;</strong> &rarr; <strong>Duplicate</strong>, rename with the new date</li>`;
   } else {
-    duplicateStep = `<li><strong>Start a fresh Copilot chat:</strong> Tell Copilot <em>"I'm updating my ${g} newsletter for the week of [date]"</em></li>`;
+    dupStep = isEs
+      ? `<li><strong>Inicia un nuevo chat en Copilot:</strong> Dile a Copilot <em>"Estoy actualizando mi boletín de ${g} para la semana del [fecha]"</em></li>`
+      : `<li><strong>Start a fresh Copilot chat:</strong> Tell Copilot <em>"I'm updating my ${g} newsletter for the week of [date]"</em></li>`;
   }
 
-  return `<h4>Your Weekly Process (15-20 minutes)</h4>
-<ol>
-  ${duplicateStep}
-  <li><strong>Update each section</strong> using the Copilot prompts from this guide &mdash; fill in this week's topics</li>
-  ${d.sections.includes('specials') ? '<li><strong>Update the specials rotation</strong> &mdash; shift the schedule or update the rotation letter</li>' : ''}
-  ${d.sections.includes('recognition') ? '<li><strong>Update ' + d.recognition + '</strong> &mdash; swap in this week\'s student names</li>' : ''}
-  <li><strong>Review and edit</strong> &mdash; Copilot gives you a first draft, always personalize it</li>
-  ${d.bilingual ? '<li><strong>Translate</strong> &mdash; use the translation prompt, then have a bilingual colleague review</li>' : ''}
-  <li><strong>Publish / Send</strong> &mdash; ${d.tool === 'sharepoint' ? 'click <strong>Publish</strong> (or Republish)' : d.tool === 'word' ? 'copy into Outlook and send, or share the OneDrive link' : d.tool === 'sway' ? 'Sway auto-saves &mdash; the same link always shows the latest' : 'paste into your delivery platform and send'}</li>
-  <li><strong>Share the link</strong> (first time only) via ParentSquare, email, or a printed card</li>
-</ol>
+  const weeklyTitle = isEs ? 'Tu proceso semanal (15-20 minutos)' : 'Your Weekly Process (15-20 minutes)';
+  const updateStep = isEs ? `<li><strong>Actualiza cada sección</strong> usando los prompts de Copilot de esta guía</li>` : `<li><strong>Update each section</strong> using the Copilot prompts from this guide</li>`;
+  const specialsStep = d.sections.includes('specials') ? (isEs ? '<li><strong>Actualiza la rotación de especiales</strong></li>' : '<li><strong>Update the specials rotation</strong></li>') : '';
+  const recognitionStep = d.sections.includes('recognition') ? (isEs ? `<li><strong>Actualiza ${d.recognition}</strong> &mdash; cambia los nombres de los estudiantes</li>` : `<li><strong>Update ${d.recognition}</strong> &mdash; swap in this week's student names</li>`) : '';
+  const reviewStep = isEs ? `<li><strong>Revisa y edita</strong> &mdash; Copilot te da un borrador, siempre personalízalo</li>` : `<li><strong>Review and edit</strong> &mdash; Copilot gives you a first draft, always personalize it</li>`;
+  const bilingualStep = d.bilingual ? (isEs ? `<li><strong>Traduce</strong> &mdash; usa el prompt de traducción y pide a un colega bilingüe que revise</li>` : `<li><strong>Translate</strong> &mdash; use the translation prompt, then have a bilingual colleague review</li>`) : '';
 
-<div class="tip-box"><strong>Time-saver:</strong> Keep a running note during the week where you jot down what you're teaching. When it's newsletter time, you'll have all your topics ready to drop into the prompts.</div>
+  let publishStep = '';
+  if (d.tool === 'sharepoint') publishStep = isEs ? 'haz clic en <strong>Publicar</strong>' : 'click <strong>Publish</strong>';
+  else if (d.tool === 'word') publishStep = isEs ? 'copia en Outlook y envía' : 'copy into Outlook and send';
+  else if (d.tool === 'sway') publishStep = isEs ? 'Sway se guarda automáticamente' : 'Sway auto-saves';
+  else publishStep = isEs ? 'pega en tu plataforma y envía' : 'paste into your delivery platform';
 
-<h4>All-in-One Weekly Update Prompt</h4>
-<p>Use this single prompt to generate most of your newsletter at once:</p>
-${promptBlock('Full Newsletter Prompt', `I need to update my ${g} weekly newsletter for the week of [date] at ${d.school}. Here is what's happening this week:
+  const pubLabel = isEs ? 'Publica / Envía' : 'Publish / Send';
+  const shareLabel = isEs ? 'Comparte el enlace' : 'Share the link';
+  const shareNote = isEs ? '(solo la primera vez) por ParentSquare, correo o una tarjeta impresa' : '(first time only) via ParentSquare, email, or a printed card';
+  const tipLabel = isEs ? 'Consejo' : 'Time-saver';
+  const tipText = isEs ? 'Mantén una nota durante la semana donde apuntes lo que estás enseñando. Cuando sea hora del boletín, tendrás todos los temas listos.' : "Keep a running note during the week where you jot down what you're teaching. When it's newsletter time, you'll have all your topics ready.";
+  const allInOneTitle = isEs ? 'Prompt para actualización semanal completa' : 'All-in-One Weekly Update Prompt';
+  const allInOneDesc = isEs ? 'Usa este prompt para generar la mayor parte de tu boletín de una vez:' : 'Use this single prompt to generate most of your newsletter at once:';
+
+  const secListStr = d.sections.filter(s => s !== 'specials' && s !== 'custom').map(s => sNames[s] || s).join(', ');
+
+  const allInOnePrompt = isEs
+    ? `Necesito actualizar mi boletín semanal de ${g} para la semana del [fecha] en ${d.school}. Esto es lo que pasa esta semana:
+- Matemáticas: [tema]
+- Lectoescritura: [tema]
+${d.sections.includes('books') ? '- Libros: [título(s)]\n' : ''}- Recordatorios: [lista]
+${d.sections.includes('recognition') ? '- ' + d.recognition + ': [nombres de estudiantes por salón]\n' : ''}
+Escribe todas las secciones del boletín: ${secListStr}. Mantén todo conciso y amigable para padres.`
+    : `I need to update my ${g} weekly newsletter for the week of [date] at ${d.school}. Here is what's happening this week:
 - Math: [topic]
 - Literacy: [topic]
 ${d.sections.includes('books') ? '- Books: [title(s)]\n' : ''}- Reminders: [list]
 ${d.sections.includes('recognition') ? '- ' + d.recognition + ': [student names by classroom]\n' : ''}
-Write all of the newsletter sections: ${d.sections.filter(s => s !== 'specials' && s !== 'custom').map(s => sectionNames[s] || s).join(', ')}. Keep everything concise and parent-friendly.`)}`;
-}
+Write all of the newsletter sections: ${secListStr}. Keep everything concise and parent-friendly.`;
 
-const sectionNames = {
-  welcome: 'welcome message',
-  math: 'math news',
-  literacy: 'literacy news',
-  ask: '4 "ask your child" questions',
-  vocab: 'vocabulary definitions',
-  books: 'book description with discussion questions',
-  reminders: 'formatted reminders',
-  recognition: 'student recognition',
-  custom: 'custom section'
-};
+  return `<h4>${weeklyTitle}</h4>
+<ol>
+  ${dupStep}
+  ${updateStep}
+  ${specialsStep}
+  ${recognitionStep}
+  ${reviewStep}
+  ${bilingualStep}
+  <li><strong>${pubLabel}</strong> &mdash; ${publishStep}</li>
+  <li><strong>${shareLabel}</strong> ${shareNote}</li>
+</ol>
+<div class="tip-box"><strong>${tipLabel}:</strong> ${tipText}</div>
+<h4>${allInOneTitle}</h4>
+<p>${allInOneDesc}</p>
+${promptBlock(isEs ? 'Prompt completo' : 'Full Newsletter Prompt', allInOnePrompt)}`;
+}
 
 // ── Cheat Sheet ──
 function generateCheatSheet(d) {
   const g = d.gradeLabel;
-  let html = '<p>All your prompts in one place. Click <strong>Copy</strong> on any prompt to copy it to your clipboard.</p>';
+  const isEs = lang === 'es';
+  const sNames = isEs ? sectionNamesEs : sectionNamesEn;
 
-  html += promptBlock('Full Newsletter (One Shot)', `Write a weekly ${g} classroom newsletter for the week of [date] at ${d.school}.
+  let html = isEs
+    ? '<p>Todos tus prompts en un solo lugar. Haz clic en <strong>Copiar</strong> en cualquier prompt.</p>'
+    : '<p>All your prompts in one place. Click <strong>Copy</strong> on any prompt to copy it to your clipboard.</p>';
 
-Include these sections:
-${d.sections.includes('welcome') ? '1. Welcome message (3 sentences, warm and friendly)\n' : ''}${d.sections.includes('math') ? '2. Math News: We\'re learning [topic]. Explain for parents and give 1 home practice idea.\n' : ''}${d.sections.includes('literacy') ? '3. Literacy News: We\'re focusing on [reading skill] and [writing skill]. Explain for parents and give 1 home support idea.\n' : ''}${d.sections.includes('ask') ? '4. Ask Your Child: 4 open-ended questions about [this week\'s topics]\n' : ''}${d.sections.includes('vocab') ? '5. Vocabulary: Define these words at a ${g} level: [words]\n' : ''}${d.sections.includes('books') ? '6. Book of the Week: [Title] by [Author]. Write a 2-sentence description and 2 discussion questions.\n' : ''}${d.sections.includes('reminders') ? '7. Reminders: Format these with bold dates: [your reminders]\n' : ''}
-Use a warm, encouraging tone. Keep everything concise — parents should be able to read the whole newsletter in 3 minutes.`);
+  const secLines = [];
+  let n = 1;
+  if (d.sections.includes('welcome')) secLines.push(isEs ? `${n++}. Mensaje de bienvenida (3 oraciones, cálido y amigable)` : `${n++}. Welcome message (3 sentences, warm and friendly)`);
+  if (d.sections.includes('math')) secLines.push(isEs ? `${n++}. Noticias de matemáticas: Estamos aprendiendo [tema]. Explica para padres y da 1 idea de práctica en casa.` : `${n++}. Math News: We're learning [topic]. Explain for parents and give 1 home practice idea.`);
+  if (d.sections.includes('literacy')) secLines.push(isEs ? `${n++}. Noticias de lectoescritura: Nos enfocamos en [destreza de lectura] y [destreza de escritura]. Explica para padres y da 1 idea de apoyo en casa.` : `${n++}. Literacy News: We're focusing on [reading skill] and [writing skill]. Explain for parents and give 1 home support idea.`);
+  if (d.sections.includes('ask')) secLines.push(isEs ? `${n++}. Pregúntale a tu hijo/a: 4 preguntas abiertas sobre [temas de esta semana]` : `${n++}. Ask Your Child: 4 open-ended questions about [this week's topics]`);
+  if (d.sections.includes('vocab')) secLines.push(isEs ? `${n++}. Vocabulario: Define estas palabras a nivel de ${g}: [palabras]` : `${n++}. Vocabulary: Define these words at a ${g} level: [words]`);
+  if (d.sections.includes('books')) secLines.push(isEs ? `${n++}. Libro de la semana: [Título] de [Autor]. Escribe una descripción de 2 oraciones y 2 preguntas de discusión.` : `${n++}. Book of the Week: [Title] by [Author]. Write a 2-sentence description and 2 discussion questions.`);
+  if (d.sections.includes('reminders')) secLines.push(isEs ? `${n++}. Recordatorios: Formatea estos con fechas en negritas: [tus recordatorios]` : `${n++}. Reminders: Format these with bold dates: [your reminders]`);
 
-  html += promptBlock('Rewrite for New Week', `Rewrite this newsletter for the week of [new date]. Update the following: Math topic is now [X]. Literacy focus is now [Y]. New reminders: [list]. Keep the same format and tone:
+  const fullPrompt = isEs
+    ? `Escribe un boletín semanal de ${g} para la semana del [fecha] en ${d.school}.\n\nIncluye estas secciones:\n${secLines.join('\n')}\n\nUsa un tono cálido y alentador. Mantén todo conciso — los padres deben poder leer el boletín completo en 3 minutos.`
+    : `Write a weekly ${g} classroom newsletter for the week of [date] at ${d.school}.\n\nInclude these sections:\n${secLines.join('\n')}\n\nUse a warm, encouraging tone. Keep everything concise — parents should be able to read the whole newsletter in 3 minutes.`;
 
-[paste last week's newsletter]`);
+  html += promptBlock(isEs ? 'Boletín completo (una sola vez)' : 'Full Newsletter (One Shot)', fullPrompt);
+
+  html += promptBlock(isEs ? 'Reescribir para nueva semana' : 'Rewrite for New Week', isEs
+    ? `Reescribe este boletín para la semana del [nueva fecha]. Actualiza lo siguiente: El tema de matemáticas ahora es [X]. El enfoque de lectoescritura ahora es [Y]. Nuevos recordatorios: [lista]. Mantén el mismo formato y tono:\n\n[pega el boletín de la semana pasada]`
+    : `Rewrite this newsletter for the week of [new date]. Update the following: Math topic is now [X]. Literacy focus is now [Y]. New reminders: [list]. Keep the same format and tone:\n\n[paste last week's newsletter]`);
 
   if (d.bilingual) {
-    html += promptBlock(`Translate to ${d.bilingualLang}`, `Translate the following school newsletter to ${d.bilingualLang}. Use a warm, parent-friendly tone. Keep proper nouns in English (names, ${d.school}, program names like ${d.recognition}, ParentSquare). Preserve all formatting:
-
-[paste newsletter]`);
+    html += promptBlock(isEs ? `Traducir a ${d.bilingualLang}` : `Translate to ${d.bilingualLang}`, isEs
+      ? `Traduce el siguiente boletín escolar a ${d.bilingualLang}. Usa un tono cálido y amigable para padres. Mantén los nombres propios en inglés (nombres, ${d.school}, nombres de programas como ${d.recognition}, ParentSquare). Conserva el formato:\n\n[pega el boletín]`
+      : `Translate the following school newsletter to ${d.bilingualLang}. Use a warm, parent-friendly tone. Keep proper nouns in English (names, ${d.school}, program names like ${d.recognition}, ParentSquare). Preserve all formatting:\n\n[paste newsletter]`);
   }
 
-  html += promptBlock('Make It More Concise', `Shorten this newsletter section to be more concise. Keep the key information but reduce it to 2-3 sentences max:
+  html += promptBlock(isEs ? 'Hacerlo más conciso' : 'Make It More Concise', isEs
+    ? `Acorta esta sección del boletín para que sea más concisa. Mantén la información clave pero redúcelo a 2-3 oraciones máximo:\n\n[pega la sección]`
+    : `Shorten this newsletter section to be more concise. Keep the key information but reduce it to 2-3 sentences max:\n\n[paste section]`);
 
-[paste section]`);
-
-  html += promptBlock('Generate Discussion Questions', `Write 4 family discussion questions for ${g}rs about [topic]. Make them open-ended, specific (not generic), and something a child would actually want to talk about.`);
+  html += promptBlock(isEs ? 'Generar preguntas de discusión' : 'Generate Discussion Questions', isEs
+    ? `Escribe 4 preguntas de discusión familiar para estudiantes de ${g} sobre [tema]. Hazlas abiertas, específicas (no genéricas), y algo sobre lo que un niño realmente quiera hablar.`
+    : `Write 4 family discussion questions for ${g}rs about [topic]. Make them open-ended, specific (not generic), and something a child would actually want to talk about.`);
 
   return html;
 }
@@ -1667,86 +1607,48 @@ Use a warm, encouraging tone. Keep everything concise — parents should be able
 // ── Troubleshooting ──
 function generateTroubleshooting(d) {
   let html = '';
+  const isEs = lang === 'es';
 
   if (d.tool === 'sharepoint') {
-    html += `<h4>"I can't find Copilot in SharePoint"</h4>
-<p>Copilot appears when you're <strong>editing a page</strong>, inside text web parts. If you don't see it, your district may need to enable it. As a workaround, use Copilot in <strong>Word</strong> or at <strong>copilot.microsoft.com</strong> to generate text, then paste it into SharePoint.</p>
-
-<h4>"My site looks plain"</h4>
-<ul>
-  <li>Use <strong>section background colors</strong> (click a section, choose Neutral/Soft/Strong)</li>
-  <li>Add images and emojis in headings to break up text</li>
-  <li>Use the <strong>Hero web part</strong> at the top for a strong visual header</li>
-</ul>
-
-<h4>"Parents can't access the site"</h4>
-<ul>
-  <li>Check <strong>Settings &rarr; Site permissions</strong></li>
-  <li>Set to "Anyone with the link" or add specific parent email groups</li>
-  <li>Ask your admin if external sharing is enabled</li>
-</ul>`;
+    html += isEs
+      ? `<h4>"No encuentro Copilot en SharePoint"</h4><p>Copilot aparece cuando estás <strong>editando una página</strong>, dentro de los elementos web de texto. Si no lo ves, tu distrito puede necesitar activarlo. Como alternativa, usa Copilot en <strong>Word</strong> o en <strong>copilot.microsoft.com</strong> para generar texto y pégalo en SharePoint.</p>
+<h4>"Mi sitio se ve simple"</h4><ul><li>Usa <strong>colores de fondo de sección</strong> (haz clic en una sección, elige Neutral/Suave/Fuerte)</li><li>Agrega imágenes y emojis en los encabezados</li><li>Usa el <strong>elemento web Hero</strong> arriba para un encabezado visual fuerte</li></ul>
+<h4>"Los padres no pueden acceder al sitio"</h4><ul><li>Revisa <strong>Configuración &rarr; Permisos del sitio</strong></li><li>Configura a "Cualquier persona con el enlace"</li><li>Pregunta a tu administrador si el acceso compartido externo está habilitado</li></ul>`
+      : `<h4>"I can't find Copilot in SharePoint"</h4><p>Copilot appears when you're <strong>editing a page</strong>, inside text web parts. If you don't see it, your district may need to enable it. As a workaround, use Copilot in <strong>Word</strong> or at <strong>copilot.microsoft.com</strong>.</p>
+<h4>"My site looks plain"</h4><ul><li>Use <strong>section background colors</strong> (click a section, choose Neutral/Soft/Strong)</li><li>Add images and emojis in headings</li><li>Use the <strong>Hero web part</strong> for a strong visual header</li></ul>
+<h4>"Parents can't access the site"</h4><ul><li>Check <strong>Settings &rarr; Site permissions</strong></li><li>Set to "Anyone with the link"</li><li>Ask your admin if external sharing is enabled</li></ul>`;
   }
 
   if (d.tool === 'sway') {
-    html += `<h4>"My Sway looks too generic"</h4>
-<ul>
-  <li>Click the <strong>Design</strong> button and try different styles</li>
-  <li>Add your own images &mdash; they make a huge difference</li>
-  <li>Use <strong>Group cards</strong> to organize related content together</li>
-</ul>
-
-<h4>"Parents can't see my Sway"</h4>
-<ul>
-  <li>Click <strong>Share</strong> and make sure it's set to <strong>"Anyone with a link"</strong></li>
-  <li>If your district restricts Sway sharing, check with IT</li>
-</ul>`;
+    html += isEs
+      ? `<h4>"Mi Sway se ve muy genérico"</h4><ul><li>Haz clic en el botón <strong>Diseño</strong> y prueba diferentes estilos</li><li>Agrega tus propias imágenes</li><li>Usa <strong>tarjetas de grupo</strong> para organizar contenido relacionado</li></ul>
+<h4>"Los padres no pueden ver mi Sway"</h4><ul><li>Haz clic en <strong>Compartir</strong> y asegúrate de que esté en <strong>"Cualquier persona con un enlace"</strong></li></ul>`
+      : `<h4>"My Sway looks too generic"</h4><ul><li>Click the <strong>Design</strong> button and try different styles</li><li>Add your own images</li><li>Use <strong>Group cards</strong> to organize related content</li></ul>
+<h4>"Parents can't see my Sway"</h4><ul><li>Click <strong>Share</strong> and make sure it's set to <strong>"Anyone with a link"</strong></li></ul>`;
   }
 
   if (d.tool === 'word') {
-    html += `<h4>"The formatting breaks when I paste into Outlook"</h4>
-<ul>
-  <li>In Outlook, use <strong>Paste Special &rarr; Keep Source Formatting</strong></li>
-  <li>Or paste as plain text and reformat in Outlook</li>
-  <li>Tables may not transfer perfectly &mdash; consider using simple lists instead</li>
-</ul>
-
-<h4>"I can't find Copilot in Word"</h4>
-<ul>
-  <li>Look for the <strong>Copilot icon</strong> in the <strong>Home tab</strong> of the ribbon</li>
-  <li>If it's not there, your license may not include Copilot &mdash; use <strong>copilot.microsoft.com</strong> as a free alternative</li>
-</ul>`;
+    html += isEs
+      ? `<h4>"El formato se rompe al pegar en Outlook"</h4><ul><li>En Outlook, usa <strong>Pegado especial &rarr; Mantener formato de origen</strong></li><li>O pega como texto sin formato y reformatea en Outlook</li></ul>
+<h4>"No encuentro Copilot en Word"</h4><ul><li>Busca el <strong>ícono de Copilot</strong> en la pestaña <strong>Inicio</strong> de la cinta</li><li>Si no está, tu licencia puede no incluir Copilot &mdash; usa <strong>copilot.microsoft.com</strong></li></ul>`
+      : `<h4>"The formatting breaks when I paste into Outlook"</h4><ul><li>In Outlook, use <strong>Paste Special &rarr; Keep Source Formatting</strong></li><li>Or paste as plain text and reformat</li></ul>
+<h4>"I can't find Copilot in Word"</h4><ul><li>Look for the <strong>Copilot icon</strong> in the <strong>Home tab</strong> of the ribbon</li><li>If it's not there, use <strong>copilot.microsoft.com</strong> as a free alternative</li></ul>`;
   }
 
   if (d.tool === 'copilot-web') {
-    html += `<h4>"Copilot's responses are too long / too short"</h4>
-<ul>
-  <li>Be specific about length: <em>"Keep it to 2-3 sentences"</em> or <em>"Write a detailed paragraph"</em></li>
-  <li>Ask follow-ups: <em>"Make it shorter"</em> or <em>"Expand on the math section"</em></li>
-</ul>
-
-<h4>"I can't sign in"</h4>
-<ul>
-  <li>Use your <strong>school/district Microsoft account</strong>, not a personal one</li>
-  <li>If it doesn't work, try <strong>bing.com/chat</strong> as an alternative</li>
-</ul>`;
+    html += isEs
+      ? `<h4>"Las respuestas de Copilot son muy largas / muy cortas"</h4><ul><li>Sé específico sobre la longitud: <em>"Mantenlo en 2-3 oraciones"</em></li><li>Haz preguntas de seguimiento: <em>"Hazlo más corto"</em> o <em>"Amplía la sección de matemáticas"</em></li></ul>
+<h4>"No puedo iniciar sesión"</h4><ul><li>Usa tu <strong>cuenta escolar de Microsoft</strong>, no una personal</li><li>Si no funciona, prueba <strong>bing.com/chat</strong></li></ul>`
+      : `<h4>"Copilot's responses are too long / too short"</h4><ul><li>Be specific about length: <em>"Keep it to 2-3 sentences"</em></li><li>Ask follow-ups: <em>"Make it shorter"</em> or <em>"Expand on the math section"</em></li></ul>
+<h4>"I can't sign in"</h4><ul><li>Use your <strong>school/district Microsoft account</strong>, not a personal one</li><li>If it doesn't work, try <strong>bing.com/chat</strong></li></ul>`;
   }
 
-  // Common to all
-  html += `<h4>"It takes too long to update every week"</h4>
-<ul>
-  <li>Always <strong>duplicate last week's</strong> as your starting point</li>
-  <li>Use the <strong>"Full Newsletter" prompt</strong> from the Cheat Sheet to generate most content in one shot</li>
-  <li>Keep a running note during the week of what you're teaching &mdash; it makes newsletter time much faster</li>
-  <li>Establish a routine: same day, same time, same process</li>
-</ul>
-
-<h4>"Copilot's output doesn't sound right"</h4>
-<ul>
-  <li>Be <strong>specific</strong> in your prompts &mdash; the more detail, the better</li>
-  <li>Always <strong>edit the output</strong> &mdash; treat it as a first draft, not a final product</li>
-  <li>If the tone is off, add: <em>"Use a warm, conversational tone like you're talking to a friend"</em></li>
-  <li>If it's too formal, try: <em>"Rewrite this in a simpler, more casual way"</em></li>
-</ul>`;
+  // Common
+  html += isEs
+    ? `<h4>"Toma mucho tiempo actualizar cada semana"</h4><ul><li>Siempre <strong>duplica la de la semana anterior</strong> como punto de partida</li><li>Usa el <strong>prompt "Boletín completo"</strong> de la hoja de referencia</li><li>Mantén una nota durante la semana de lo que estás enseñando</li><li>Establece una rutina: mismo día, misma hora, mismo proceso</li></ul>
+<h4>"Lo que genera Copilot no suena bien"</h4><ul><li>Sé <strong>específico/a</strong> en tus prompts &mdash; más detalle = mejor resultado</li><li>Siempre <strong>edita el resultado</strong> &mdash; trátalo como un borrador</li><li>Si el tono no es correcto, agrega: <em>"Usa un tono cálido y conversacional como si hablaras con un amigo"</em></li><li>Si es demasiado formal, prueba: <em>"Reescribe esto de forma más simple y casual"</em></li></ul>`
+    : `<h4>"It takes too long to update every week"</h4><ul><li>Always <strong>duplicate last week's</strong> as your starting point</li><li>Use the <strong>"Full Newsletter" prompt</strong> from the Cheat Sheet</li><li>Keep a running note during the week of what you're teaching</li><li>Establish a routine: same day, same time, same process</li></ul>
+<h4>"Copilot's output doesn't sound right"</h4><ul><li>Be <strong>specific</strong> in your prompts &mdash; more detail = better output</li><li>Always <strong>edit the output</strong> &mdash; treat it as a first draft</li><li>If the tone is off, add: <em>"Use a warm, conversational tone like you're talking to a friend"</em></li><li>If it's too formal, try: <em>"Rewrite this in a simpler, more casual way"</em></li></ul>`;
 
   return html;
 }
@@ -1757,15 +1659,16 @@ function copyPrompt(btn) {
   const text = block.querySelector('.prompt-text').textContent;
   navigator.clipboard.writeText(text).then(() => {
     btn.classList.add('copied');
-    btn.innerHTML = '<svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied!';
+    btn.innerHTML = `<svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5" stroke-linecap="round" stroke-linejoin="round"/></svg> ${t('btn.copied')}`;
     setTimeout(() => {
       btn.classList.remove('copied');
-      btn.innerHTML = '<svg viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V3a1.5 1.5 0 0 1 1.5-1.5H11"/></svg> Copy';
+      btn.innerHTML = `<svg viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V3a1.5 1.5 0 0 1 1.5-1.5H11"/></svg> ${t('btn.copy')}`;
     }, 2000);
   });
 }
 
 // ── Init ──
+renderSectionGrid();
 renderClassroomInputs();
 </script>
 </body>
