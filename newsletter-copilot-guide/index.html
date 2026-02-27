@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newsletter Copilot Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --cream: #FFF8F0;
+  --cream-dark: #F5EDE0;
+  --teal: #1A6B5A;
+  --teal-light: #E8F5F0;
+  --teal-dark: #0E4D3F;
+  --coral: #E8725A;
+  --coral-light: #FFF0EC;
+  --sage: #7BAE7F;
+  --sage-light: #EDF5EE;
+  --charcoal: #2C2C2C;
+  --text: #3D3832;
+  --text-light: #7A7168;
+  --text-lighter: #A89E94;
+  --border: #E5DDD2;
+  --white: #FFFFFF;
+  --shadow-sm: 0 1px 3px rgba(44,44,44,0.06);
+  --shadow-md: 0 4px 16px rgba(44,44,44,0.08);
+  --shadow-lg: 0 8px 32px rgba(44,44,44,0.12);
+  --shadow-xl: 0 16px 48px rgba(44,44,44,0.14);
+  --radius: 12px;
+  --radius-lg: 20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Background Texture ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(26,107,90,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(232,114,90,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(123,174,127,0.02) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header ── */
+.site-header {
+  background: var(--teal);
+  color: var(--white);
+  padding: 1.25rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(14,77,63,0.2);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.header-inner h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.header-inner p {
+  font-size: 0.8rem;
+  opacity: 0.75;
+  margin-top: 0.1rem;
+}
+
+/* ── Progress Bar ── */
+.progress-container {
+  max-width: 900px;
+  margin: 2rem auto 0;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.progress-steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+}
+
+.progress-steps::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  right: 24px;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.progress-fill {
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  height: 3px;
+  background: var(--teal);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--text-lighter);
+  font-family: inherit;
+  transition: color 0.3s;
+}
+
+.progress-step:hover { color: var(--text-light); }
+
+.step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 3px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+}
+
+.progress-step.active .step-circle {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: var(--white);
+  box-shadow: 0 0 0 4px rgba(26,107,90,0.15);
+}
+
+.progress-step.completed .step-circle {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: var(--white);
+}
+
+.step-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-align: center;
+  max-width: 80px;
+  line-height: 1.3;
+}
+
+.progress-step.active .step-label,
+.progress-step.completed .step-label { color: var(--teal); font-weight: 600; }
+
+/* ── Main Card ── */
+.wizard-container {
+  max-width: 900px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.wizard-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  border: 1px solid rgba(229,221,210,0.5);
+}
+
+.card-body {
+  padding: 2.5rem;
+}
+
+.step-panel {
+  display: none;
+  animation: fadeSlideIn 0.4s ease;
+}
+
+.step-panel.active { display: block; }
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Step Header ── */
+.step-header {
+  margin-bottom: 2rem;
+}
+
+.step-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--coral);
+  margin-bottom: 0.4rem;
+}
+
+.step-header h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.step-header p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* ── Tool Picker (Step 1) ── */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.tool-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.tool-option input { position: absolute; opacity: 0; pointer-events: none; }
+
+.tool-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  transition: all 0.25s;
+  background: var(--white);
+  height: 100%;
+}
+
+.tool-option:hover .tool-card {
+  border-color: var(--teal);
+  box-shadow: var(--shadow-md);
+}
+
+.tool-option input:checked + .tool-card {
+  border-color: var(--teal);
+  background: var(--teal-light);
+  box-shadow: 0 0 0 3px rgba(26,107,90,0.12);
+}
+
+.tool-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.tool-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--charcoal);
+}
+
+.tool-card p {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  line-height: 1.45;
+}
+
+.tool-card .tool-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  margin-top: 0.6rem;
+}
+
+/* ── Form Fields ── */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.35rem;
+  color: var(--charcoal);
+}
+
+.form-group .hint {
+  font-size: 0.78rem;
+  color: var(--text-lighter);
+  margin-bottom: 0.35rem;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%237A7168' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.5rem;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(26,107,90,0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.classroom-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.classroom-input-wrap {
+  position: relative;
+}
+
+.classroom-input-wrap .room-label {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-lighter);
+  pointer-events: none;
+}
+
+.classroom-input-wrap input {
+  padding-left: 1.6rem;
+}
+
+/* ── Section Checkboxes (Step 3) ── */
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.section-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.section-option input { position: absolute; opacity: 0; pointer-events: none; }
+
+.section-card {
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.section-option:hover .section-card {
+  border-color: var(--teal);
+}
+
+.section-option input:checked + .section-card {
+  border-color: var(--teal);
+  background: var(--teal-light);
+}
+
+.section-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: all 0.2s;
+}
+
+.section-option input:checked + .section-card .section-check {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+.section-check svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--white);
+  stroke-width: 3;
+  fill: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.section-option input:checked + .section-card .section-check svg { opacity: 1; }
+
+.section-info h4 {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 0.15rem;
+}
+
+.section-info p {
+  font-size: 0.76rem;
+  color: var(--text-light);
+  line-height: 1.35;
+}
+
+/* ── Step 4: Options ── */
+.option-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.option-toggle:last-child { border-bottom: none; }
+
+.option-left h4 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+
+.option-left p {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-top: 0.15rem;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 3px;
+  top: 3px;
+  background: var(--white);
+  border-radius: 50%;
+  transition: transform 0.25s;
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-switch input:checked + .toggle-track {
+  background: var(--teal);
+}
+
+.toggle-switch input:checked + .toggle-track::after {
+  transform: translateX(20px);
+}
+
+.sub-option {
+  padding: 0.75rem 0 0.75rem 1rem;
+  border-left: 3px solid var(--teal-light);
+  margin: 0.5rem 0 0.75rem 0;
+  animation: fadeSlideIn 0.3s;
+}
+
+.specials-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.special-chip {
+  position: relative;
+  cursor: pointer;
+}
+
+.special-chip input { position: absolute; opacity: 0; pointer-events: none; }
+
+.chip-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.85rem;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.special-chip:hover .chip-label { border-color: var(--teal); }
+
+.special-chip input:checked + .chip-label {
+  border-color: var(--teal);
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  font-weight: 600;
+}
+
+/* ── Navigation Buttons ── */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2.5rem;
+  border-top: 1px solid var(--border);
+  background: rgba(245,237,224,0.3);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--teal);
+  color: var(--white);
+  box-shadow: 0 2px 8px rgba(26,107,90,0.2);
+}
+
+.btn-primary:hover {
+  background: var(--teal-dark);
+  box-shadow: 0 4px 12px rgba(26,107,90,0.3);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-light);
+  border: 2px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-lighter);
+  color: var(--text);
+}
+
+.btn-ghost {
+  background: none;
+  color: var(--text-light);
+  padding: 0.7rem 1rem;
+}
+
+.btn-ghost:hover { color: var(--text); }
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  fill: none;
+}
+
+/* ── Results (Step 5) ── */
+.results-intro {
+  background: linear-gradient(135deg, var(--teal-light), var(--sage-light));
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(26,107,90,0.1);
+}
+
+.results-intro h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.2rem;
+  color: var(--teal-dark);
+  margin-bottom: 0.3rem;
+}
+
+.results-intro p {
+  font-size: 0.88rem;
+  color: var(--teal);
+}
+
+.accordion { margin-bottom: 0.75rem; }
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: var(--cream);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  transition: all 0.2s;
+}
+
+.accordion.open .accordion-header {
+  border-color: var(--teal);
+  background: var(--teal-light);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.accordion-header:hover { border-color: var(--teal); }
+
+.accordion-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s;
+}
+
+.accordion.open .accordion-icon { transform: rotate(180deg); }
+
+.accordion-body {
+  display: none;
+  border: 2px solid var(--teal);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 1.5rem 1.25rem;
+  background: var(--white);
+}
+
+.accordion.open .accordion-body { display: block; animation: fadeSlideIn 0.3s; }
+
+/* ── Prompt Blocks ── */
+.prompt-block {
+  position: relative;
+  background: var(--charcoal);
+  color: #E8E0D6;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: 'DM Sans', monospace;
+}
+
+.prompt-block .prompt-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--coral);
+  margin-bottom: 0.6rem;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+  color: #ccc;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  background: rgba(255,255,255,0.2);
+  color: var(--white);
+}
+
+.copy-btn.copied {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: var(--white);
+}
+
+.copy-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* ── Results Prose ── */
+.result-section h4 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--charcoal);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.result-section h4:first-child { margin-top: 0; }
+
+.result-section p {
+  font-size: 0.88rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.result-section ol, .result-section ul {
+  font-size: 0.88rem;
+  color: var(--text);
+  padding-left: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.result-section li {
+  margin-bottom: 0.35rem;
+  line-height: 1.55;
+}
+
+.result-section strong { color: var(--charcoal); }
+
+.tip-box {
+  background: var(--coral-light);
+  border-left: 3px solid var(--coral);
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  font-size: 0.84rem;
+  color: var(--text);
+}
+
+.tip-box strong { color: var(--coral); }
+
+/* ── Start Over button ── */
+.start-over-wrap {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .card-body { padding: 1.5rem; }
+  .card-footer { padding: 1rem 1.5rem; }
+
+  .tool-grid { grid-template-columns: 1fr; }
+  .section-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .classroom-inputs { grid-template-columns: 1fr; }
+
+  .step-header h2 { font-size: 1.4rem; }
+
+  .step-label { font-size: 0.65rem; max-width: 56px; }
+  .step-circle { width: 30px; height: 30px; font-size: 0.75rem; }
+
+  .progress-steps::before { top: 15px; }
+  .progress-fill { top: 15px; }
+
+  .header-inner h1 { font-size: 1.1rem; }
+}
+
+@media (max-width: 420px) {
+  .site-header { padding: 1rem; }
+  .header-inner p { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-icon">&#9993;</div>
+    <div>
+      <h1>Newsletter Copilot Guide</h1>
+      <p>Build your grade-level newsletter with Microsoft Copilot</p>
+    </div>
+  </div>
+</header>
+
+<!-- ── Progress ── -->
+<div class="progress-container">
+  <div class="progress-steps">
+    <div class="progress-fill" id="progressFill"></div>
+    <button class="progress-step active" data-step="1" onclick="goToStep(1)">
+      <div class="step-circle">1</div>
+      <span class="step-label">Choose Tool</span>
+    </button>
+    <button class="progress-step" data-step="2" onclick="goToStep(2)">
+      <div class="step-circle">2</div>
+      <span class="step-label">Your Info</span>
+    </button>
+    <button class="progress-step" data-step="3" onclick="goToStep(3)">
+      <div class="step-circle">3</div>
+      <span class="step-label">Sections</span>
+    </button>
+    <button class="progress-step" data-step="4" onclick="goToStep(4)">
+      <div class="step-circle">4</div>
+      <span class="step-label">Options</span>
+    </button>
+    <button class="progress-step" data-step="5" onclick="goToStep(5)">
+      <div class="step-circle">5</div>
+      <span class="step-label">Your Guide</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── Wizard ── -->
+<div class="wizard-container">
+  <div class="wizard-card">
+    <div class="card-body">
+
+      <!-- ═══ STEP 1: Choose Tool ═══ -->
+      <div class="step-panel active" id="step1">
+        <div class="step-header">
+          <div class="step-eyebrow">Step 1 of 5</div>
+          <h2>Choose Your Tool</h2>
+          <p>Which Microsoft tool will you use to build your newsletter? Pick the one that works best for your situation.</p>
+        </div>
+
+        <div class="tool-grid">
+          <label class="tool-option">
+            <input type="radio" name="tool" value="sharepoint" checked>
+            <div class="tool-card">
+              <div class="tool-card-icon" style="background:#E0F0FF;">&#127760;</div>
+              <h3>SharePoint</h3>
+              <p>Create a dedicated newsletter site parents can bookmark. Best for a polished, ongoing newsletter.</p>
+              <span class="tool-badge" style="background:var(--teal-light);color:var(--teal-dark);">Recommended</span>
+            </div>
+          </label>
+
+          <label class="tool-option">
+            <input type="radio" name="tool" value="sway">
+            <div class="tool-card">
+              <div class="tool-card-icon" style="background:#F0E6FF;">&#127912;</div>
+              <h3>Sway</h3>
+              <p>Create beautiful, scrollable pages quickly. Great if you want something visual with minimal setup.</p>
+              <span class="tool-badge" style="background:#F0E6FF;color:#6B3FA0;">Quick & Visual</span>
+            </div>
+          </label>
+
+          <label class="tool-option">
+            <input type="radio" name="tool" value="word">
+            <div class="tool-card">
+              <div class="tool-card-icon" style="background:#E3F2FD;">&#128196;</div>
+              <h3>Word / Outlook</h3>
+              <p>Draft in Word, email via Outlook. Best if your school already sends newsletters by email.</p>
+              <span class="tool-badge" style="background:var(--cream-dark);color:var(--text-light);">Familiar</span>
+            </div>
+          </label>
+
+          <label class="tool-option">
+            <input type="radio" name="tool" value="copilot-web">
+            <div class="tool-card">
+              <div class="tool-card-icon" style="background:#FFF3E0;">&#10024;</div>
+              <h3>copilot.microsoft.com</h3>
+              <p>Use the Copilot web app to generate text, then paste into any tool. Works as a fallback for any workflow.</p>
+              <span class="tool-badge" style="background:var(--coral-light);color:var(--coral);">Flexible</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- ═══ STEP 2: Grade & Info ═══ -->
+      <div class="step-panel" id="step2">
+        <div class="step-header">
+          <div class="step-eyebrow">Step 2 of 5</div>
+          <h2>Your Grade &amp; Info</h2>
+          <p>Tell us about your grade level so we can personalize your prompts and guide.</p>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="gradeLevel">Grade Level</label>
+            <select id="gradeLevel">
+              <option value="Pre-K">Pre-K</option>
+              <option value="Kindergarten">Kindergarten</option>
+              <option value="1st" selected>1st Grade</option>
+              <option value="2nd">2nd Grade</option>
+              <option value="3rd">3rd Grade</option>
+              <option value="4th">4th Grade</option>
+              <option value="5th">5th Grade</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="schoolName">School Name</label>
+            <input type="text" id="schoolName" value="Bancroft ES" placeholder="e.g., Bancroft ES">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="numRooms">Number of Classrooms</label>
+          <p class="hint">How many classrooms are in your grade level?</p>
+          <select id="numRooms" onchange="renderClassroomInputs()">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Classroom Names</label>
+          <p class="hint">Enter a name, teacher name, or identifier for each classroom.</p>
+          <div class="classroom-inputs" id="classroomInputs"></div>
+        </div>
+      </div>
+
+      <!-- ═══ STEP 3: Sections ═══ -->
+      <div class="step-panel" id="step3">
+        <div class="step-header">
+          <div class="step-eyebrow">Step 3 of 5</div>
+          <h2>Newsletter Sections</h2>
+          <p>Choose which sections to include. We'll generate Copilot prompts for each one you select.</p>
+        </div>
+
+        <div class="section-grid">
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="welcome" checked>
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Welcome Message</h4>
+                <p>Warm greeting summarizing the week ahead</p>
+              </div>
+            </div>
+          </label>
+
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="math" checked>
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Math News</h4>
+                <p>What students are learning in math this week</p>
+              </div>
+            </div>
+          </label>
+
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="literacy" checked>
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Literacy / ELA News</h4>
+                <p>Reading and writing focus for the week</p>
+              </div>
+            </div>
+          </label>
+
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="ask" checked>
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Ask Your Child</h4>
+                <p>Conversation starters for parents</p>
+              </div>
+            </div>
+          </label>
+
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="vocab" checked>
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Vocabulary</h4>
+                <p>Weekly vocabulary words with definitions</p>
+              </div>
+            </div>
+          </label>
+
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="books" checked>
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Books &amp; Read-Alouds</h4>
+                <p>Books being read in class with discussion Qs</p>
+              </div>
+            </div>
+          </label>
+
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="reminders" checked>
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Important Reminders</h4>
+                <p>Upcoming dates, events, deadlines</p>
+              </div>
+            </div>
+          </label>
+
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="specials" checked>
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Specials Schedule</h4>
+                <p>Art, Music, PE, Library rotation</p>
+              </div>
+            </div>
+          </label>
+
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="recognition" checked>
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Student Recognition</h4>
+                <p>Celebrating students (ROARS or similar)</p>
+              </div>
+            </div>
+          </label>
+
+          <label class="section-option">
+            <input type="checkbox" name="sections" value="custom">
+            <div class="section-card">
+              <div class="section-check"><svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5"/></svg></div>
+              <div class="section-info">
+                <h4>Other / Custom</h4>
+                <p>Add your own section</p>
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <div id="customSectionWrap" style="display:none;margin-top:1rem;">
+          <div class="form-group">
+            <label for="customSectionName">Custom Section Name</label>
+            <input type="text" id="customSectionName" placeholder="e.g., Science Corner, Social Studies Update">
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ STEP 4: Options ═══ -->
+      <div class="step-panel" id="step4">
+        <div class="step-header">
+          <div class="step-eyebrow">Step 4 of 5</div>
+          <h2>Additional Options</h2>
+          <p>Customize your newsletter further with these optional settings.</p>
+        </div>
+
+        <div class="option-toggle">
+          <div class="option-left">
+            <h4>Bilingual Newsletter</h4>
+            <p>Include a translated version alongside English</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="bilingualToggle" onchange="toggleBilingual()">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+        <div class="sub-option" id="bilingualOptions" style="display:none;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="bilingualLang">Second Language</label>
+            <select id="bilingualLang">
+              <option value="Spanish" selected>Spanish</option>
+              <option value="Amharic">Amharic</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Chinese">Chinese (Simplified)</option>
+              <option value="French">French</option>
+              <option value="Korean">Korean</option>
+              <option value="Vietnamese">Vietnamese</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="option-toggle">
+          <div class="option-left">
+            <h4>Student Recognition Program</h4>
+            <p>Name of your positive behavior program</p>
+          </div>
+          <div style="flex-shrink:0;width:160px;">
+            <input type="text" id="recognitionName" value="ROARS" style="text-align:center;font-weight:600;">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:1.5rem;">
+          <label>Specials Offered</label>
+          <p class="hint">Select all the specials your grade level has</p>
+          <div class="specials-grid">
+            <label class="special-chip"><input type="checkbox" name="specials" value="Art" checked><span class="chip-label">&#127912; Art</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Music" checked><span class="chip-label">&#127925; Music</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="PE" checked><span class="chip-label">&#9917; PE</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Library" checked><span class="chip-label">&#128218; Library</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Science" checked><span class="chip-label">&#128300; Science</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Tech"><span class="chip-label">&#128187; Tech</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="STEM"><span class="chip-label">&#9881; STEM</span></label>
+            <label class="special-chip"><input type="checkbox" name="specials" value="Spanish"><span class="chip-label">&#127466;&#127480; Spanish</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ STEP 5: Results ═══ -->
+      <div class="step-panel" id="step5">
+        <div class="step-header">
+          <div class="step-eyebrow">Step 5 of 5</div>
+          <h2>Your Personalized Guide</h2>
+          <p>Here's everything you need to create and maintain your newsletter.</p>
+        </div>
+
+        <div class="results-intro" id="resultsIntro"></div>
+
+        <div id="resultsContent"></div>
+
+        <div class="start-over-wrap">
+          <button class="btn btn-secondary" onclick="startOver()">
+            <svg viewBox="0 0 16 16"><path d="M2 8a6 6 0 1 1 1.76 4.24" stroke-linecap="round"/><polyline points="2 4 2 8 6 8"/></svg>
+            Start Over
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /card-body -->
+
+    <!-- ── Footer Nav ── -->
+    <div class="card-footer" id="cardFooter">
+      <button class="btn btn-ghost" id="prevBtn" onclick="prevStep()" style="visibility:hidden;">
+        <svg viewBox="0 0 16 16"><polyline points="10 3 5 8 10 13"/></svg>
+        Back
+      </button>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+        Continue
+        <svg viewBox="0 0 16 16"><polyline points="6 3 11 8 6 13"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ──
+let currentStep = 1;
+const totalSteps = 5;
+
+// ── Navigation ──
+function goToStep(step) {
+  if (step < 1 || step > totalSteps) return;
+  if (step === 5) generateResults();
+
+  currentStep = step;
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step' + step).classList.add('active');
+
+  // Progress
+  document.querySelectorAll('.progress-step').forEach(s => {
+    const n = +s.dataset.step;
+    s.classList.remove('active', 'completed');
+    if (n === step) s.classList.add('active');
+    else if (n < step) s.classList.add('completed');
+  });
+
+  const fill = document.getElementById('progressFill');
+  const pct = ((step - 1) / (totalSteps - 1)) * 100;
+  const containerW = fill.parentElement.offsetWidth - 48;
+  fill.style.width = (containerW * pct / 100) + 'px';
+
+  // Buttons
+  const prev = document.getElementById('prevBtn');
+  const next = document.getElementById('nextBtn');
+  prev.style.visibility = step === 1 ? 'hidden' : 'visible';
+  if (step === totalSteps) {
+    next.style.display = 'none';
+  } else if (step === totalSteps - 1) {
+    next.innerHTML = 'Generate Guide <svg viewBox="0 0 16 16"><polyline points="6 3 11 8 6 13"/></svg>';
+    next.style.display = '';
+  } else {
+    next.innerHTML = 'Continue <svg viewBox="0 0 16 16"><polyline points="6 3 11 8 6 13"/></svg>';
+    next.style.display = '';
+  }
+
+  document.getElementById('cardFooter').style.display = step === totalSteps ? 'none' : '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextStep() { goToStep(currentStep + 1); }
+function prevStep() { goToStep(currentStep - 1); }
+
+function startOver() {
+  goToStep(1);
+}
+
+// ── Classroom Inputs ──
+function renderClassroomInputs() {
+  const n = +document.getElementById('numRooms').value;
+  const wrap = document.getElementById('classroomInputs');
+  const existing = {};
+  wrap.querySelectorAll('input').forEach(inp => {
+    existing[inp.dataset.index] = inp.value;
+  });
+  wrap.innerHTML = '';
+  for (let i = 0; i < n; i++) {
+    const div = document.createElement('div');
+    div.className = 'classroom-input-wrap';
+    div.innerHTML = `<input type="text" data-index="${i}" placeholder="Classroom ${i + 1}" value="${existing[i] || ''}">`;
+    wrap.appendChild(div);
+  }
+}
+
+// ── Custom Section Toggle ──
+document.querySelectorAll('input[name="sections"]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const customChecked = document.querySelector('input[name="sections"][value="custom"]').checked;
+    document.getElementById('customSectionWrap').style.display = customChecked ? 'block' : 'none';
+  });
+});
+
+// ── Bilingual Toggle ──
+function toggleBilingual() {
+  const on = document.getElementById('bilingualToggle').checked;
+  document.getElementById('bilingualOptions').style.display = on ? 'block' : 'none';
+}
+
+// ── Gather Data ──
+function gatherData() {
+  const tool = document.querySelector('input[name="tool"]:checked')?.value || 'sharepoint';
+  const grade = document.getElementById('gradeLevel').value;
+  const school = document.getElementById('schoolName').value || 'your school';
+  const numRooms = +document.getElementById('numRooms').value;
+  const classrooms = [];
+  document.querySelectorAll('#classroomInputs input').forEach(inp => {
+    classrooms.push(inp.value || `Classroom ${+inp.dataset.index + 1}`);
+  });
+  const sections = [];
+  document.querySelectorAll('input[name="sections"]:checked').forEach(cb => sections.push(cb.value));
+  const customName = document.getElementById('customSectionName').value;
+  const bilingual = document.getElementById('bilingualToggle').checked;
+  const bilingualLang = document.getElementById('bilingualLang').value;
+  const recognition = document.getElementById('recognitionName').value || 'ROARS';
+  const specials = [];
+  document.querySelectorAll('input[name="specials"]:checked').forEach(cb => specials.push(cb.value));
+
+  const gradeLabel = grade === 'Pre-K' ? 'Pre-K' :
+                     grade === 'Kindergarten' ? 'Kindergarten' : grade + ' grade';
+
+  return { tool, grade, gradeLabel, school, numRooms, classrooms, sections, customName, bilingual, bilingualLang, recognition, specials };
+}
+
+// ── Tool Info ──
+const toolInfo = {
+  sharepoint: { name: 'SharePoint', icon: '&#127760;' },
+  sway:       { name: 'Sway', icon: '&#127912;' },
+  word:       { name: 'Word / Outlook', icon: '&#128196;' },
+  'copilot-web': { name: 'copilot.microsoft.com', icon: '&#10024;' }
+};
+
+// ── Generate Results ──
+function generateResults() {
+  const d = gatherData();
+  const ti = toolInfo[d.tool];
+
+  // Intro
+  document.getElementById('resultsIntro').innerHTML = `
+    <h3>${d.gradeLabel} Newsletter &mdash; ${d.school}</h3>
+    <p>Using <strong>${ti.name}</strong> &bull; ${d.classrooms.length} classroom${d.classrooms.length > 1 ? 's' : ''} &bull; ${d.sections.length} sections${d.bilingual ? ' &bull; Bilingual (' + d.bilingualLang + ')' : ''}</p>
+  `;
+
+  let html = '';
+
+  // 1. Setup Instructions
+  html += accordion('Setup Instructions', 'setup', generateSetup(d), true);
+
+  // 2. Section Prompts
+  html += accordion('Section-by-Section Prompts', 'prompts', generateSectionPrompts(d));
+
+  // 3. Weekly Workflow
+  html += accordion('Weekly Workflow', 'workflow', generateWorkflow(d));
+
+  // 4. Prompt Cheat Sheet
+  html += accordion('Prompt Cheat Sheet', 'cheatsheet', generateCheatSheet(d));
+
+  // 5. Troubleshooting
+  html += accordion('Troubleshooting', 'troubleshoot', generateTroubleshooting(d));
+
+  document.getElementById('resultsContent').innerHTML = html;
+}
+
+function accordion(title, id, content, openByDefault = false) {
+  return `<div class="accordion${openByDefault ? ' open' : ''}" id="acc-${id}">
+    <button class="accordion-header" onclick="toggleAccordion('acc-${id}')">
+      ${title}
+      <svg class="accordion-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="4 6 8 10 12 6"/></svg>
+    </button>
+    <div class="accordion-body"><div class="result-section">${content}</div></div>
+  </div>`;
+}
+
+function toggleAccordion(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function promptBlock(label, text) {
+  const escapedText = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const copyId = 'copy-' + Math.random().toString(36).substring(2, 9);
+  return `<div class="prompt-block">
+    <span class="prompt-label">${label}</span>
+    <button class="copy-btn" id="${copyId}" onclick="copyPrompt(this)">
+      <svg viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V3a1.5 1.5 0 0 1 1.5-1.5H11"/></svg>
+      Copy
+    </button>
+    <div class="prompt-text">${escapedText}</div>
+  </div>`;
+}
+
+// ── Setup Instructions ──
+function generateSetup(d) {
+  if (d.tool === 'sharepoint') {
+    return `<h4>Create Your SharePoint Newsletter Site</h4>
+<ol>
+  <li>Go to <strong>sharepoint.com</strong> (or your district's SharePoint portal)</li>
+  <li>Click <strong>+ Create site</strong> &rarr; <strong>Communication site</strong></li>
+  <li>Choose the <strong>Blank</strong> template</li>
+  <li>Name it: <strong>${d.gradeLabel} Newsletter &mdash; ${d.school}</strong></li>
+  <li>Set sharing to "Anyone with the link" (check with your admin)</li>
+</ol>
+
+<h4>Customize the Look</h4>
+<ol>
+  <li>Click <strong>Settings gear</strong> (top right) &rarr; <strong>Change the look</strong></li>
+  <li>Pick a <strong>theme color</strong> that represents your grade</li>
+  <li>Upload a header image or school logo</li>
+  <li>Add navigation links: ParentSquare, school calendar, lunch menu</li>
+</ol>
+
+<h4>Create Your First Newsletter</h4>
+<ol>
+  <li>Click <strong>+ New</strong> &rarr; <strong>News post</strong> (recommended over regular pages &mdash; creates an automatic feed)</li>
+  <li>Title it with the date: <em>"Week of [date]"</em></li>
+  <li>Use <strong>section backgrounds</strong> (Neutral, Soft, Strong) for visual separation between sections</li>
+  <li>Add each newsletter section as a <strong>Text web part</strong></li>
+  <li>Use the Copilot sparkle icon in text web parts to generate content</li>
+</ol>
+
+<div class="tip-box"><strong>Pro Tip:</strong> Use <strong>News posts</strong> instead of regular pages. Your homepage will automatically show the latest newsletter at the top, like a blog &mdash; newest first.</div>`;
+  }
+
+  if (d.tool === 'sway') {
+    return `<h4>Create Your Sway Newsletter</h4>
+<ol>
+  <li>Go to <strong>sway.cloud.microsoft</strong> or open Sway from your Office 365 app launcher</li>
+  <li>Click <strong>+ Create New</strong></li>
+  <li>Title it: <strong>${d.gradeLabel} Newsletter &mdash; ${d.school}</strong></li>
+  <li>Choose a layout style &mdash; <strong>vertical scrolling</strong> works best for newsletters</li>
+</ol>
+
+<h4>Build Your Sections</h4>
+<ol>
+  <li>Add <strong>Heading cards</strong> for each section title</li>
+  <li>Add <strong>Text cards</strong> for the content below each heading</li>
+  <li>Use <strong>Image cards</strong> to break up text and add visual interest</li>
+  <li>Sway has a built-in <strong>Design</strong> button &mdash; click it to auto-style your newsletter</li>
+</ol>
+
+<h4>Using Copilot with Sway</h4>
+<p>Use <strong>copilot.microsoft.com</strong> or <strong>Copilot in Word</strong> to generate your text, then paste it into your Sway cards.</p>
+
+<h4>Share It</h4>
+<ol>
+  <li>Click <strong>Share</strong> at the top</li>
+  <li>Choose <strong>"Anyone with a link"</strong> for view access</li>
+  <li>Copy the link and share with families</li>
+</ol>
+
+<div class="tip-box"><strong>Pro Tip:</strong> Sway automatically makes your newsletter beautiful and mobile-friendly. It's the fastest way to get a polished-looking result.</div>`;
+  }
+
+  if (d.tool === 'word') {
+    return `<h4>Create Your Newsletter in Word</h4>
+<ol>
+  <li>Open <strong>Microsoft Word</strong> (desktop or online at office.com)</li>
+  <li>Start a <strong>blank document</strong> or search templates for "Newsletter"</li>
+  <li>Title it: <strong>${d.gradeLabel} Weekly Newsletter &mdash; ${d.school}</strong></li>
+  <li>Use <strong>Headings</strong> (Heading 1, Heading 2) for each section &mdash; this keeps formatting consistent</li>
+</ol>
+
+<h4>Use Copilot in Word</h4>
+<ol>
+  <li>Click the <strong>Copilot icon</strong> in the toolbar (or press Alt+I)</li>
+  <li>Type your prompt to generate section content</li>
+  <li>Click <strong>Insert</strong> to add the generated text</li>
+  <li>Edit as needed, then move to the next section</li>
+</ol>
+
+<h4>Send via Outlook</h4>
+<ol>
+  <li>Select all your newsletter content (<strong>Ctrl+A</strong>)</li>
+  <li>Copy (<strong>Ctrl+C</strong>)</li>
+  <li>Open Outlook, create a new email</li>
+  <li>Paste into the email body (<strong>Ctrl+V</strong>) &mdash; formatting carries over</li>
+  <li>Or attach the Word doc / share a OneDrive link</li>
+</ol>
+
+<div class="tip-box"><strong>Pro Tip:</strong> Save your first newsletter as a <strong>template</strong> (File &rarr; Save As Template). Each week you'll duplicate it and just update the content.</div>`;
+  }
+
+  // copilot-web
+  return `<h4>Using copilot.microsoft.com</h4>
+<p>This approach works with <strong>any tool</strong> &mdash; you'll generate all your newsletter text in Copilot's web interface, then paste it wherever you need it.</p>
+
+<ol>
+  <li>Go to <strong>copilot.microsoft.com</strong> and sign in with your school account</li>
+  <li>Use the prompts below to generate each section of your newsletter</li>
+  <li>Copy the generated text and paste it into your chosen platform (SharePoint, email, Google Docs, etc.)</li>
+</ol>
+
+<h4>Best Practices</h4>
+<ul>
+  <li>Keep a <strong>dedicated Copilot conversation</strong> for your newsletter &mdash; Copilot remembers context within a chat</li>
+  <li>Start each week by saying: <em>"I'm updating my ${d.gradeLabel} newsletter for the week of [date]"</em></li>
+  <li>Ask follow-up questions if the output isn't quite right: <em>"Make it shorter"</em> or <em>"Use a warmer tone"</em></li>
+</ul>
+
+<div class="tip-box"><strong>Pro Tip:</strong> You can paste the entire previous week's newsletter into Copilot and say <em>"Rewrite this for the week of [date], updating the math topic to [X] and literacy to [Y]."</em> It's the fastest way to update week to week.</div>`;
+}
+
+// ── Section Prompts ──
+function generateSectionPrompts(d) {
+  let html = '';
+  const g = d.gradeLabel;
+  const classroomList = d.classrooms.join(', ');
+
+  if (d.sections.includes('welcome')) {
+    html += `<h4>Welcome Message</h4>
+<p>A warm greeting summarizing the week ahead.</p>
+${promptBlock('Copilot Prompt', `Write a warm, friendly welcome message for a ${g} weekly classroom newsletter dated [date]. Mention that this week students will be learning about [topic in math] and [topic in literacy]. Keep it to 3-4 sentences. Use a warm, encouraging tone that makes families feel included in their child's learning.`)}`;
+  }
+
+  if (d.sections.includes('math')) {
+    html += `<h4>Math News</h4>
+<p>What students are learning in math, explained for parents with a home practice idea.</p>
+${promptBlock('Copilot Prompt', `Write a short math update for a ${g} parent newsletter. This week we are working on [topic/module/lesson]. Explain what students are learning in simple, parent-friendly language. Include 1 suggestion for how families can practice this skill at home. Keep it to 1 short paragraph.`)}`;
+  }
+
+  if (d.sections.includes('literacy')) {
+    html += `<h4>Literacy / ELA News</h4>
+<p>Reading and writing focus for the week, with home support suggestions.</p>
+${promptBlock('Copilot Prompt', `Write a short literacy update for a ${g} parent newsletter. This week in reading, we are focusing on [skill — e.g., identifying the main idea, making inferences]. In writing, students are working on [skill — e.g., persuasive paragraphs, personal narratives]. Explain in parent-friendly language and suggest one way families can support this at home. Keep it to 1 short paragraph.`)}`;
+  }
+
+  if (d.sections.includes('ask')) {
+    html += `<h4>Ask Your Child</h4>
+<p>Conversation starters so parents get more than "Fine." at dinner.</p>
+${promptBlock('Copilot Prompt', `Generate 4 specific conversation-starter questions that parents can ask their ${g}r about school this week. This week we learned about [topics]. Make the questions engaging and open-ended so kids have something concrete to talk about. Format as a bulleted list.`)}`;
+  }
+
+  if (d.sections.includes('vocab')) {
+    html += `<h4>Vocabulary</h4>
+<p>Format the week's vocabulary words with kid-friendly definitions.</p>
+${promptBlock('Copilot Prompt', `Format the following vocabulary words into a clean list with simple, kid-friendly definitions appropriate for ${g}: [word1, word2, word3, word4, word5]`)}`;
+  }
+
+  if (d.sections.includes('books')) {
+    html += `<h4>Books &amp; Read-Alouds</h4>
+<p>Description and discussion questions for the week's books.</p>
+${promptBlock('Copilot Prompt', `Write a short description of the book "[Title]" by [Author] for a ${g} parent newsletter. Include 2 discussion questions families can use after reading or listening to the book together. Keep the description to 2 sentences.`)}`;
+  }
+
+  if (d.sections.includes('reminders')) {
+    html += `<h4>Important Reminders</h4>
+<p>Format upcoming dates and events into a scannable list.</p>
+${promptBlock('Copilot Prompt', `Format the following school reminders into a clear, scannable list for a parent newsletter. Each item should have the date bolded and a brief description: [list your reminders — e.g., Picture Day is March 5, Spring Break is March 16-20]`)}`;
+  }
+
+  if (d.sections.includes('specials')) {
+    html += `<h4>Specials Schedule</h4>
+<p>Build a weekly rotation table for your classrooms.</p>
+${promptBlock('Copilot Prompt', `Create a weekly specials schedule table for ${g} at ${d.school}. The classrooms are: ${classroomList}. The specials are: ${d.specials.join(', ')}. Here is the rotation: [Monday: ${d.classrooms[0]} has ${d.specials[0] || 'Art'}, ${d.classrooms.length > 1 ? d.classrooms[1] + ' has ' + (d.specials[1] || 'Music') : ''}, etc.]. Format it as a clean table with days as columns and classrooms as rows.`)}`;
+  }
+
+  if (d.sections.includes('recognition')) {
+    html += `<h4>Student Recognition (${d.recognition})</h4>
+<p>Celebrate one student per classroom. Copilot can format it for you — you pick the students!</p>
+${promptBlock('Copilot Prompt', `Format the following student recognitions into a celebratory section for a school newsletter. The program is called "${d.recognition}." Use a fun, congratulatory tone. Classrooms and students: [${d.classrooms.map((c, i) => c + ': [Student ' + (i+1) + ' Name]').join(', ')}]`)}`;
+  }
+
+  if (d.sections.includes('custom') && d.customName) {
+    html += `<h4>${d.customName}</h4>
+<p>Your custom section.</p>
+${promptBlock('Copilot Prompt', `Write a short, parent-friendly update for a ${g} newsletter section called "${d.customName}." This week: [describe what's happening]. Keep it to 1 short paragraph with a warm, informative tone.`)}`;
+  }
+
+  if (d.bilingual) {
+    html += `<h4>Translation to ${d.bilingualLang}</h4>
+<p>After writing all your sections in English, use this prompt to translate.</p>
+${promptBlock('Translation Prompt', `Translate the following school newsletter to ${d.bilingualLang}. Use a warm, parent-friendly tone. Keep proper nouns in English (names, ${d.school}, program names like ${d.recognition}, ParentSquare). Preserve all formatting (headings, bullet points, bold text):
+
+[paste your English newsletter text here]`)}
+<div class="tip-box"><strong>Important:</strong> Always have a native speaker or bilingual colleague review Copilot's translations before publishing. AI translations are good but not perfect, especially with educational terminology.</div>`;
+  }
+
+  return html;
+}
+
+// ── Weekly Workflow ──
+function generateWorkflow(d) {
+  const g = d.gradeLabel;
+  let duplicateStep = '';
+  if (d.tool === 'sharepoint') {
+    duplicateStep = `<li><strong>Duplicate last week's page:</strong> Go to your site's <strong>Pages</strong> library, find last week, click <strong>&hellip;</strong> &rarr; <strong>Copy</strong>, rename with the new date</li>`;
+  } else if (d.tool === 'word') {
+    duplicateStep = `<li><strong>Duplicate last week's document:</strong> Open last week's file, <strong>Save As</strong> with the new date</li>`;
+  } else if (d.tool === 'sway') {
+    duplicateStep = `<li><strong>Duplicate last week's Sway:</strong> Open it, click <strong>&hellip;</strong> &rarr; <strong>Duplicate</strong>, rename with the new date</li>`;
+  } else {
+    duplicateStep = `<li><strong>Start a fresh Copilot chat:</strong> Tell Copilot <em>"I'm updating my ${g} newsletter for the week of [date]"</em></li>`;
+  }
+
+  return `<h4>Your Weekly Process (15-20 minutes)</h4>
+<ol>
+  ${duplicateStep}
+  <li><strong>Update each section</strong> using the Copilot prompts from this guide &mdash; fill in this week's topics</li>
+  ${d.sections.includes('specials') ? '<li><strong>Update the specials rotation</strong> &mdash; shift the schedule or update the rotation letter</li>' : ''}
+  ${d.sections.includes('recognition') ? '<li><strong>Update ' + d.recognition + '</strong> &mdash; swap in this week\'s student names</li>' : ''}
+  <li><strong>Review and edit</strong> &mdash; Copilot gives you a first draft, always personalize it</li>
+  ${d.bilingual ? '<li><strong>Translate</strong> &mdash; use the translation prompt, then have a bilingual colleague review</li>' : ''}
+  <li><strong>Publish / Send</strong> &mdash; ${d.tool === 'sharepoint' ? 'click <strong>Publish</strong> (or Republish)' : d.tool === 'word' ? 'copy into Outlook and send, or share the OneDrive link' : d.tool === 'sway' ? 'Sway auto-saves &mdash; the same link always shows the latest' : 'paste into your delivery platform and send'}</li>
+  <li><strong>Share the link</strong> (first time only) via ParentSquare, email, or a printed card</li>
+</ol>
+
+<div class="tip-box"><strong>Time-saver:</strong> Keep a running note during the week where you jot down what you're teaching. When it's newsletter time, you'll have all your topics ready to drop into the prompts.</div>
+
+<h4>All-in-One Weekly Update Prompt</h4>
+<p>Use this single prompt to generate most of your newsletter at once:</p>
+${promptBlock('Full Newsletter Prompt', `I need to update my ${g} weekly newsletter for the week of [date] at ${d.school}. Here is what's happening this week:
+- Math: [topic]
+- Literacy: [topic]
+${d.sections.includes('books') ? '- Books: [title(s)]\n' : ''}- Reminders: [list]
+${d.sections.includes('recognition') ? '- ' + d.recognition + ': [student names by classroom]\n' : ''}
+Write all of the newsletter sections: ${d.sections.filter(s => s !== 'specials' && s !== 'custom').map(s => sectionNames[s] || s).join(', ')}. Keep everything concise and parent-friendly.`)}`;
+}
+
+const sectionNames = {
+  welcome: 'welcome message',
+  math: 'math news',
+  literacy: 'literacy news',
+  ask: '4 "ask your child" questions',
+  vocab: 'vocabulary definitions',
+  books: 'book description with discussion questions',
+  reminders: 'formatted reminders',
+  recognition: 'student recognition',
+  custom: 'custom section'
+};
+
+// ── Cheat Sheet ──
+function generateCheatSheet(d) {
+  const g = d.gradeLabel;
+  let html = '<p>All your prompts in one place. Click <strong>Copy</strong> on any prompt to copy it to your clipboard.</p>';
+
+  html += promptBlock('Full Newsletter (One Shot)', `Write a weekly ${g} classroom newsletter for the week of [date] at ${d.school}.
+
+Include these sections:
+${d.sections.includes('welcome') ? '1. Welcome message (3 sentences, warm and friendly)\n' : ''}${d.sections.includes('math') ? '2. Math News: We\'re learning [topic]. Explain for parents and give 1 home practice idea.\n' : ''}${d.sections.includes('literacy') ? '3. Literacy News: We\'re focusing on [reading skill] and [writing skill]. Explain for parents and give 1 home support idea.\n' : ''}${d.sections.includes('ask') ? '4. Ask Your Child: 4 open-ended questions about [this week\'s topics]\n' : ''}${d.sections.includes('vocab') ? '5. Vocabulary: Define these words at a ${g} level: [words]\n' : ''}${d.sections.includes('books') ? '6. Book of the Week: [Title] by [Author]. Write a 2-sentence description and 2 discussion questions.\n' : ''}${d.sections.includes('reminders') ? '7. Reminders: Format these with bold dates: [your reminders]\n' : ''}
+Use a warm, encouraging tone. Keep everything concise — parents should be able to read the whole newsletter in 3 minutes.`);
+
+  html += promptBlock('Rewrite for New Week', `Rewrite this newsletter for the week of [new date]. Update the following: Math topic is now [X]. Literacy focus is now [Y]. New reminders: [list]. Keep the same format and tone:
+
+[paste last week's newsletter]`);
+
+  if (d.bilingual) {
+    html += promptBlock(`Translate to ${d.bilingualLang}`, `Translate the following school newsletter to ${d.bilingualLang}. Use a warm, parent-friendly tone. Keep proper nouns in English (names, ${d.school}, program names like ${d.recognition}, ParentSquare). Preserve all formatting:
+
+[paste newsletter]`);
+  }
+
+  html += promptBlock('Make It More Concise', `Shorten this newsletter section to be more concise. Keep the key information but reduce it to 2-3 sentences max:
+
+[paste section]`);
+
+  html += promptBlock('Generate Discussion Questions', `Write 4 family discussion questions for ${g}rs about [topic]. Make them open-ended, specific (not generic), and something a child would actually want to talk about.`);
+
+  return html;
+}
+
+// ── Troubleshooting ──
+function generateTroubleshooting(d) {
+  let html = '';
+
+  if (d.tool === 'sharepoint') {
+    html += `<h4>"I can't find Copilot in SharePoint"</h4>
+<p>Copilot appears when you're <strong>editing a page</strong>, inside text web parts. If you don't see it, your district may need to enable it. As a workaround, use Copilot in <strong>Word</strong> or at <strong>copilot.microsoft.com</strong> to generate text, then paste it into SharePoint.</p>
+
+<h4>"My site looks plain"</h4>
+<ul>
+  <li>Use <strong>section background colors</strong> (click a section, choose Neutral/Soft/Strong)</li>
+  <li>Add images and emojis in headings to break up text</li>
+  <li>Use the <strong>Hero web part</strong> at the top for a strong visual header</li>
+</ul>
+
+<h4>"Parents can't access the site"</h4>
+<ul>
+  <li>Check <strong>Settings &rarr; Site permissions</strong></li>
+  <li>Set to "Anyone with the link" or add specific parent email groups</li>
+  <li>Ask your admin if external sharing is enabled</li>
+</ul>`;
+  }
+
+  if (d.tool === 'sway') {
+    html += `<h4>"My Sway looks too generic"</h4>
+<ul>
+  <li>Click the <strong>Design</strong> button and try different styles</li>
+  <li>Add your own images &mdash; they make a huge difference</li>
+  <li>Use <strong>Group cards</strong> to organize related content together</li>
+</ul>
+
+<h4>"Parents can't see my Sway"</h4>
+<ul>
+  <li>Click <strong>Share</strong> and make sure it's set to <strong>"Anyone with a link"</strong></li>
+  <li>If your district restricts Sway sharing, check with IT</li>
+</ul>`;
+  }
+
+  if (d.tool === 'word') {
+    html += `<h4>"The formatting breaks when I paste into Outlook"</h4>
+<ul>
+  <li>In Outlook, use <strong>Paste Special &rarr; Keep Source Formatting</strong></li>
+  <li>Or paste as plain text and reformat in Outlook</li>
+  <li>Tables may not transfer perfectly &mdash; consider using simple lists instead</li>
+</ul>
+
+<h4>"I can't find Copilot in Word"</h4>
+<ul>
+  <li>Look for the <strong>Copilot icon</strong> in the <strong>Home tab</strong> of the ribbon</li>
+  <li>If it's not there, your license may not include Copilot &mdash; use <strong>copilot.microsoft.com</strong> as a free alternative</li>
+</ul>`;
+  }
+
+  if (d.tool === 'copilot-web') {
+    html += `<h4>"Copilot's responses are too long / too short"</h4>
+<ul>
+  <li>Be specific about length: <em>"Keep it to 2-3 sentences"</em> or <em>"Write a detailed paragraph"</em></li>
+  <li>Ask follow-ups: <em>"Make it shorter"</em> or <em>"Expand on the math section"</em></li>
+</ul>
+
+<h4>"I can't sign in"</h4>
+<ul>
+  <li>Use your <strong>school/district Microsoft account</strong>, not a personal one</li>
+  <li>If it doesn't work, try <strong>bing.com/chat</strong> as an alternative</li>
+</ul>`;
+  }
+
+  // Common to all
+  html += `<h4>"It takes too long to update every week"</h4>
+<ul>
+  <li>Always <strong>duplicate last week's</strong> as your starting point</li>
+  <li>Use the <strong>"Full Newsletter" prompt</strong> from the Cheat Sheet to generate most content in one shot</li>
+  <li>Keep a running note during the week of what you're teaching &mdash; it makes newsletter time much faster</li>
+  <li>Establish a routine: same day, same time, same process</li>
+</ul>
+
+<h4>"Copilot's output doesn't sound right"</h4>
+<ul>
+  <li>Be <strong>specific</strong> in your prompts &mdash; the more detail, the better</li>
+  <li>Always <strong>edit the output</strong> &mdash; treat it as a first draft, not a final product</li>
+  <li>If the tone is off, add: <em>"Use a warm, conversational tone like you're talking to a friend"</em></li>
+  <li>If it's too formal, try: <em>"Rewrite this in a simpler, more casual way"</em></li>
+</ul>`;
+
+  return html;
+}
+
+// ── Copy to Clipboard ──
+function copyPrompt(btn) {
+  const block = btn.closest('.prompt-block');
+  const text = block.querySelector('.prompt-text').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg viewBox="0 0 16 16"><polyline points="3.5 8 6.5 11 12.5 5" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11V3a1.5 1.5 0 0 1 1.5-1.5H11"/></svg> Copy';
+    }, 2000);
+  });
+}
+
+// ── Init ──
+renderClassroomInputs();
+</script>
+</body>
+</html>
